@@ -72,7 +72,8 @@
 ## 6. 提问与决定
 
 - **问别人**：在对方岗位的 issue 下留言，开头写清楚问题和所需答复的时间点。
-- **需要决定的事**：在相关 issue 下标注 `needs-decision` 标签（若仓库中没有该标签，由技术总监创建）。
+- **需要决定的事**：在相关 issue 下标注 `needs-decision` 标签。
+- **需要真人处理的事**：在相关 issue 下标注 `needs-human` 标签。真人的待办入口是筛选 `label:needs-human` 的 open issue，见第 10 节。
 - **跨学科问题**：写在 #1 下。
 - **决定分级**：
   - **小事**（在已批准的范围内调整关卡数值、文案等）：产品设计师与技术总监决定，在 issue 中记录。
@@ -93,6 +94,15 @@
 
 - 超过几行的评论，先写入文件，再用 `gh api ... -F body=@文件路径` 发布，不要在命令行中直接拼接长文本。
 - 发布后检查一次评论是否完整。若被截断，编辑原评论或发布更正评论，并在更正中注明"更正"。
+
+## 10. 真人的待办入口
+
+- 查看所有需要真人处理的事项：
+  https://github.com/jidoraku-admin/lelexue/issues?q=is%3Aissue+is%3Aopen+label%3Aneeds-human
+- 查看需要决定的事项：
+  https://github.com/jidoraku-admin/lelexue/issues?q=is%3Aissue+is%3Aopen+label%3Aneeds-decision
+- 技术方案的待确认项在 issue #1。
+- 每天 19 时，技术总监会把当天新增的待办汇总到 #1，并标注 `needs-human`。
 
 ## 9. 当前待决事项（截至 2026-11-20）
 
