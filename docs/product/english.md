@@ -187,6 +187,8 @@
 | 册次 | 单元 |
 | --- | --- |
 | 小学三年级上（2024 版） | Unit 1 Making friends；Unit 2 Different families；Unit 3 Amazing animals；Unit 4 Plants around us；Unit 5 The colourful world；Unit 6 Useful numbers |
+
+**2026-11-20 复核（三年级上 Unit 1）**：标题 Making friends 与板块结构经两份公开教学资料交叉核对：2024 版三年级上，Unit 1 含语音课（Letters and sounds，字母 Aa–Dd）与 Let's learn、Listen and chant 等板块，Let's learn 与 Listen and chant 的核心句型为 I smile / I listen / I help / I share。这两份资料为第三方教学资源，**官方目录页（人教数字教材）当前无法访问**，因此仍需真人或官方渠道最终核对。教材原文只用于核对，不进入产品内容（0003）。
 | 小学四年级上（2024 版） | Unit 1 Helping at home；Unit 2 My friends；Unit 3 Places we live in；Unit 4 Helping in the community；Unit 5 The weather and us；Unit 6 Changing for the seasons |
 | 小学五年级上（2024 版） | Unit 1 Different friends；Unit 2 My feelings；Unit 3 Work and play；Unit 4 Healthy habits；Unit 5 Food we eat；Unit 6 Nature and us（两个来源一致；部分站点仍显示旧版名称，见 4.3） |
 | 小学五年级下（2024 版） | Unit 1 My day；Unit 2 My favourite season；Unit 3 My school calendar；Unit 4 When is the art show?；Unit 5 Whose dog is it?；Unit 6 Work quietly!（两个来源一致，另一来源版本不同，见 4.3） |
@@ -428,6 +430,7 @@
 
 ## 变更记录
 
+- v0.13（补充）：三年级上 Unit 1 的标题与板块经第三方教学资源交叉核对，官方页面待核对。
 - v0.13：按技术总监第一轮审核（PR #22）与真人决定（0002–0005）修改：删除班级码与班级组队；游戏位置限定在练习、复习、验收；家长付费改为母子账号结构；教材来源改为原创路线；高中不在 MVP；核心目标与成效验收标注为内部目标；时长改为推荐值，不阻断进度；增长机制按 0004 调整为付费席位佣金；待决问题按决定记录更新。
 - v0.12：补全小学五年级上下册（有冲突，已标注）、六年级上册前四单元、六年级下册前四单元与回顾单元、七年级下册 Unit 3；九年级上册前三单元；高中期中结构样例。剩余缺口见第 10 节第 8 条。
 - v0.11：真人接受版权规则（真题只分析、练习题从零原创），待决问题已更新。
