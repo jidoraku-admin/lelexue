@@ -70,7 +70,7 @@
 
 - 2026 年新高考一卷的公开结构：听力 30 分，阅读理解 40 分左右（含七选五），语言运用 30 分（完形填空与语法填空），写作 40 分（应用文 15 分、读后续写 25 分）。全卷 150 分。
 - **来源之间存在分值拆分冲突**：有来源把语言运用合计为 45 分，写作为 35 分；有来源把完形与语法填空的分值拆分为 15 分与 15 分。以上均为公开报道的汇总，以教育部考试院的正式文本为准，本版不取舍。
-- 高中期中期末试卷的结构尚未核对，待补充。
+- 高中期中试卷的一份公开样例（2025–2026 学年第一学期高三期中，满分 150 分）：听力 30 分，阅读理解 50 分，语言运用 30 分，写作 40 分。该样例来自高三期中，不等同于高一、高二的期中期末结构，仍待各年级核对。来源：<https://zy.21cnjy.com/24447257>
 
 **题型蓝图的使用规则**
 
@@ -120,7 +120,7 @@
 | 应用文写作 | 按情境写信件、通知等 | 应用文规范与要点覆盖 | 15 分 |
 | 读后续写 | 给出一段故事开头，续写结尾 | 情节设计与语言表达 | 约 25 分 |
 
-- 期中、期末试卷的高中模板尚未核对，待补充。
+- 高中期中试卷的结构已有高三期中样例（见 1.2 节），按样例拆分为：听力 30 分、阅读 50 分、语言运用 30 分、写作 40 分。期末试卷及高一、高二的结构仍待核对。
 
 **使用规则**
 
@@ -165,6 +165,9 @@
 | --- | --- |
 | 小学三年级上（2024 版） | Unit 1 Making friends；Unit 2 Different families；Unit 3 Amazing animals；Unit 4 Plants around us；Unit 5 The colourful world；Unit 6 Useful numbers |
 | 小学四年级上（2024 版） | Unit 1 Helping at home；Unit 2 My friends；Unit 3 Places we live in；Unit 4 Helping in the community；Unit 5 The weather and us；Unit 6 Changing for the seasons |
+| 小学五年级上（2024 版） | Unit 1 Different friends；Unit 2 My feelings；Unit 3 Work and play；Unit 4 Healthy habits；Unit 5 Food we eat；Unit 6 Nature and us（两个来源一致；部分站点仍显示旧版名称，见 4.3） |
+| 小学五年级下（2024 版） | Unit 1 My day；Unit 2 My favourite season；Unit 3 My school calendar；Unit 4 When is the art show?；Unit 5 Whose dog is it?；Unit 6 Work quietly!（两个来源一致，另一来源版本不同，见 4.3） |
+| 小学六年级下（2024 版） | Unit 1 How tall are you?；Unit 2 Last weekend；Unit 3 Where did you go?；Unit 4 Then and now；Recycle Mike's happy days（来源一致） |
 | 初中七年级上（2024 版） | Starter Unit 1 Hello!；Starter Unit 2 Keep Tidy!；Starter Unit 3 Welcome!；Unit 1 You and Me；Unit 2 We're Family!；Unit 3 My School；Unit 4 My Favourite Subject；Unit 5 Fun Clubs；Unit 6 A Day in the Life；Unit 7 Happy Birthdays |
 | 高中必修第一册（2019 版） | Welcome unit；Unit 1 Teenage life；Unit 2 Travelling around；Unit 3 Sports and fitness；Unit 4 Natural disasters；Unit 5 Languages around the world |
 | 高中必修第二册（2019 版） | Unit 1 Cultural Heritage；Unit 2 Wildlife protection；Unit 3 The internet；Unit 4 History and traditions；Unit 5 Music |
@@ -178,14 +181,18 @@
 | 册次 | 已确认单元 | 缺口 |
 | --- | --- | --- |
 | 小学三年级下（2024 版） | Unit 1 Meeting new people、Unit 4 Healthy food、Unit 6 Numbers in life 一致；Unit 2、3、5 名称在来源间冲突（见 4.3） | 需按教材原文核对 Unit 2、3、5 |
-| 小学五、六年级（2024 版） | 未采集到可靠目录 | 全部单元待补 |
-| 初中七年级下（2024 版） | Unit 1 Animal friends；Unit 2 No Rules, No Order；Unit 4 Eat Well；Unit 5 Here and Now；Unit 6 Rain or Shine；Unit 7 A Day to Remember；Unit 8 Once upon a Time | Unit 3 待补 |
+| 小学六年级上（2024 版） | Unit 1 How can I get there?；Unit 2 Ways to go to school；Unit 3 My weekend plan；Unit 4 I have a pen pal（来源一致）；Unit 5 开头为 What does he…，名称不完整；Unit 6 未采集 | Unit 5 全称、Unit 6 待补 |
+| 初中七年级下（2024 版） | Unit 1 Animal friends；Unit 2 No Rules, No Order；Unit 3 Keep Fit；Unit 4 Eat Well；Unit 5 Here and Now；Unit 6 Rain or Shine；Unit 7 A Day to Remember；Unit 8 Once upon a Time | 无（已补全） |
 | 初中八年级上（2024 版） | Unit 1 Happy Holiday；Unit 2 Home Sweet Home；Unit 3 Same or Different？；Unit 4 Amazing Plants and Animals；Unit 6 Plan for Yourself；Unit 8 Let's Communicate! | Unit 5、Unit 7 待补 |
-| 初中八年级下、九年级全册 | 九年级上仅确认 Unit 1 The Changing World、Unit 2 Inspiring People | 其余全部待补 |
+| 初中九年级上（2024 版） | Unit 1 The Changing World；Unit 2 Inspiring People；Unit 3 Smart Learning（来源为 2026 年教学资源） | Unit 4 至 Unit 8 待补 |
+| 初中八年级下（2024 版） | 来源中的单元名称与旧版重合，未能确认 2024 版目录 | 全部待补 |
+| 初中九年级下（2024 版） | 未采集到可靠目录 | 全部待补 |
 
 ### 4.3 需要核对的冲突
 
 - **小学三年级下**：一个来源的 Unit 2 为 "Expressing yourself"、Unit 3 为 "Learning better"、Unit 5 为 "Old toys"；另一来源为 "My words and actions"、"Tools and senses for learning"、"Old things"。两组名称都标注为 2024 版，**需以教材原文为准**。
+- **小学五年级上**：多个站点仍显示旧版单元名（What's he like?、My week、What would you like? 等）。本版采用两个来源一致的 2024 版名称，仍需以教材原文核对。
+- **小学五年级下**：另一来源列出的单元名称为 Following the rules、Our community、Life in different seasons、My hometown、Travelling around、Making a travel plan，与上表不一致。本版采用两个来源一致的名称，仍需核对。
 
 ### 4.4 录入格式（逐单元补全时使用）
 
@@ -349,7 +356,8 @@
 5. **实名与隐私条款**：未成年人的实名方式、监护人同意流程，需要真人或法务确认。
 6. **家长付费**：第 6 节规定未成年人账号不设付费入口。是否允许家长账号付费购买学习内容？若允许，付费入口只放在家长端，不放在学生端。
 7. **班级码的学校同意**：班级码和班级组队，是否需要学校或教师的书面同意，需要真人或法务确认。
-8. **高中题型**：高中各地题型结构尚未核对，需要补充后再进入覆盖率审计。
+8. **剩余的教材缺口**：小学六年级上 Unit 5–6；初中七年级上（已补全）、八年级上 Unit 5 与 Unit 7；八年级下全册；九年级上 Unit 4–8；九年级下全册。这些单元需要补全后才能通过覆盖率审计。
+8a. **高中题型**：本版只有一份高三期中样例，高一、高二、高三期末的结构仍需核对。
 9. **版权规则（已确认）**：真人已接受"真题只分析、练习题从零原创"的规则，见第 1.2 节第 4 条。"取真题后稍微修改"的做法不采用。
 
 ## 11. 参考资料（题型）
@@ -387,6 +395,7 @@
 
 ## 变更记录
 
+- v0.12：补全小学五年级上下册（有冲突，已标注）、六年级上册前四单元、六年级下册前四单元与回顾单元、七年级下册 Unit 3；九年级上册前三单元；高中期中结构样例。剩余缺口见第 10 节第 8 条。
 - v0.11：真人接受版权规则（真题只分析、练习题从零原创），待决问题已更新。
 - v0.10：高中题型补充。1.2 增加 2026 年高考结构（来源之间分值拆分有冲突，已标注）；1.3 增加高中高考模板；期中期末的高中题型仍待核对。
 - v0.7：真人确认三项：分数线为单元测分数率 90% 以上；对照实验方案（同校同年级、以学校排名为参照）；试题可从公开网络获取，无需授权。待决问题已更新，版权默认做法待真人确认。
