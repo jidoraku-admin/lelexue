@@ -1,0 +1,90 @@
+name: 岗位事件循环（英语）
+
+# 每个学科复制一份，只改 env 中的配置。
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: role-loop-english
+  cancel-in-progress: false
+
+env:
+  SUBJECT_SIGNATURE: "【技术总监｜英语"        # 只响应技术总监的英语签名
+  DESIGNER_SIGNATURE: "【英语产品设计师"        # 设计师回复的签名，用于计数与防止自我触发
+  DESIGN_ISSUE: "7"                          # 英语设计 issue
+  HANDOFF_ISSUE: "35"                        # 待办交接 issue
+  DESIGN_BRANCH: "feat/english-product-design-7"
+  MAX_ROUNDS: "3"
+  ALLOWED_PATH: "docs/product/"              # 设计师只能改动的目录
+
+jobs:
+  english-designer:
+    if: >-
+      (github.event_name == 'issue_comment' &&
+        contains(github.event.comment.body, '【技术总监｜英语') &&
+        !contains(github.event.comment.body, '【英语产品设计师')) ||
+      (github.event_name == 'pull_request_review' &&
+        contains(github.event.review.body, '【技术总监｜英语'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: 循环上限检查
+        id: guard
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          COUNT=$(gh api "repos/${{ github.repository }}/issues/${DESIGN_ISSUE}/comments" --paginate \
+            --jq "[.[] | select(.body | contains(\"${DESIGNER_SIGNATURE}\"))] | length" | awk '{s+=$1} END {print s+0}')
+          echo "rounds=$COUNT"
+          if [ "$COUNT" -ge "$MAX_ROUNDS" ]; then
+            echo "stop=true" >> "$GITHUB_OUTPUT"
+            echo "已达到循环上限（${MAX_ROUNDS} 次），停止自动循环，转交技术总监或真人处理。"
+          else
+            echo "stop=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.stop == 'false'
+        with:
+          ref: ${{ env.DESIGN_BRANCH }}
+          fetch-depth: 0
+
+      - name: 唤起英语产品设计师
+        if: steps.guard.outputs.stop == 'false'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            你是乐乐学项目的英语子系统产品设计师。先阅读 docs/automation/role-event-loop.md 的循环规则，然后：
+            1. 读取 issue #7 与 issue #35 中技术总监的最新意见，以及 PR #22 的审核评论。
+            2. 只修改 docs/product/ 下的英语设计文档，按意见逐项修改。
+            3. 不合并 PR，不修改 stage:* 标签，不做定稿决定。
+            4. 修改完成后推送到 feat/english-product-design-7，并在 issue #35 回复，签名为【英语产品设计师｜英语｜#7】，写明每项的修改结果。
+            5. 无法执行的意见写明理由，交回技术总监，不自行决定。
+
+  path-check:
+    # 设计师的推送只能改动 docs/product/，否则标记失败，需人工处理
+    if: github.event_name == 'pull_request_review' || github.event_name == 'issue_comment'
+    runs-on: ubuntu-latest
+    needs: english-designer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.DESIGN_BRANCH }}
+          fetch-depth: 0
+      - name: 校验改动范围
+        run: |
+          BAD=$(git diff --name-only origin/main...HEAD | grep -v "^${ALLOWED_PATH}" || true)
+          if [ -n "$BAD" ]; then
+            echo "越权改动，以下文件不在 ${ALLOWED_PATH} 中："
+            echo "$BAD"
+            exit 1
+          fi
+          echo "改动范围正常"
