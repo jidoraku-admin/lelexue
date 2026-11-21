@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="200" fill="#bfe9ff"/>
+  <circle cx="340" cy="40" r="22" fill="#ffd54a" stroke="#2b2118" stroke-width="3"/>
+  <path d="M0 150 Q80 105 160 150 T320 140 T400 150 V200 H0 Z" fill="#9fdc8a" stroke="#2b2118" stroke-width="3"/>
+  <rect x="150" y="70" width="14" height="110" fill="#b07a4b" stroke="#2b2118" stroke-width="3"/>
+  <rect x="236" y="70" width="14" height="110" fill="#b07a4b" stroke="#2b2118" stroke-width="3"/>
+  <path d="M136 72 Q200 22 264 72 Z" fill="#ff6b5b" stroke="#2b2118" stroke-width="3"/>
+  <rect x="158" y="46" width="84" height="26" rx="8" fill="#fff" stroke="#2b2118" stroke-width="3"/>
+  <text x="200" y="65" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2118" font-family="sans-serif">栗子镇</text>
+</svg>
