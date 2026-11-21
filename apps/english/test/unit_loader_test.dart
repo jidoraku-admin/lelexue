@@ -150,4 +150,35 @@ void main() {
     progress.record(path[0].id, 1);
     expect(progress.isUnlocked(path, 1), isTrue);
   });
+
+  group('Unit 2 复用同一套代码（只换数据）', () {
+    final unit2 = const UnitLoader().parse(File('assets/data/unit2.json').readAsStringSync());
+
+    test('单元信息与角色来自数据', () {
+      expect(unit2.code, 'Unit 2');
+      expect(unit2.title, 'School things');
+      expect(unit2.characters.map((c) => c.id), containsAll(['pig', 'duck']));
+    });
+
+    test('句型题与运用题数量来自数据，且选项正确', () {
+      final sentence = unit2.levels.firstWhere((l) => l.stage == Stage.sentence);
+      final use = unit2.levels.firstWhere((l) => l.stage == Stage.use);
+      expect(sentence.questions.length, 6);
+      expect(use.questions.length, 5);
+      for (final q in [...sentence.questions, ...use.questions]) {
+        expect(q.options.length, 4, reason: q.id);
+        expect(q.answer, inInclusiveRange(0, 3), reason: q.id);
+        expect(q.options.toSet().length, 4, reason: q.id);
+      }
+    });
+
+    test('Unit 2 的认词关覆盖全部词汇', () {
+      final words = unit2.levels.where((l) => l.stage == Stage.word).expand((l) => l.questions);
+      expect(words.length, unit2.words.length);
+    });
+
+    test('未核对的单元标记为 not_checked', () {
+      expect(unit2.isValidated, isFalse);
+    });
+  });
 }
