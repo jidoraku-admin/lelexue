@@ -8,10 +8,11 @@ import 'unit.dart';
 /// 句型关与运用关使用 [unit1SentenceQuestions]、[unit1UseQuestions]；
 /// Boss 从全部题目中等距抽取 [bossSize] 题。
 class UnitLoader {
-  const UnitLoader({this.wordsPerLevel = 8, this.bossSize = 12});
+  const UnitLoader({this.wordsPerLevel = 8, this.bossSize = 12, this.reviewSize = 8});
 
   final int wordsPerLevel;
   final int bossSize;
+  final int reviewSize;
 
   Unit parse(String source) {
     final json = jsonDecode(source) as Map<String, dynamic>;
@@ -85,23 +86,42 @@ class UnitLoader {
     );
   }
 
-  /// 第 [index] 个词的选择题：给英文，选中文释义。
+  /// 第 [index] 个词的选择题。偶数题英文→中文，奇数题中文→英文，兼顾认读与记忆。
+  /// 干扰项不得与正确答案的释义共享任何词段（如「你好」），否则孩子无法区分。
   Question _wordQuestion(List<Word> words, int index) {
     final target = words[index];
-    final distractors = <String>[];
-    for (var step = 1; distractors.length < 3 && step < words.length; step++) {
-      final zh = words[(index + step) % words.length].zh;
-      if (zh != target.zh && !distractors.contains(zh)) distractors.add(zh);
+    final forward = index.isEven;
+    String value(Word w) => forward ? w.zh : w.en;
+    final targetTokens = _tokens(target.zh);
+    final candidates = <Word>[
+      for (var step = 1; step < words.length; step++) words[(index + step) % words.length],
+    ];
+    List<String> pick({required bool strict}) {
+      final out = <String>[];
+      for (final c in candidates) {
+        if (out.length == 3) break;
+        if (value(c) == value(target) || out.contains(value(c))) continue;
+        if (strict && _tokens(c.zh).intersection(targetTokens).isNotEmpty) continue;
+        out.add(value(c));
+      }
+      return out;
     }
-    final options = [...distractors];
+    var distractors = pick(strict: true);
+    if (distractors.length < 3) distractors = pick(strict: false);
     final answerIndex = index % 4;
-    options.insert(answerIndex, target.zh);
+    final options = [...distractors]..insert(answerIndex, value(target));
     return Question(
-      id: 'w-${target.en}',
-      prompt: target.en,
+      id: '${forward ? 'w' : 'wz'}-${target.en}',
+      prompt: forward ? target.en : target.zh,
       options: options,
       answer: answerIndex,
       explanation: '${target.en} 的意思是「${target.zh}」（课本第 ${target.page} 页）。',
     );
   }
+
+  /// 释义按分隔符切成词段，用于判断两个释义是否含义重叠。
+  static Set<String> _tokens(String zh) => zh
+      .split(RegExp(r'[；;，,（）()\s]+'))
+      .where((t) => t.isNotEmpty)
+      .toSet();
 }

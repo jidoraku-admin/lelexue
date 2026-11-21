@@ -10,14 +10,57 @@ void main() {
   final source = File('assets/data/unit1.json').readAsStringSync();
   final unit = const UnitLoader().parse(source);
 
-  test('认词关覆盖全部词汇且不重复', () {
-    final words = unit.levels
+  test('认词关每个词出一题，题目 id 不重复', () {
+    final questions = unit.levels
         .where((l) => l.stage == Stage.word)
         .expand((l) => l.questions)
-        .map((q) => q.prompt)
         .toList();
-    expect(words.length, unit.words.length);
-    expect(words.toSet().length, words.length);
+    expect(questions.length, unit.words.length);
+    expect(questions.map((q) => q.id).toSet().length, questions.length, reason: '题目 id 不应重复');
+  });
+
+  test('单词题双向出题：偶数英→中，奇数中→英', () {
+    final wordQs = unit.levels.where((l) => l.stage == Stage.word).expand((l) => l.questions).toList();
+    expect(wordQs.where((q) => q.id.startsWith('w-')).isNotEmpty, isTrue);
+    expect(wordQs.where((q) => q.id.startsWith('wz-')).isNotEmpty, isTrue);
+    for (final q in wordQs.where((q) => q.id.startsWith('wz-'))) {
+      expect(q.options[q.answer], isNot(q.prompt), reason: q.id);
+    }
+  });
+
+  test('干扰项不与正确释义共享词段（避免 hello 与 hi 混淆）', () {
+    final wordQs = unit.levels.where((l) => l.stage == Stage.word).expand((l) => l.questions).toList();
+    final hello = wordQs.firstWhere((q) => q.id == 'w-hello');
+    final correct = hello.options[hello.answer];
+    expect(hello.options.where((o) => o.contains('你好') && o != correct), isEmpty);
+  });
+
+  test('复习关在 Boss 之后，错题优先，无错题时抽取词汇', () {
+    final progress = Progress();
+    final path = progress.path(unit);
+    final bossIndex = path.indexWhere((l) => l.isBoss);
+    expect(path[bossIndex + 1].stage, Stage.review);
+    final review = path[bossIndex + 1];
+    expect(review.questions, isNotEmpty);
+
+    final missedIds = [unit.levels.first.questions[0].id, unit.levels.first.questions[1].id];
+    progress.addMissed(missedIds);
+    final reviewWithMissed = progress.path(unit).firstWhere((l) => l.id == Progress.reviewId);
+    expect(reviewWithMissed.questions.map((q) => q.id), missedIds);
+  });
+
+  test('复习答对的题目从错题本移除，答错的保留', () {
+    final progress = Progress(missed: [unit.levels.first.questions[0].id, unit.levels.first.questions[1].id]);
+    progress.clearMissed([unit.levels.first.questions[0].id]);
+    expect(progress.missed, [unit.levels.first.questions[1].id]);
+  });
+
+  test('错题本去重且有上限', () {
+    final progress = Progress();
+    progress.addMissed(['a', 'a', 'b']);
+    expect(progress.missed, ['a', 'b']);
+    progress.addMissed(List.generate(40, (i) => 'x$i'));
+    expect(progress.missed.length, Progress.maxMissed);
   });
 
   test('关卡顺序：认词 → 句型 → 运用 → Boss', () {
