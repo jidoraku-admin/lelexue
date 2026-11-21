@@ -1,57 +1,46 @@
 {
-  "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）课本各单元对话与活动页的文字层，仅摘录目标句型，不含歌谣与对话全文",
-  "status": "未核对：句子列表尚未经真人确认，部分条目仍需对照课本页核对",
+  "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）各单元目标句型，仅记录句型结构（以 ___ 代替词汇），不含对话、歌谣原文",
+  "status": "待复核：句型根据课本各单元的对话与目标句整理，尚未逐条对照课本页码",
   "units": {
     "Unit 1": [
-      "Good morning.",
-      "Good afternoon.",
-      "Good evening.",
-      "Goodbye.",
-      "Bye.",
-      "Hello.",
-      "Hi.",
+      "Good morning / afternoon / evening / night.",
+      "Goodbye. / Bye.",
+      "Hello. / Hi.",
       "What's your name?",
-      "I am Lucky.",
-      "I'm Mimi.",
-      "Good afternoon, Haoran!",
-      "Sit down, please."
+      "I'm ___.",
+      "Hi, ___. I'm ___."
     ],
     "Unit 2": [
-      "I have a pencil.",
+      "I have a ___.",
       "Me too.",
-      "I can't find my eraser.",
-      "Can I use your eraser?",
+      "I can't find my ___.",
+      "Can I use your ___?",
       "Sure, here you are."
     ],
     "Unit 3": [
       "What's this?",
-      "It's a ball.",
-      "Can I play with your toy cat?",
+      "It's a ___.",
+      "Can I play with your toy ___?",
       "Sure, here you are."
     ],
     "Unit 4": [
-      "This is my hair.",
-      "I have a friend.",
-      "She is a girl.",
-      "She is short.",
-      "She has long hair.",
-      "He is tall.",
-      "He has a big mouth."
+      "This is my ___.",
+      "She is ___. / He is ___.",
+      "She has ___. / He has ___.",
+      "I have a friend."
     ],
     "Unit 5": [
-      "Let's buy some milk.",
-      "OK!",
-      "Do you like apples?",
-      "Yes, I do.",
-      "No, I don't."
+      "Let's buy some ___.",
+      "Do you like ___?",
+      "Yes, I do. / No, I don't."
     ],
     "Unit 6": [
-      "Have some cake.",
+      "Have some ___.",
       "Thank you.",
-      "I like cake.",
+      "I like ___.",
       "What do you want for dinner?",
-      "I want chicken and fish.",
-      "You need vegetables too."
+      "I want ___.",
+      "You need ___."
     ]
   }
 }
