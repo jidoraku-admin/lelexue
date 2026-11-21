@@ -11,6 +11,12 @@
       "code": "Unit 2",
       "title": "School things",
       "validation": "not_checked"
+    },
+    {
+      "file": "unit3.json",
+      "code": "Unit 3",
+      "title": "Toys",
+      "validation": "not_checked"
     }
   ]
 }
