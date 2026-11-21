@@ -1,6 +1,6 @@
 {
   "source": "人教版三年级上册（2022修订版）附录3 Vocabulary A-Z 词表（国家平台）。仅记录词头，释义以课本为准，未录入释义。",
-  "status": "已读 A-Z 全部页面（PDF 96-99，附录3）。词头为抽取结果，待与 english-g3a-vocab.json 对照。",
+  "status": "附录3 词头已与 english-g3a-vocab.json（136 条）做差集比对：附录词头全部被词表覆盖，词表词条全部出现在附录中（短语按词拆分后匹配）。无缺漏。",
   "headwords": [
     "a",
     "am",
