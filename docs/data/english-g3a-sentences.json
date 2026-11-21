@@ -1,6 +1,6 @@
 {
   "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）课本各单元对话与活动页的文字层，仅摘录目标句型，不含歌谣与对话全文",
-  "status": "待复核：句子是从 Lesson 1-2 的对话与歌谣中摘取的目标句型，Unit 1 的 Let's talk 对话未完整读取",
+  "status": "未核对：句子列表尚未经真人确认，部分条目仍需对照课本页核对",
   "units": {
     "Unit 1": [
       "Good morning.",
@@ -21,15 +21,13 @@
       "Me too.",
       "I can't find my eraser.",
       "Can I use your eraser?",
-      "Sure, here you are.",
-      "What's this?"
+      "Sure, here you are."
     ],
     "Unit 3": [
       "What's this?",
       "It's a ball.",
       "Can I play with your toy cat?",
-      "Sure, here you are.",
-      "It's a kite."
+      "Sure, here you are."
     ],
     "Unit 4": [
       "This is my hair.",
