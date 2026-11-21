@@ -1,7 +1,7 @@
 /// 英语单元的领域模型（v0.16 §2.2 单元结构）。
 library;
 
-enum Stage { word, sentence, use, boss, remediation }
+enum Stage { word, sentence, use, boss, remediation, review }
 
 class Word {
   const Word({required this.en, required this.zh, required this.page});

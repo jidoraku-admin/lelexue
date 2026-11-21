@@ -46,12 +46,20 @@ class _LevelPageState extends State<LevelPage> {
     if (saved) return;
     saved = true;
     final progress = widget.progress;
-    progress.record(widget.level.id, run.stars);
-    if (widget.level.id == Progress.remediationId && run.passed) {
+    final level = widget.level;
+    progress.record(level.id, run.stars);
+    if (level.id == Progress.remediationId && run.passed) {
       progress.remediation.clear();
       progress.stars.remove(Progress.remediationId);
     }
-    if (widget.level.isBoss && !run.passed) {
+    if (level.id == Progress.reviewId) {
+      // 复习关中答对的题目从错题本移除，答错的继续保留。
+      progress.clearMissed(level.questions.map((q) => q.id).where((id) => !run.missed.any((m) => m.id == id)));
+      progress.addMissed(run.missed.map((q) => q.id));
+    } else {
+      progress.addMissed(run.missed.map((q) => q.id));
+    }
+    if (level.isBoss && !run.passed) {
       progress.remediation
         ..clear()
         ..addAll(run.missed.map((q) => q.id));
