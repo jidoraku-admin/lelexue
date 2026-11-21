@@ -76,3 +76,7 @@
 **注意**：第二节"目录一致"之前引用的第三方页面（dzkbw，2024 秋版）单元名称为 Making friends、Different families 等，与官方不一致。以本节官方目录为准。仓库 `docs/product/english.md` 中三年级上的单元名称需要同步修正。
 
 词表：官方页面有 Words in each unit（Unit 1 至 6）与 Appendix，内容未在本次核对中读取，仍待核对。
+
+## 七、标注依据（真人确认，2026-11-21）
+
+教材标注以国家平台（basic.smartedu.cn）的人教版三年级上册（2022 修订版）为准，因为这是国家平台的版本。第三方页面（含 dzkbw）的单元名称不作为依据。
