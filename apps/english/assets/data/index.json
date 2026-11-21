@@ -1,0 +1,16 @@
+{
+  "units": [
+    {
+      "file": "unit1.json",
+      "code": "Unit 1",
+      "title": "Greetings",
+      "validation": "failed: 见 #44 待核对"
+    },
+    {
+      "file": "unit2.json",
+      "code": "Unit 2",
+      "title": "School things",
+      "validation": "not_checked"
+    }
+  ]
+}

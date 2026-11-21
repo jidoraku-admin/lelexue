@@ -19,6 +19,15 @@ OUT_DIR = ROOT / "apps" / "english" / "assets" / "data"
 TITLES = {1: "Greetings", 2: "School things", 3: "Toys", 4: "Friends", 5: "Drinks and fruits", 6: "Food"}
 
 
+def write_index():
+    """根据已导出的单元文件生成 index.json，界面据此列出单元。"""
+    entries = []
+    for path in sorted(OUT_DIR.glob("unit*.json"), key=lambda p: int(p.stem.replace("unit", ""))):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        entries.append({"file": path.name, "code": data["unit"], "title": data["title"], "validation": data["validation"]})
+    (OUT_DIR / "index.json").write_text(json.dumps({"units": entries}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main(n: int):
     unit = f"Unit {n}"
     vocab = json.load(open(DATA / "english-g3a-vocab.json", encoding="utf-8"))
@@ -45,6 +54,7 @@ def main(n: int):
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     path = OUT_DIR / f"unit{n}.json"
     path.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    write_index()
     print(f"写入 {path.relative_to(ROOT)}：词 {len(out['words'])}，句型题 {len(out['sentenceQuestions'])}，运用题 {len(out['useQuestions'])}，validation={validation}")
 
 

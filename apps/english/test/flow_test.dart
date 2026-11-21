@@ -31,6 +31,9 @@ void main() {
 
     await tester.pumpWidget(const LelexueEnglishApp());
     await tester.pumpAndSettle(const Duration(seconds: 1));
+    expect(find.text('Unit 1 Greetings'), findsOneWidget);
+    await tester.tap(find.text('Unit 1 Greetings'));
+    await tester.pumpAndSettle(const Duration(seconds: 1));
     expect(find.text('认词关 1'), findsOneWidget);
 
     await tester.tap(find.text('认词关 1'));
