@@ -163,5 +163,49 @@
         }
       ]
     }
-  }
+  },
+  "cast": [
+    {
+      "id": "pig",
+      "name": "小猪",
+      "kind": "猪",
+      "asset": "assets/art/pig.svg",
+      "line": "我们一起去池塘玩吧！"
+    },
+    {
+      "id": "duck",
+      "name": "小鸭",
+      "kind": "鸭子",
+      "asset": "assets/art/duck.svg",
+      "line": "嘎嘎！我会游泳哦。"
+    },
+    {
+      "id": "mouse",
+      "name": "小老鼠",
+      "kind": "老鼠",
+      "asset": "assets/art/mouse.svg",
+      "line": "奶酪在哪儿呀？"
+    },
+    {
+      "id": "cow",
+      "name": "小牛",
+      "kind": "牛",
+      "asset": "assets/art/cow.svg",
+      "line": "哞，牛奶好喝吗？"
+    },
+    {
+      "id": "chicken",
+      "name": "小鸡",
+      "kind": "鸡",
+      "asset": "assets/art/chicken.svg",
+      "line": "叽叽，早上好！"
+    },
+    {
+      "id": "tadpole",
+      "name": "小蝌蚪",
+      "kind": "蝌蚪",
+      "asset": "assets/art/tadpole.svg",
+      "line": "我还没长腿呢，等等我！"
+    }
+  ]
 }
