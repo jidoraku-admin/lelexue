@@ -9,7 +9,12 @@ import '../data/speech_player.dart';
 /// 关卡页：逐题作答，答错即时讲解，结束后结算并保存进度。
 /// 返回 true 表示进度已变化，地图需要刷新。
 class LevelPage extends StatefulWidget {
-  const LevelPage({super.key, required this.level, required this.progress, required this.store});
+  const LevelPage({
+    super.key,
+    required this.level,
+    required this.progress,
+    required this.store,
+  });
 
   final Level level;
   final Progress progress;
@@ -34,7 +39,9 @@ class _LevelPageState extends State<LevelPage> {
     if (run.lastCorrect || run.finished) return;
     final ok = run.answer(i);
     setState(() {});
-    if (ok && isEnglish(run.current.options[i])) _speech.speak(run.current.options[i]);
+    if (ok && isEnglish(run.current.options[i])) {
+      _speech.speak(run.current.options[i]);
+    }
   }
 
   void _next() {
@@ -54,7 +61,11 @@ class _LevelPageState extends State<LevelPage> {
     }
     if (level.id == Progress.reviewId) {
       // 复习关中答对的题目从错题本移除，答错的继续保留。
-      progress.clearMissed(level.questions.map((q) => q.id).where((id) => !run.missed.any((m) => m.id == id)));
+      progress.clearMissed(
+        level.questions
+            .map((q) => q.id)
+            .where((id) => !run.missed.any((m) => m.id == id)),
+      );
       progress.addMissed(run.missed.map((q) => q.id));
     } else {
       progress.addMissed(run.missed.map((q) => q.id));
@@ -137,7 +148,10 @@ class _LevelPageState extends State<LevelPage> {
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     backgroundColor: _optionColor(theme, i),
                   ),
-                  child: Text(q.options[i], style: const TextStyle(fontSize: 18)),
+                  child: Text(
+                    q.options[i],
+                    style: const TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
             ),
@@ -146,7 +160,9 @@ class _LevelPageState extends State<LevelPage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: run.lastCorrect ? Colors.green.shade50 : Colors.orange.shade50,
+                color: run.lastCorrect
+                    ? Colors.green.shade50
+                    : Colors.orange.shade50,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(run.feedback!, style: const TextStyle(fontSize: 16)),
@@ -188,7 +204,9 @@ class _LevelPageState extends State<LevelPage> {
                     child: Icon(
                       Icons.star,
                       size: 48,
-                      color: s <= run.stars ? Colors.amber : Colors.grey.shade300,
+                      color: s <= run.stars
+                          ? Colors.amber
+                          : Colors.grey.shade300,
                     ),
                   ),
               ],
@@ -199,7 +217,9 @@ class _LevelPageState extends State<LevelPage> {
               style: theme.textTheme.headlineMedium,
             ),
             const SizedBox(height: 8),
-            Text('首次作答正确率 ${run.percent}%（通过线 ${(widget.level.passRate * 100).round()}%）'),
+            Text(
+              '首次作答正确率 ${run.percent}%（通过线 ${(widget.level.passRate * 100).round()}%）',
+            ),
             if (!passed && isBoss) ...[
               const SizedBox(height: 12),
               Text(

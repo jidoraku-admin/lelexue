@@ -4,7 +4,11 @@ import 'unit.dart';
 
 /// 翻卡配对：英文卡与中文卡成对，翻开两张，相同则配对成功，不同则翻回。
 class MatchCard {
-  MatchCard({required this.pairId, required this.text, required this.isEnglish});
+  MatchCard({
+    required this.pairId,
+    required this.text,
+    required this.isEnglish,
+  });
 
   final int pairId;
   final String text;
@@ -23,6 +27,8 @@ class MatchGame {
   int? _open;
   List<int>? _pendingMismatch;
   int moves = 0;
+  int streak = 0; // 当前连续配对次数
+  int bestStreak = 0;
 
   /// 用单元词表生成一局。取前 [pairs] 个词，每个词做成一对卡。
   factory MatchGame.fromWords(List<Word> words, {int pairs = 8, int seed = 0}) {
@@ -30,7 +36,13 @@ class MatchGame {
     final cards = <MatchCard>[];
     for (var i = 0; i < chosen.length; i++) {
       cards.add(MatchCard(pairId: i, text: chosen[i].en, isEnglish: true));
-      cards.add(MatchCard(pairId: i, text: shortMeaning(chosen[i].zh), isEnglish: false));
+      cards.add(
+        MatchCard(
+          pairId: i,
+          text: shortMeaning(chosen[i].zh),
+          isEnglish: false,
+        ),
+      );
     }
     cards.shuffle(Random(seed));
     return MatchGame._(cards);
@@ -59,8 +71,11 @@ class MatchGame {
     if (first.pairId == card.pairId && first.isEnglish != card.isEnglish) {
       first.matched = true;
       card.matched = true;
+      streak++;
+      if (streak > bestStreak) bestStreak = streak;
       return FlipOutcome.matched;
     }
+    streak = 0;
     _pendingMismatch = [firstIndex, index];
     return FlipOutcome.mismatch;
   }

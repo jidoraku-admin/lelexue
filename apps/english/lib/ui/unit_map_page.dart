@@ -36,7 +36,8 @@ class _UnitMapPageState extends State<UnitMapPage> {
   Future<void> _open(Unit unit, Progress progress, Level level) async {
     final changed = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
-        builder: (_) => LevelPage(level: level, progress: progress, store: store),
+        builder: (_) =>
+            LevelPage(level: level, progress: progress, store: store),
       ),
     );
     if (changed == true) _reload();
@@ -53,7 +54,9 @@ class _UnitMapPageState extends State<UnitMapPage> {
       appBar: AppBar(
         title: FutureBuilder<_Loaded>(
           future: _future,
-          builder: (_, s) => Text(s.hasData ? '${s.data!.unit.code} ${s.data!.unit.title}' : ''),
+          builder: (_, s) => Text(
+            s.hasData ? '${s.data!.unit.code} ${s.data!.unit.title}' : '',
+          ),
         ),
         actions: [
           IconButton(
@@ -92,7 +95,11 @@ class _UnitMapPageState extends State<UnitMapPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    SvgPicture.asset('assets/art/gate_bg.svg', height: 140, fit: BoxFit.cover),
+                    SvgPicture.asset(
+                      'assets/art/gate_bg.svg',
+                      height: 140,
+                      fit: BoxFit.cover,
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: Row(
@@ -100,7 +107,11 @@ class _UnitMapPageState extends State<UnitMapPage> {
                           for (final c in unit.characters) ...[
                             Tooltip(
                               message: '${c.name}：${c.line}',
-                              child: SvgPicture.asset(c.asset, width: 56, height: 56),
+                              child: SvgPicture.asset(
+                                c.asset,
+                                width: 56,
+                                height: 56,
+                              ),
                             ),
                             const SizedBox(width: 8),
                           ],
@@ -120,7 +131,10 @@ class _UnitMapPageState extends State<UnitMapPage> {
                       icon: const Icon(Icons.movie),
                       label: const Text('动画开场'),
                       onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => StoryIntroPage(assetPath: widget.assetPath)),
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              StoryIntroPage(assetPath: widget.assetPath),
+                        ),
                       ),
                     ),
                   ),
@@ -130,7 +144,10 @@ class _UnitMapPageState extends State<UnitMapPage> {
                       icon: const Icon(Icons.grid_view),
                       label: const Text('翻卡挑战'),
                       onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => MatchGamePage(assetPath: widget.assetPath)),
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              MatchGamePage(assetPath: widget.assetPath),
+                        ),
                       ),
                     ),
                   ),
@@ -181,19 +198,27 @@ class _LevelTile extends StatelessWidget {
         enabled: unlocked,
         onTap: onTap,
         leading: CircleAvatar(
-          backgroundColor: unlocked ? theme.colorScheme.primary : Colors.grey.shade300,
+          backgroundColor: unlocked
+              ? theme.colorScheme.primary
+              : Colors.grey.shade300,
           child: Icon(
             unlocked ? Icons.play_arrow : Icons.lock,
             color: unlocked ? theme.colorScheme.onPrimary : Colors.grey,
           ),
         ),
         title: Text(level.title),
-        subtitle: Text('${level.questions.length} 题 · 通过线 ${(level.passRate * 100).round()}%'),
+        subtitle: Text(
+          '${level.questions.length} 题 · 通过线 ${(level.passRate * 100).round()}%',
+        ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             for (var s = 1; s <= 3; s++)
-              Icon(Icons.star, size: 18, color: s <= stars ? Colors.amber : Colors.grey.shade300),
+              Icon(
+                Icons.star,
+                size: 18,
+                color: s <= stars ? Colors.amber : Colors.grey.shade300,
+              ),
           ],
         ),
       ),

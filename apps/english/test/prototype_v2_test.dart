@@ -10,7 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// 资源读取是真实异步，转圈动画也会持续出帧，所以用真实时间与帧交替推进，不用 pumpAndSettle。
 Future<void> settle(WidgetTester tester, {int rounds = 30}) async {
   for (var i = 0; i < rounds; i++) {
-    await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 50)));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 50)),
+    );
     await tester.pump(const Duration(milliseconds: 100));
   }
 }
@@ -29,11 +31,11 @@ void main() {
   setUpAll(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMessageHandler('flutter/assets', (message) async {
-      final key = utf8.decode(message!.buffer.asUint8List());
-      final file = File(key);
-      if (!file.existsSync()) return null;
-      return ByteData.sublistView(file.readAsBytesSync());
-    });
+          final key = utf8.decode(message!.buffer.asUint8List());
+          final file = File(key);
+          if (!file.existsSync()) return null;
+          return ByteData.sublistView(file.readAsBytesSync());
+        });
   });
 
   // 两个玩法放在同一个用例里顺序验证：同一个应用实例中多次加载资源，分开写会互相干扰。

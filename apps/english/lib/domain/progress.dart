@@ -2,10 +2,13 @@ import 'unit.dart';
 
 /// 学习进度（纯领域规则，不依赖存储）。
 class Progress {
-  Progress({Map<String, int>? stars, List<String>? remediation, List<String>? missed})
-      : stars = stars ?? {},
-        remediation = remediation ?? [],
-        missed = missed ?? [];
+  Progress({
+    Map<String, int>? stars,
+    List<String>? remediation,
+    List<String>? missed,
+  }) : stars = stars ?? {},
+       remediation = remediation ?? [],
+       missed = missed ?? [];
 
   /// 关卡 id → 历史最高星级（0 表示未通过）。
   final Map<String, int> stars;
@@ -46,23 +49,30 @@ class Progress {
     final result = <Level>[];
     for (final level in unit.levels) {
       if (level.isBoss && remediation.isNotEmpty) {
-        result.add(Level(
-          id: remediationId,
-          stage: Stage.remediation,
-          title: '补救关',
-          questions: [for (final id in remediation) if (index[id] != null) index[id]!],
-          passRate: 1.0,
-        ));
+        result.add(
+          Level(
+            id: remediationId,
+            stage: Stage.remediation,
+            title: '补救关',
+            questions: [
+              for (final id in remediation)
+                if (index[id] != null) index[id]!,
+            ],
+            passRate: 1.0,
+          ),
+        );
       }
       result.add(level);
       if (level.isBoss) {
-        result.add(Level(
-          id: reviewId,
-          stage: Stage.review,
-          title: '复习关',
-          questions: _reviewQuestions(unit),
-          passRate: 0.6,
-        ));
+        result.add(
+          Level(
+            id: reviewId,
+            stage: Stage.review,
+            title: '复习关',
+            questions: _reviewQuestions(unit),
+            passRate: 0.6,
+          ),
+        );
       }
     }
     return result;
@@ -71,12 +81,21 @@ class Progress {
   /// 复习题：优先取错题；没有错题时，按间隔抽取单元词汇保持记忆。
   List<Question> _reviewQuestions(Unit unit) {
     final index = unit.questionIndex;
-    final fromMissed = [for (final id in missed) if (index[id] != null) index[id]!];
+    final fromMissed = [
+      for (final id in missed)
+        if (index[id] != null) index[id]!,
+    ];
     if (fromMissed.isNotEmpty) return fromMissed;
-    final words = unit.levels.where((l) => l.stage == Stage.word).expand((l) => l.questions).toList();
+    final words = unit.levels
+        .where((l) => l.stage == Stage.word)
+        .expand((l) => l.questions)
+        .toList();
     if (words.isEmpty) return const [];
     final step = words.length / 6;
-    return [for (var k = 0; k < 6 && (k * step).floor() < words.length; k++) words[(k * step).floor()]];
+    return [
+      for (var k = 0; k < 6 && (k * step).floor() < words.length; k++)
+        words[(k * step).floor()],
+    ];
   }
 
   /// 关卡是否可挑战：第一关总是可以；其余需要前一关通过。
@@ -90,14 +109,16 @@ class Progress {
   }
 
   Map<String, dynamic> toJson() => {
-        'stars': stars,
-        'remediation': remediation,
-        'missed': missed,
-      };
+    'stars': stars,
+    'remediation': remediation,
+    'missed': missed,
+  };
 
   factory Progress.fromJson(Map<String, dynamic> json) => Progress(
-        stars: (json['stars'] as Map?)?.map((k, v) => MapEntry(k as String, v as int)),
-        remediation: (json['remediation'] as List?)?.cast<String>(),
-        missed: (json['missed'] as List?)?.cast<String>(),
-      );
+    stars: (json['stars'] as Map?)?.map(
+      (k, v) => MapEntry(k as String, v as int),
+    ),
+    remediation: (json['remediation'] as List?)?.cast<String>(),
+    missed: (json['missed'] as List?)?.cast<String>(),
+  );
 }

@@ -16,11 +16,18 @@ void main() {
         .expand((l) => l.questions)
         .toList();
     expect(questions.length, unit.words.length);
-    expect(questions.map((q) => q.id).toSet().length, questions.length, reason: '题目 id 不应重复');
+    expect(
+      questions.map((q) => q.id).toSet().length,
+      questions.length,
+      reason: '题目 id 不应重复',
+    );
   });
 
   test('单词题双向出题：偶数英→中，奇数中→英', () {
-    final wordQs = unit.levels.where((l) => l.stage == Stage.word).expand((l) => l.questions).toList();
+    final wordQs = unit.levels
+        .where((l) => l.stage == Stage.word)
+        .expand((l) => l.questions)
+        .toList();
     expect(wordQs.where((q) => q.id.startsWith('w-')).isNotEmpty, isTrue);
     expect(wordQs.where((q) => q.id.startsWith('wz-')).isNotEmpty, isTrue);
     for (final q in wordQs.where((q) => q.id.startsWith('wz-'))) {
@@ -29,10 +36,16 @@ void main() {
   });
 
   test('干扰项不与正确释义共享词段（避免 hello 与 hi 混淆）', () {
-    final wordQs = unit.levels.where((l) => l.stage == Stage.word).expand((l) => l.questions).toList();
+    final wordQs = unit.levels
+        .where((l) => l.stage == Stage.word)
+        .expand((l) => l.questions)
+        .toList();
     final hello = wordQs.firstWhere((q) => q.id == 'w-hello');
     final correct = hello.options[hello.answer];
-    expect(hello.options.where((o) => o.contains('你好') && o != correct), isEmpty);
+    expect(
+      hello.options.where((o) => o.contains('你好') && o != correct),
+      isEmpty,
+    );
   });
 
   test('复习关在 Boss 之后，错题优先，无错题时抽取词汇', () {
@@ -43,14 +56,24 @@ void main() {
     final review = path[bossIndex + 1];
     expect(review.questions, isNotEmpty);
 
-    final missedIds = [unit.levels.first.questions[0].id, unit.levels.first.questions[1].id];
+    final missedIds = [
+      unit.levels.first.questions[0].id,
+      unit.levels.first.questions[1].id,
+    ];
     progress.addMissed(missedIds);
-    final reviewWithMissed = progress.path(unit).firstWhere((l) => l.id == Progress.reviewId);
+    final reviewWithMissed = progress
+        .path(unit)
+        .firstWhere((l) => l.id == Progress.reviewId);
     expect(reviewWithMissed.questions.map((q) => q.id), missedIds);
   });
 
   test('复习答对的题目从错题本移除，答错的保留', () {
-    final progress = Progress(missed: [unit.levels.first.questions[0].id, unit.levels.first.questions[1].id]);
+    final progress = Progress(
+      missed: [
+        unit.levels.first.questions[0].id,
+        unit.levels.first.questions[1].id,
+      ],
+    );
     progress.clearMissed([unit.levels.first.questions[0].id]);
     expect(progress.missed, [unit.levels.first.questions[1].id]);
   });
@@ -75,7 +98,11 @@ void main() {
       for (final q in level.questions) {
         expect(q.options.length, 4, reason: q.id);
         expect(q.answer, inInclusiveRange(0, 3), reason: q.id);
-        expect(q.options.toSet().length, q.options.length, reason: '选项不应重复：${q.id}');
+        expect(
+          q.options.toSet().length,
+          q.options.length,
+          reason: '选项不应重复：${q.id}',
+        );
       }
     }
   });
@@ -128,15 +155,24 @@ void main() {
     final path = progress.path(unit);
     final bossIndex = path.indexWhere((l) => l.isBoss);
     expect(path[bossIndex - 1].id, Progress.remediationId);
-    expect(progress.isUnlocked(path, bossIndex), isFalse, reason: 'Boss 在补救前不可挑战');
+    expect(
+      progress.isUnlocked(path, bossIndex),
+      isFalse,
+      reason: 'Boss 在补救前不可挑战',
+    );
 
     progress.record(Progress.remediationId, 1);
     progress.remediation.clear();
-    expect(progress.path(unit).any((l) => l.id == Progress.remediationId), isFalse);
+    expect(
+      progress.path(unit).any((l) => l.id == Progress.remediationId),
+      isFalse,
+    );
   });
 
   test('进度 JSON 往返一致', () {
-    final progress = Progress()..record('word-1', 2)..remediation.add('w-hello');
+    final progress = Progress()
+      ..record('word-1', 2)
+      ..remediation.add('w-hello');
     final restored = Progress.fromJson(progress.toJson());
     expect(restored.stars, {'word-1': 2});
     expect(restored.remediation, ['w-hello']);
@@ -152,7 +188,9 @@ void main() {
   });
 
   group('Unit 2 复用同一套代码（只换数据）', () {
-    final unit2 = const UnitLoader().parse(File('assets/data/unit2.json').readAsStringSync());
+    final unit2 = const UnitLoader().parse(
+      File('assets/data/unit2.json').readAsStringSync(),
+    );
 
     test('单元信息与角色来自数据', () {
       expect(unit2.code, 'Unit 2');
@@ -161,7 +199,9 @@ void main() {
     });
 
     test('句型题与运用题数量来自数据，且选项正确', () {
-      final sentence = unit2.levels.firstWhere((l) => l.stage == Stage.sentence);
+      final sentence = unit2.levels.firstWhere(
+        (l) => l.stage == Stage.sentence,
+      );
       final use = unit2.levels.firstWhere((l) => l.stage == Stage.use);
       expect(sentence.questions.length, 6);
       expect(use.questions.length, 5);
@@ -173,7 +213,9 @@ void main() {
     });
 
     test('Unit 2 的认词关覆盖全部词汇', () {
-      final words = unit2.levels.where((l) => l.stage == Stage.word).expand((l) => l.questions);
+      final words = unit2.levels
+          .where((l) => l.stage == Stage.word)
+          .expand((l) => l.questions);
       expect(words.length, unit2.words.length);
     });
 

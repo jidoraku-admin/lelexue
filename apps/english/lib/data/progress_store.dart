@@ -11,7 +11,8 @@ class ProgressStore {
   /// 单元代码，例如 "Unit 1"。每个单元的进度独立保存。
   final String unitCode;
 
-  String get key => 'english.${unitCode.replaceAll(' ', '').toLowerCase()}.progress';
+  String get key =>
+      'english.${unitCode.replaceAll(' ', '').toLowerCase()}.progress';
 
   Future<Progress> load() async {
     final prefs = await SharedPreferences.getInstance();
