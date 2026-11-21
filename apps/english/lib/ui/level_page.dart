@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 
@@ -220,16 +222,9 @@ class _LevelPageState extends State<LevelPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 for (var s = 1; s <= 3; s++)
-                  AnimatedScale(
-                    scale: s <= run.stars ? 1.2 : 0.8,
-                    duration: const Duration(milliseconds: 300),
-                    child: Icon(
-                      Icons.star,
-                      size: 48,
-                      color: s <= run.stars
-                          ? Colors.amber
-                          : Colors.grey.shade300,
-                    ),
+                  _StarPop(
+                    delay: Duration(milliseconds: 250 * (s - 1)),
+                    lit: s <= run.stars,
                   ),
               ],
             ),
@@ -315,6 +310,54 @@ class _Dialogue extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// 结算星星：依次弹出，点亮的星星金色、带弹性放大。
+class _StarPop extends StatefulWidget {
+  const _StarPop({required this.delay, required this.lit});
+
+  final Duration delay;
+  final bool lit;
+
+  @override
+  State<_StarPop> createState() => _StarPopState();
+}
+
+class _StarPopState extends State<_StarPop>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 500),
+  );
+
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer(widget.delay, () {
+      if (mounted) _c.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScaleTransition(
+      scale: CurvedAnimation(parent: _c, curve: Curves.elasticOut),
+      child: Icon(
+        Icons.star,
+        size: 48,
+        color: widget.lit ? Colors.amber : Colors.grey.shade300,
+      ),
     );
   }
 }
