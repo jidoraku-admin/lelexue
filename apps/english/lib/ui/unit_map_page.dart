@@ -6,6 +6,8 @@ import '../domain/unit.dart';
 import '../data/unit_repository.dart';
 import '../data/progress_store.dart';
 import 'level_page.dart';
+import 'match_game_page.dart';
+import 'story_intro_page.dart';
 
 /// Unit 1 地图：按路径展示关卡，已通过、可挑战、未解锁三种状态。
 class UnitMapPage extends StatefulWidget {
@@ -109,6 +111,30 @@ class _UnitMapPageState extends State<UnitMapPage> {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  Expanded(
+                    child: FilledButton.tonalIcon(
+                      icon: const Icon(Icons.movie),
+                      label: const Text('动画开场'),
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => StoryIntroPage(assetPath: widget.assetPath)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: FilledButton.tonalIcon(
+                      icon: const Icon(Icons.grid_view),
+                      label: const Text('翻卡挑战'),
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => MatchGamePage(assetPath: widget.assetPath)),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 8),
               for (var i = 0; i < path.length; i++)
