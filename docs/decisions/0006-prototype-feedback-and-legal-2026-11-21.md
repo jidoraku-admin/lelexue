@@ -56,3 +56,23 @@
 1. 真人提供或核对人教版官方目录与词表。
 2. 法务确认持续流水佣金与 0004 红线的关系，并确认未成年人与个人信息条款。
 3. 产品设计师按新决定修改英语设计稿。
+
+## 六、官方目录核对结果（2026-11-21，官方平台 CONTENTS 页）
+
+教材：义务教育教科书·英语 三年级上册（根据 2022 年版课程标准修订），人民教育出版社。
+
+官方单元：
+- Module 无；结构为 Unit 1 至 Unit 6，每单元含 Lesson 1 至 Lesson 3，另有 Revision 1 与 Revision 2。
+- Unit 1 Greetings（p.2）
+- Unit 2 School things（p.14）
+- Unit 3 Toys（p.26）
+- Revision 1（p.38）
+- Unit 4 Friends（p.42）
+- Unit 5 Drinks and fruits（p.54）
+- Unit 6 Food（p.66）
+- Revision 2（p.78）
+- Appendix 1 Chants and songs in each unit（p.82）
+
+**注意**：第二节"目录一致"之前引用的第三方页面（dzkbw，2024 秋版）单元名称为 Making friends、Different families 等，与官方不一致。以本节官方目录为准。仓库 `docs/product/english.md` 中三年级上的单元名称需要同步修正。
+
+词表：官方页面有 Words in each unit（Unit 1 至 6）与 Appendix，内容未在本次核对中读取，仍待核对。
