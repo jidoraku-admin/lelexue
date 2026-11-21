@@ -36,8 +36,12 @@ class _UnitMapPageState extends State<UnitMapPage> {
   Future<void> _open(Unit unit, Progress progress, Level level) async {
     final changed = await Navigator.of(context).push<bool>(
       MaterialPageRoute(
-        builder: (_) =>
-            LevelPage(level: level, progress: progress, store: store),
+        builder: (_) => LevelPage(
+          level: level,
+          progress: progress,
+          store: store,
+          characters: unit.characters,
+        ),
       ),
     );
     if (changed == true) _reload();

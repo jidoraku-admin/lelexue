@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../domain/level_run.dart';
@@ -14,11 +15,15 @@ class LevelPage extends StatefulWidget {
     required this.level,
     required this.progress,
     required this.store,
+    this.characters = const [],
   });
 
   final Level level;
   final Progress progress;
   final ProgressStore store;
+
+  /// 单元角色。句型关与运用关里，题目由角色轮流说出。
+  final List<Character> characters;
 
   @override
   State<LevelPage> createState() => _LevelPageState();
@@ -113,27 +118,36 @@ class _LevelPageState extends State<LevelPage> {
           const SizedBox(height: 8),
           Text('第 ${run.index + 1} / $total 题', textAlign: TextAlign.right),
           const SizedBox(height: 16),
-          Card(
-            color: theme.colorScheme.primaryContainer,
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  Text(
-                    q.prompt,
-                    style: theme.textTheme.headlineSmall,
-                    textAlign: TextAlign.center,
-                  ),
-                  if (isEnglish(q.prompt))
-                    IconButton(
-                      tooltip: '播放',
-                      icon: const Icon(Icons.volume_up),
-                      onPressed: () => _speech.speak(q.prompt),
+          if (_isDialogue && _speaker != null)
+            _Dialogue(
+              speaker: _speaker!,
+              text: q.prompt,
+              onPlay: isEnglish(q.prompt)
+                  ? () => _speech.speak(q.prompt)
+                  : null,
+            )
+          else
+            Card(
+              color: theme.colorScheme.primaryContainer,
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    Text(
+                      q.prompt,
+                      style: theme.textTheme.headlineSmall,
+                      textAlign: TextAlign.center,
                     ),
-                ],
+                    if (isEnglish(q.prompt))
+                      IconButton(
+                        tooltip: '播放',
+                        icon: const Icon(Icons.volume_up),
+                        onPressed: () => _speech.speak(q.prompt),
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
           const SizedBox(height: 16),
           for (var i = 0; i < q.options.length; i++)
             Padding(
@@ -177,6 +191,14 @@ class _LevelPageState extends State<LevelPage> {
         ],
       ),
     );
+  }
+
+  bool get _isDialogue =>
+      widget.level.stage == Stage.sentence || widget.level.stage == Stage.use;
+
+  Character? get _speaker {
+    if (widget.characters.isEmpty) return null;
+    return widget.characters[run.index % widget.characters.length];
   }
 
   Color? _optionColor(ThemeData theme, int i) {
@@ -238,6 +260,61 @@ class _LevelPageState extends State<LevelPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// 对话气泡：角色说出题目。
+class _Dialogue extends StatelessWidget {
+  const _Dialogue({required this.speaker, required this.text, this.onPlay});
+
+  final Character speaker;
+  final String text;
+  final VoidCallback? onPlay;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SvgPicture.asset(speaker.asset, width: 72, height: 72),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(speaker.name, style: theme.textTheme.labelLarge),
+              const SizedBox(height: 4),
+              Container(
+                padding: const EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.primaryContainer,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
+                  ),
+                  border: Border.all(color: theme.colorScheme.outline),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(text, style: theme.textTheme.titleMedium),
+                    ),
+                    if (onPlay != null)
+                      IconButton(
+                        tooltip: '播放',
+                        icon: const Icon(Icons.volume_up),
+                        onPressed: onPlay,
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
