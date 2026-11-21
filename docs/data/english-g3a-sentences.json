@@ -1,0 +1,62 @@
+{
+  "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）各单元目标句型，仅记录句型结构（以 ___ 代替词汇），不含对话、歌谣原文",
+  "status": "已与本次读取的对话与 Self-check 逐条对照（Unit 1-6、Revision 1-2）。句型以结构表示，___ 为词汇位。",
+  "units": {
+    "Unit 1": [
+      "Good morning / afternoon / evening / night.",
+      "Goodbye. / Bye.",
+      "Hello. / Hi.",
+      "What's your name?",
+      "I'm ___.",
+      "Hi, ___. I'm ___."
+    ],
+    "Unit 2": [
+      "I have a ___.",
+      "Me too.",
+      "I can't find my ___.",
+      "Can I use your ___?",
+      "Sure, here you are.",
+      "Sorry, I don't have a ___.",
+      "Here you are. / Thank you! / You're welcome!",
+      "It's nice!"
+    ],
+    "Unit 3": [
+      "What's this?",
+      "It's a ___.",
+      "Can I play with your toy ___?",
+      "Sure, here you are.",
+      "Look! I have a ___!",
+      "It's so nice!",
+      "Can I play with it?"
+    ],
+    "Unit 4": [
+      "This is my ___.",
+      "She is ___. / He is ___.",
+      "She has ___. / He has ___.",
+      "I have a friend.",
+      "She is tall. / She is short.",
+      "She has big eyes and long hair.",
+      "He has big ears and a big nose.",
+      "Who is your best friend? What does he or she look like?"
+    ],
+    "Unit 5": [
+      "Let's buy some ___.",
+      "Do you like ___?",
+      "Yes, I do. / No, I don't.",
+      "Do you like ___, ___?",
+      "Name / Student (调查表格式)"
+    ],
+    "Unit 6": [
+      "Have some ___.",
+      "Thank you.",
+      "I like ___.",
+      "What do you want for dinner?",
+      "I want ___.",
+      "You need ___.",
+      "What about ___?",
+      "Have some ___, ___.",
+      "Thank you. But I don't like ___.",
+      "I want some ___."
+    ]
+  }
+}

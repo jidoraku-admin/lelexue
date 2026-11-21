@@ -1,0 +1,698 @@
+{
+  "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）书后 Vocabulary in each unit（课本第 87-90 页），页码为课本页码，逐屏截图核对",
+  "status": "页码已逐行核对；释义待复核",
+  "units": {
+    "Unit 1": [
+      {
+        "en": "hello",
+        "zh": "喂；你好",
+        "page": 4
+      },
+      {
+        "en": "hi",
+        "zh": "嗨；你好（hello 的非正式用语）",
+        "page": 4
+      },
+      {
+        "en": "I",
+        "zh": "我",
+        "page": 4
+      },
+      {
+        "en": "am",
+        "zh": "（用于第一人称代词 I 后）是",
+        "page": 4
+      },
+      {
+        "en": "I'm",
+        "zh": "我是（I am）",
+        "page": 4
+      },
+      {
+        "en": "Miss",
+        "zh": "（用于未婚女子的姓氏或姓名前）小姐，女士",
+        "page": 4
+      },
+      {
+        "en": "what",
+        "zh": "什么",
+        "page": 4
+      },
+      {
+        "en": "is",
+        "zh": "（用于代词 he、she、it，单数名词或不可数名词后）是",
+        "page": 4
+      },
+      {
+        "en": "what's",
+        "zh": "……是什么（what is）",
+        "page": 4
+      },
+      {
+        "en": "your",
+        "zh": "你的；你们的",
+        "page": 4
+      },
+      {
+        "en": "name",
+        "zh": "名字",
+        "page": 4
+      },
+      {
+        "en": "stand up",
+        "zh": "起立；站起来",
+        "page": 6
+      },
+      {
+        "en": "boy",
+        "zh": "男孩",
+        "page": 6
+      },
+      {
+        "en": "and",
+        "zh": "和",
+        "page": 6
+      },
+      {
+        "en": "girl",
+        "zh": "女孩",
+        "page": 6
+      },
+      {
+        "en": "sit down",
+        "zh": "坐下",
+        "page": 6
+      },
+      {
+        "en": "Good morning!",
+        "zh": "早上好！上午好！",
+        "page": 6
+      },
+      {
+        "en": "Good afternoon!",
+        "zh": "下午好！",
+        "page": 6
+      },
+      {
+        "en": "Good evening!",
+        "zh": "晚上好！",
+        "page": 6
+      },
+      {
+        "en": "Mr",
+        "zh": "（用于男子的姓氏或姓名前）先生",
+        "page": 8
+      },
+      {
+        "en": "dad",
+        "zh": "（非正式用语）爸爸",
+        "page": 8
+      },
+      {
+        "en": "Goodbye!",
+        "zh": "再见！",
+        "page": 8
+      },
+      {
+        "en": "Good night!",
+        "zh": "晚安！",
+        "page": 8
+      },
+      {
+        "en": "Bye!",
+        "zh": "再见！",
+        "page": 8
+      }
+    ],
+    "Unit 2": [
+      {
+        "en": "pencil",
+        "zh": "铅笔",
+        "page": 16
+      },
+      {
+        "en": "sharpener",
+        "zh": "卷笔刀",
+        "page": 16
+      },
+      {
+        "en": "pencil box",
+        "zh": "文具盒",
+        "page": 16
+      },
+      {
+        "en": "schoolbag",
+        "zh": "书包",
+        "page": 16
+      },
+      {
+        "en": "eraser",
+        "zh": "橡皮；黑板擦",
+        "page": 18
+      },
+      {
+        "en": "crayon",
+        "zh": "蜡笔",
+        "page": 18
+      },
+      {
+        "en": "pen",
+        "zh": "钢笔",
+        "page": 18
+      },
+      {
+        "en": "ruler",
+        "zh": "直尺",
+        "page": 18
+      },
+      {
+        "en": "look",
+        "zh": "看",
+        "page": 16
+      },
+      {
+        "en": "have",
+        "zh": "有",
+        "page": 16
+      },
+      {
+        "en": "a",
+        "zh": "一个",
+        "page": 16
+      },
+      {
+        "en": "new",
+        "zh": "新的；新来的；新买的",
+        "page": 16
+      },
+      {
+        "en": "it",
+        "zh": "它",
+        "page": 16
+      },
+      {
+        "en": "it's",
+        "zh": "它是（it is）",
+        "page": 16
+      },
+      {
+        "en": "nice",
+        "zh": "好看的；令人愉悦的",
+        "page": 16
+      },
+      {
+        "en": "can",
+        "zh": "能；会",
+        "page": 18
+      },
+      {
+        "en": "use",
+        "zh": "用；使用",
+        "page": 18
+      },
+      {
+        "en": "find",
+        "zh": "发现；找到",
+        "page": 18
+      },
+      {
+        "en": "my",
+        "zh": "我的",
+        "page": 18
+      },
+      {
+        "en": "sure",
+        "zh": "（表示同意）当然",
+        "page": 18
+      },
+      {
+        "en": "you",
+        "zh": "你；你们",
+        "page": 18
+      },
+      {
+        "en": "sorry",
+        "zh": "抱歉",
+        "page": 18
+      },
+      {
+        "en": "don't",
+        "zh": "（do not）（表示否定）没，不",
+        "page": 18
+      },
+      {
+        "en": "Here you are.",
+        "zh": "给你。",
+        "page": 18
+      },
+      {
+        "en": "Thank you!",
+        "zh": "谢谢你！",
+        "page": 18
+      },
+      {
+        "en": "You're welcome!",
+        "zh": "不用谢！",
+        "page": 18
+      }
+    ],
+    "Unit 3": [
+      {
+        "en": "ball",
+        "zh": "球",
+        "page": 28
+      },
+      {
+        "en": "doll",
+        "zh": "玩偶；玩具娃娃",
+        "page": 28
+      },
+      {
+        "en": "kite",
+        "zh": "风筝",
+        "page": 28
+      },
+      {
+        "en": "jigsaw",
+        "zh": "拼图；拼板玩具",
+        "page": 28
+      },
+      {
+        "en": "toy",
+        "zh": "玩具",
+        "page": 30
+      },
+      {
+        "en": "cat",
+        "zh": "猫",
+        "page": 30
+      },
+      {
+        "en": "dog",
+        "zh": "狗",
+        "page": 30
+      },
+      {
+        "en": "bike",
+        "zh": "自行车",
+        "page": 30
+      },
+      {
+        "en": "bus",
+        "zh": "公共汽车",
+        "page": 30
+      },
+      {
+        "en": "this",
+        "zh": "（指较近的人或事物）这，这个",
+        "page": 28
+      },
+      {
+        "en": "mum",
+        "zh": "（英）非正式用语；（美）mom 妈妈",
+        "page": 28
+      },
+      {
+        "en": "gift",
+        "zh": "礼物",
+        "page": 28
+      },
+      {
+        "en": "for",
+        "zh": "（表示对象、用途等）对，给",
+        "page": 28
+      },
+      {
+        "en": "so",
+        "zh": "很；极",
+        "page": 30
+      },
+      {
+        "en": "cute",
+        "zh": "可爱的",
+        "page": 30
+      },
+      {
+        "en": "play with",
+        "zh": "玩……；和……一起玩",
+        "page": 30
+      },
+      {
+        "en": "good",
+        "zh": "好的；亲密的",
+        "page": 32
+      },
+      {
+        "en": "friend",
+        "zh": "朋友",
+        "page": 32
+      },
+      {
+        "en": "she",
+        "zh": "她",
+        "page": 32
+      },
+      {
+        "en": "has",
+        "zh": "（用于第三人称单数代词、不可数名词或单数可数名词后）有",
+        "page": 32
+      },
+      {
+        "en": "often",
+        "zh": "经常",
+        "page": 32
+      },
+      {
+        "en": "share",
+        "zh": "分享",
+        "page": 32
+      },
+      {
+        "en": "Happy birthday!",
+        "zh": "生日快乐！",
+        "page": 28
+      }
+    ],
+    "Unit 4": [
+      {
+        "en": "face",
+        "zh": "脸；面孔",
+        "page": 44
+      },
+      {
+        "en": "hair",
+        "zh": "头发",
+        "page": 44
+      },
+      {
+        "en": "eye",
+        "zh": "眼睛",
+        "page": 44
+      },
+      {
+        "en": "ear",
+        "zh": "耳朵",
+        "page": 44
+      },
+      {
+        "en": "nose",
+        "zh": "鼻子",
+        "page": 44
+      },
+      {
+        "en": "mouth",
+        "zh": "嘴",
+        "page": 44
+      },
+      {
+        "en": "long",
+        "zh": "长的",
+        "page": 46
+      },
+      {
+        "en": "short",
+        "zh": "短的；矮的",
+        "page": 46
+      },
+      {
+        "en": "big",
+        "zh": "大的",
+        "page": 46
+      },
+      {
+        "en": "small",
+        "zh": "小的",
+        "page": 46
+      },
+      {
+        "en": "tall",
+        "zh": "高的",
+        "page": 46
+      },
+      {
+        "en": "let's",
+        "zh": "（let us）（提出建议时说）我们……吧！",
+        "page": 44
+      },
+      {
+        "en": "OK",
+        "zh": "对；好；行",
+        "page": 44
+      },
+      {
+        "en": "his",
+        "zh": "他的",
+        "page": 44
+      },
+      {
+        "en": "he",
+        "zh": "他",
+        "page": 44
+      },
+      {
+        "en": "or",
+        "zh": "（用以引出另一种可能性）或者，还是",
+        "page": 46
+      },
+      {
+        "en": "her",
+        "zh": "她的",
+        "page": 46
+      },
+      {
+        "en": "are",
+        "zh": "（用于 we、you、they 或复数名词等后边）是",
+        "page": 48
+      }
+    ],
+    "Unit 5": [
+      {
+        "en": "milk",
+        "zh": "奶",
+        "page": 56
+      },
+      {
+        "en": "water",
+        "zh": "水",
+        "page": 56
+      },
+      {
+        "en": "tea",
+        "zh": "茶；茶叶",
+        "page": 56
+      },
+      {
+        "en": "juice",
+        "zh": "果汁",
+        "page": 56
+      },
+      {
+        "en": "cola",
+        "zh": "可乐",
+        "page": 56
+      },
+      {
+        "en": "apple",
+        "zh": "苹果",
+        "page": 58
+      },
+      {
+        "en": "banana",
+        "zh": "香蕉",
+        "page": 58
+      },
+      {
+        "en": "orange",
+        "zh": "橙子",
+        "page": 58
+      },
+      {
+        "en": "grape",
+        "zh": "葡萄",
+        "page": 58
+      },
+      {
+        "en": "lemon",
+        "zh": "柠檬",
+        "page": 58
+      },
+      {
+        "en": "drink",
+        "zh": "饮料",
+        "page": 54
+      },
+      {
+        "en": "fruit",
+        "zh": "水果",
+        "page": 54
+      },
+      {
+        "en": "buy",
+        "zh": "买",
+        "page": 56
+      },
+      {
+        "en": "some",
+        "zh": "一些",
+        "page": 56
+      },
+      {
+        "en": "too",
+        "zh": "（通常置于句末）也；还",
+        "page": 56
+      },
+      {
+        "en": "tomorrow",
+        "zh": "明天",
+        "page": 56
+      },
+      {
+        "en": "like",
+        "zh": "喜欢",
+        "page": 58
+      },
+      {
+        "en": "yes",
+        "zh": "是；对；好的",
+        "page": 58
+      },
+      {
+        "en": "no",
+        "zh": "不；不是；没有",
+        "page": 58
+      },
+      {
+        "en": "want",
+        "zh": "要；想要",
+        "page": 58
+      },
+      {
+        "en": "make",
+        "zh": "做；制作",
+        "page": 58
+      },
+      {
+        "en": "say",
+        "zh": "说",
+        "page": 60
+      },
+      {
+        "en": "ice cream",
+        "zh": "冰激凌",
+        "page": 60
+      },
+      {
+        "en": "candy",
+        "zh": "糖果",
+        "page": 60
+      },
+      {
+        "en": "they",
+        "zh": "他们；她们；它们",
+        "page": 60
+      },
+      {
+        "en": "bad",
+        "zh": "不好的；有害的",
+        "page": 60
+      }
+    ],
+    "Unit 6": [
+      {
+        "en": "cake",
+        "zh": "蛋糕",
+        "page": 68
+      },
+      {
+        "en": "bread",
+        "zh": "面包",
+        "page": 68
+      },
+      {
+        "en": "rice",
+        "zh": "大米；米饭",
+        "page": 68
+      },
+      {
+        "en": "noodle",
+        "zh": "（常用复数形式 noodles）面条",
+        "page": 68
+      },
+      {
+        "en": "soup",
+        "zh": "汤；羹",
+        "page": 68
+      },
+      {
+        "en": "egg",
+        "zh": "蛋；鸡蛋",
+        "page": 68
+      },
+      {
+        "en": "chicken",
+        "zh": "鸡肉",
+        "page": 70
+      },
+      {
+        "en": "fish",
+        "zh": "鱼肉",
+        "page": 70
+      },
+      {
+        "en": "tomato",
+        "zh": "番茄；西红柿",
+        "page": 70
+      },
+      {
+        "en": "potato",
+        "zh": "马铃薯；土豆",
+        "page": 70
+      },
+      {
+        "en": "food",
+        "zh": "食物",
+        "page": 66
+      },
+      {
+        "en": "have",
+        "zh": "吃；喝",
+        "page": 68
+      },
+      {
+        "en": "but",
+        "zh": "然而；但是",
+        "page": 68
+      },
+      {
+        "en": "hungry",
+        "zh": "饥饿的",
+        "page": 70
+      },
+      {
+        "en": "dinner",
+        "zh": "主餐，正餐",
+        "page": 70
+      },
+      {
+        "en": "need",
+        "zh": "需要",
+        "page": 70
+      },
+      {
+        "en": "vegetable",
+        "zh": "蔬菜",
+        "page": 70
+      },
+      {
+        "en": "tomatoes with eggs",
+        "zh": "西红柿炒鸡蛋",
+        "page": 70
+      },
+      {
+        "en": "What about ...?",
+        "zh": "（用于提出建议）……怎么样？",
+        "page": 70
+      }
+    ]
+  }
+}
