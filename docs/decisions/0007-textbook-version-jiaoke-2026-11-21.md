@@ -1,0 +1,37 @@
+# 0007 教材版本改为教科版（真人确认，2026-11-21）
+
+- 状态：真人已确认；与项目指令"人教版"及 0002、0003 的前提冲突，需真人同步修改项目指令，并由法务确认版权使用范围
+- 关联：0002、0003、0006、#7、PR #22
+
+## 一、决定
+
+1. **教材版本**：小学英语改用教科版，即教育科学出版社出版的《英语》三年级上册（三年级起点，教育部审定 2012）。真人确认，理由是人教版 2024 秋版电子版无法获取。
+2. 本决定取代项目指令中"与中国大陆最新的人教版内容一致"的要求，以及 0002、0003 中以人教版为基础的表述。
+3. 本决定不是广州版。广州版为广州出版社出版，与教育科学出版社不同。
+
+##二、已知事实（结构信息）
+
+教科版三年级上册目录（仅记录单元结构，不记录课文、对话或词汇正文）：
+- Let's meet our friends
+- Module 1 Greetings：Unit 1 Hello!；Unit 2 How are you?
+- Module 2 Introductions：Unit 3 What's your name?；Unit 4 This is my dad
+- Module 3 Body：Unit 5 Wash your face；Unit 6 Touch your head
+- Module 4 Family：Unit 7 A picture of my family；Unit 8 Who's that lady?
+- Module 5 Toys：Unit 9 Is it a cat?；Unit 10 I have a ship
+- Module 6 School things：Unit 11 Do you have a pencil?；Unit 12 Put it on the desk
+- Module 7 Let's look back
+
+## 三、版权与使用边界（沿用 0003）
+
+1. 教材只用于核对单元结构与名称，不复制课文、对话、插图或音频进入产品内容。
+2. 产品内容（故事、对话、词汇、句型）全部原创。
+3. 教材来源文件未经核实授权，团队不得分发该扫描件。法务需确认来源与使用条件。
+
+## 四、待办（影响范围大）
+
+1. 真人在项目指令中把"人教版"改为"教科版"（指令由真人在 claude.ai 项目设置中修改，技术总监无权修改）。
+2. 产品设计师：英语设计稿需按教科版结构重做。原 Unit 1 "Making friends"（人教版）不再适用。
+3. 0002（MVP 只做三年级上 Unit 1）是否沿用，需真人确认：本决定只改版本，学段范围与 MVP 范围仍以 0002 为准，待确认。
+4. 0006 第二节的目录与词表核对，改为教科版的目录与词表核对。
+5. 法务：版权与来源（第三节）。
+6. 词表与单元结构的官方核对来源，需真人提供教科版官方目录或截图。
