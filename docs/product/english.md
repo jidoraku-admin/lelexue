@@ -188,7 +188,7 @@
 
 | 册次 | 单元 |
 | --- | --- |
-| 小学三年级上（2024 版） | Unit 1 Making friends；Unit 2 Different families；Unit 3 Amazing animals；Unit 4 Plants around us；Unit 5 The colourful world；Unit 6 Useful numbers |
+| 小学三年级上（人教版 2022 修订版，英语） | Unit 1 Greetings；Unit 2 School things；Unit 3 Toys；Unit 4 Friends；Unit 5 Drinks and fruits；Unit 6 Food（以官方 CONTENTS 页为准，2026-11-21 核对，见 0006 第六节） |
 
 **2026-11-20 复核（三年级上 Unit 1）**：标题 Making friends 与板块结构经两份公开教学资料交叉核对：2024 版三年级上，Unit 1 含语音课（Letters and sounds，字母 Aa–Dd）与 Let's learn、Listen and chant 等板块，Let's learn 与 Listen and chant 的核心句型为 I smile / I listen / I help / I share。这两份资料为第三方教学资源，**官方目录页（人教数字教材）当前无法访问**，因此仍需真人或官方渠道最终核对。教材原文只用于核对，不进入产品内容（0003）。
 | 小学四年级上（2024 版） | Unit 1 Helping at home；Unit 2 My friends；Unit 3 Places we live in；Unit 4 Helping in the community；Unit 5 The weather and us；Unit 6 Changing for the seasons |
