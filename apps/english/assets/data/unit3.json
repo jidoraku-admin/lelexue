@@ -1,0 +1,285 @@
+{
+  "unit": "Unit 3",
+  "title": "Toys",
+  "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）书后 Vocabulary in each unit（课本第 87-90 页），页码为课本页码，逐屏截图核对",
+  "validation": "not_checked",
+  "scenario": "小老鼠和小牛在玩具角玩。你要学会问玩具是什么、请求一起玩、分享和道谢的礼貌用语。",
+  "characters": [
+    {
+      "id": "mouse",
+      "name": "小老鼠",
+      "kind": "老鼠",
+      "asset": "assets/art/mouse.svg",
+      "line": "这是什么呀？可以和我一起玩吗？"
+    },
+    {
+      "id": "cow",
+      "name": "小牛",
+      "kind": "牛",
+      "asset": "assets/art/cow.svg",
+      "line": "看！我有一个风筝！"
+    }
+  ],
+  "words": [
+    {
+      "en": "ball",
+      "zh": "球",
+      "page": 28
+    },
+    {
+      "en": "doll",
+      "zh": "玩偶；玩具娃娃",
+      "page": 28
+    },
+    {
+      "en": "kite",
+      "zh": "风筝",
+      "page": 28
+    },
+    {
+      "en": "jigsaw",
+      "zh": "拼图；拼板玩具",
+      "page": 28
+    },
+    {
+      "en": "toy",
+      "zh": "玩具",
+      "page": 30
+    },
+    {
+      "en": "cat",
+      "zh": "猫",
+      "page": 30
+    },
+    {
+      "en": "dog",
+      "zh": "狗",
+      "page": 30
+    },
+    {
+      "en": "bike",
+      "zh": "自行车",
+      "page": 30
+    },
+    {
+      "en": "bus",
+      "zh": "公共汽车",
+      "page": 30
+    },
+    {
+      "en": "this",
+      "zh": "（指较近的人或事物）这，这个",
+      "page": 28
+    },
+    {
+      "en": "mum",
+      "zh": "（英）非正式用语；（美）mom 妈妈",
+      "page": 28
+    },
+    {
+      "en": "gift",
+      "zh": "礼物",
+      "page": 28
+    },
+    {
+      "en": "for",
+      "zh": "（表示对象、用途等）对，给",
+      "page": 28
+    },
+    {
+      "en": "so",
+      "zh": "很；极",
+      "page": 30
+    },
+    {
+      "en": "cute",
+      "zh": "可爱的",
+      "page": 30
+    },
+    {
+      "en": "play with",
+      "zh": "玩……；和……一起玩",
+      "page": 30
+    },
+    {
+      "en": "good",
+      "zh": "好的；亲密的",
+      "page": 32
+    },
+    {
+      "en": "friend",
+      "zh": "朋友",
+      "page": 32
+    },
+    {
+      "en": "she",
+      "zh": "她",
+      "page": 32
+    },
+    {
+      "en": "has",
+      "zh": "（用于第三人称单数代词、不可数名词或单数可数名词后）有",
+      "page": 32
+    },
+    {
+      "en": "often",
+      "zh": "经常",
+      "page": 32
+    },
+    {
+      "en": "share",
+      "zh": "分享",
+      "page": 32
+    },
+    {
+      "en": "Happy birthday!",
+      "zh": "生日快乐！",
+      "page": 28
+    }
+  ],
+  "sentences": [
+    "What's this?",
+    "It's a ___.",
+    "Can I play with your toy ___?",
+    "Sure, here you are.",
+    "Look! I have a ___!",
+    "It's so nice!",
+    "Can I play with it?"
+  ],
+  "sentenceQuestions": [
+    {
+      "id": "s3-what",
+      "prompt": "看到一个玩具，问它是什么，应该说？",
+      "options": [
+        "What's this?",
+        "It's so nice!",
+        "Look! I have a ball!",
+        "Happy birthday!"
+      ],
+      "answer": 0,
+      "explanation": "问眼前的东西用 What's this?"
+    },
+    {
+      "id": "s3-its-a",
+      "prompt": "别人问 What's this? 这是一只球，应该说？",
+      "options": [
+        "It's a ball.",
+        "It's so cute.",
+        "Sure, here you are.",
+        "Can I play with it?"
+      ],
+      "answer": 0,
+      "explanation": "回答东西是什么用 It's a ___."
+    },
+    {
+      "id": "s3-play",
+      "prompt": "想玩同学的玩偶，应该说？",
+      "options": [
+        "Can I play with your toy doll?",
+        "Look! I have a doll!",
+        "Sure, here you are.",
+        "It's so nice!"
+      ],
+      "answer": 0,
+      "explanation": "请求一起玩用 Can I play with your toy ___?"
+    },
+    {
+      "id": "s3-sure",
+      "prompt": "同学问 Can I play with it? 你同意，应该说？",
+      "options": [
+        "Look! I have a kite!",
+        "It's a kite.",
+        "Sure, here you are.",
+        "Happy birthday!"
+      ],
+      "answer": 2,
+      "explanation": "同意借玩时说 Sure, here you are."
+    },
+    {
+      "id": "s3-look",
+      "prompt": "给同学看你的风筝，应该说？",
+      "options": [
+        "What's this?",
+        "It's a kite.",
+        "Look! I have a kite!",
+        "Sorry, I don't have a kite."
+      ],
+      "answer": 2,
+      "explanation": "想让别人看时说 Look! I have a ___!"
+    },
+    {
+      "id": "s3-nice",
+      "prompt": "同学的拼图很好看，你夸它，应该说？",
+      "options": [
+        "Can I play with it?",
+        "Sure, here you are.",
+        "It's a jigsaw.",
+        "It's so nice!"
+      ],
+      "answer": 3,
+      "explanation": "表示很好看用 It's so nice!"
+    }
+  ],
+  "useQuestions": [
+    {
+      "id": "u3-gift",
+      "prompt": "小老鼠要送礼物给朋友，应该说？",
+      "options": [
+        "This is a gift for you.",
+        "What's this?",
+        "Happy birthday!",
+        "Can I play with it?"
+      ],
+      "answer": 0,
+      "explanation": "送礼物说 This is a gift for you."
+    },
+    {
+      "id": "u3-share",
+      "prompt": "小牛有一个玩具球，想和朋友分享它。它应该说？",
+      "options": [
+        "It's so cute.",
+        "Sorry, I don't have a ball.",
+        "What's this?",
+        "Let's share the ball."
+      ],
+      "answer": 3,
+      "explanation": "share 是分享的意思，Let's share 表示一起分享。"
+    },
+    {
+      "id": "u3-cat",
+      "prompt": "小鸡看到一只小猫玩偶，问朋友这是什么。应该说？",
+      "options": [
+        "It's a doll.",
+        "Me too.",
+        "Look! I have a bike.",
+        "What's this? It's a cat."
+      ],
+      "answer": 3,
+      "explanation": "问是什么用 What's this?，回答 It's a cat."
+    },
+    {
+      "id": "u3-bike",
+      "prompt": "小老鼠想骑自行车，问朋友能不能一起玩。它应该说？",
+      "options": [
+        "Can I play with your bike?",
+        "Happy birthday!",
+        "Sure, here you are.",
+        "It's so cute."
+      ],
+      "answer": 0,
+      "explanation": "请求玩用 Can I play with your ___?"
+    },
+    {
+      "id": "u3-birthday",
+      "prompt": "今天是小牛的生日，你要祝它生日快乐。应该说？",
+      "options": [
+        "Happy birthday!",
+        "It's a gift.",
+        "Look! I have a jigsaw!",
+        "Can I play with it?"
+      ],
+      "answer": 0,
+      "explanation": "生日祝福是 Happy birthday!"
+    }
+  ]
+}
