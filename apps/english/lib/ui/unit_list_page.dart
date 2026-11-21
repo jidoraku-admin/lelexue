@@ -4,15 +4,23 @@ import '../data/unit_index.dart';
 import 'unit_map_page.dart';
 
 /// 首页：列出所有单元。单元来自索引，新增单元不需要改这里。
-class UnitListPage extends StatelessWidget {
+class UnitListPage extends StatefulWidget {
   const UnitListPage({super.key});
+
+  @override
+  State<UnitListPage> createState() => _UnitListPageState();
+}
+
+class _UnitListPageState extends State<UnitListPage> {
+  // 只加载一次：放在 State 里，避免每次重建都重新读取索引。
+  late final Future<List<UnitIndexEntry>> _units = const UnitIndex().load();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('乐乐学 · 英语（人教版三年级上）')),
       body: FutureBuilder<List<UnitIndexEntry>>(
-        future: const UnitIndex().load(),
+        future: _units,
         builder: (context, snapshot) {
           if (snapshot.hasError) return Center(child: Text('加载失败：${snapshot.error}'));
           if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
