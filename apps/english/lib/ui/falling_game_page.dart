@@ -5,6 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../data/speech_player.dart';
 import '../data/unit_repository.dart';
+import '../domain/encouragement.dart';
 import '../domain/falling_round.dart';
 import '../domain/match_game.dart' show shortMeaning;
 import '../domain/unit.dart';
@@ -27,8 +28,7 @@ class FallingGamePage extends StatefulWidget {
 }
 
 class _Falling {
-  _Falling(this.id, this.word, this.x);
-  final int id;
+  _Falling(this.word, this.x);
   final Word word;
   final double x; // 0..1，屏幕宽度的比例
   double y = -0.1; // 0..1，屏幕高度的比例
@@ -41,10 +41,13 @@ class _FallingGamePageState extends State<FallingGamePage> {
   final SpeechPlayer _speech = SpeechPlayer();
   final Random _random = Random();
   FallingRound? _round;
+  FallingSpeed _speed = FallingSpeed.slow;
   final List<_Falling> _items = [];
   Timer? _timer;
+  Timer? _toastTimer;
+  String? _toast;
   int _tick = 0;
-  int _nextId = 0;
+  int _praiseCount = 0;
   int _seed = 0;
 
   static const int _goal = 10;
@@ -52,6 +55,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
   @override
   void dispose() {
     _timer?.cancel();
+    _toastTimer?.cancel();
     _speech.dispose();
     super.dispose();
   }
@@ -60,7 +64,9 @@ class _FallingGamePageState extends State<FallingGamePage> {
     _timer?.cancel();
     _items.clear();
     _tick = 0;
+    _toast = null;
     _round = FallingRound(words: unit.words, goal: _goal, seed: _seed++);
+    setState(() {});
     _timer = Timer.periodic(const Duration(milliseconds: 33), (_) => _step());
   }
 
@@ -72,19 +78,21 @@ class _FallingGamePageState extends State<FallingGamePage> {
     }
     setState(() {
       _tick++;
-      // 大约每 1.2 秒出现一个：四成是目标，其余是干扰项。
-      if (_tick % 36 == 0) {
+      // 四成是目标，其余是干扰项；出现的间隔由速度等级决定。
+      if (_tick % _speed.spawnEvery == 0) {
         final isTarget = _random.nextInt(10) < 4;
         final word = isTarget ? round.target : round.randomDistractor();
-        _items.add(_Falling(_nextId++, word, 0.1 + _random.nextDouble() * 0.8));
+        _items.add(_Falling(word, 0.1 + _random.nextDouble() * 0.8));
       }
       for (final item in _items) {
-        item.y += 0.011;
+        item.y += _speed.step;
       }
       final escaped = _items.where((i) => i.y >= 1).toList();
       for (final item in escaped) {
         _items.remove(item);
-        if (item.word.en == round.target.en) round.targetEscaped();
+        if (item.word.en == round.target.en) {
+          round.targetEscaped();
+        }
       }
       if (round.isOver) {
         _timer?.cancel();
@@ -93,11 +101,19 @@ class _FallingGamePageState extends State<FallingGamePage> {
   }
 
   void _tapItem(_Falling item, FallingRound round) {
-    if (round.isOver) return;
+    if (round.isOver) {
+      return;
+    }
     late bool ok;
     setState(() {
       _items.remove(item);
       ok = round.hit(item.word);
+      if (ok) {
+        _showToast(
+          '${praiseFor(_praiseCount++)}  ${comboText(round.streak) ?? ''}'
+              .trim(),
+        );
+      }
     });
     if (round.isOver) {
       _timer?.cancel();
@@ -105,6 +121,16 @@ class _FallingGamePageState extends State<FallingGamePage> {
     if (ok) {
       _speech.speak(item.word.en);
     }
+  }
+
+  void _showToast(String text) {
+    _toast = text;
+    _toastTimer?.cancel();
+    _toastTimer = Timer(const Duration(milliseconds: 900), () {
+      if (mounted) {
+        setState(() => _toast = null);
+      }
+    });
   }
 
   @override
@@ -122,94 +148,173 @@ class _FallingGamePageState extends State<FallingGamePage> {
             return const Center(child: CircularProgressIndicator());
           }
           final unit = snapshot.data!;
-          if (_round == null) _start(unit);
-          final round = _round!;
-          final theme = Theme.of(context);
-          return LayoutBuilder(
-            builder: (context, c) {
-              return Stack(
+          final round = _round;
+          if (round == null) {
+            return _SpeedPanel(
+              speed: _speed,
+              onSpeed: (s) => setState(() => _speed = s),
+              onStart: () => _start(unit),
+            );
+          }
+          return _playfield(context, unit, round, isFrog);
+        },
+      ),
+    );
+  }
+
+  Widget _playfield(
+    BuildContext context,
+    Unit unit,
+    FallingRound round,
+    bool isFrog,
+  ) {
+    final theme = Theme.of(context);
+    return LayoutBuilder(
+      builder: (context, c) {
+        return Stack(
+          children: [
+            Positioned.fill(
+              child: ColoredBox(
+                color: isFrog
+                    ? const Color(0xFFBDE7A8)
+                    : const Color(0xFFBFE6FF),
+              ),
+            ),
+            Positioned(
+              top: 12,
+              left: 16,
+              right: 16,
+              child: Column(
                 children: [
-                  Positioned.fill(
-                    child: ColoredBox(
-                      color: isFrog
-                          ? const Color(0xFFBDE7A8)
-                          : const Color(0xFFBFE6FF),
-                    ),
+                  Text(
+                    round.isOver ? '' : '找：${shortMeaning(round.target.zh)}',
+                    style: theme.textTheme.headlineSmall,
+                    textAlign: TextAlign.center,
                   ),
-                  Positioned(
-                    top: 12,
-                    left: 16,
-                    right: 16,
+                  const SizedBox(height: 4),
+                  Text(
+                    '分数 ${round.points}   进度 ${round.score}/$_goal   ${List.filled(round.lives.clamp(0, 3), '❤').join()}',
+                    style: theme.textTheme.titleMedium,
+                  ),
+                ],
+              ),
+            ),
+            if (_toast != null)
+              Positioned(
+                top: 110,
+                left: 0,
+                right: 0,
+                child: Text(
+                  _toast!,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+              ),
+            for (final item in _items)
+              Positioned(
+                left: item.x * c.maxWidth - 40,
+                top: item.y * c.maxHeight,
+                child: GestureDetector(
+                  onTap: () => _tapItem(item, round),
+                  child: _WordBubble(text: item.word.en, isFrog: isFrog),
+                ),
+              ),
+            Positioned(
+              bottom: 16,
+              left: 0,
+              right: 0,
+              child: Icon(
+                isFrog ? Icons.pest_control : Icons.airplanemode_active,
+                size: 56,
+                color: isFrog
+                    ? Colors.green.shade800
+                    : Colors.blueGrey.shade700,
+              ),
+            ),
+            if (round.isOver)
+              Center(
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          round.isOver
-                              ? ''
-                              : '找：${shortMeaning(round.target.zh)}',
-                          style: theme.textTheme.headlineSmall,
+                          round.isWon ? '太棒了！' : '再试一次',
+                          style: theme.textTheme.headlineMedium,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          endingMessage(won: round.isWon, points: round.points),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 4),
-                        Text(
-                          '得分 ${round.score}/$_goal    ${List.filled(round.lives.clamp(0, 3), '❤').join()}',
-                          style: theme.textTheme.titleMedium,
+                        if (round.bestStreak >= 2)
+                          Text('最高连击 ${round.bestStreak} 次'),
+                        const SizedBox(height: 12),
+                        FilledButton(
+                          onPressed: () => _start(unit),
+                          child: const Text('再玩一局'),
+                        ),
+                        const SizedBox(height: 8),
+                        OutlinedButton(
+                          onPressed: () => setState(() {
+                            _timer?.cancel();
+                            _round = null;
+                          }),
+                          child: const Text('换速度'),
                         ),
                       ],
                     ),
                   ),
-                  for (final item in _items)
-                    Positioned(
-                      left: item.x * c.maxWidth - 40,
-                      top: item.y * c.maxHeight,
-                      child: GestureDetector(
-                        onTap: () => _tapItem(item, round),
-                        child: _WordBubble(text: item.word.en, isFrog: isFrog),
-                      ),
-                    ),
-                  Positioned(
-                    bottom: 16,
-                    left: 0,
-                    right: 0,
-                    child: Icon(
-                      isFrog ? Icons.pest_control : Icons.airplanemode_active,
-                      size: 56,
-                      color: isFrog
-                          ? Colors.green.shade800
-                          : Colors.blueGrey.shade700,
-                    ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// 开始前选择速度等级。
+class _SpeedPanel extends StatelessWidget {
+  const _SpeedPanel({
+    required this.speed,
+    required this.onSpeed,
+    required this.onStart,
+  });
+
+  final FallingSpeed speed;
+  final ValueChanged<FallingSpeed> onSpeed;
+  final VoidCallback onStart;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('选择速度', style: theme.textTheme.headlineSmall),
+            const SizedBox(height: 16),
+            Wrap(
+              spacing: 12,
+              children: [
+                for (final s in FallingSpeed.values)
+                  ChoiceChip(
+                    label: Text(s.label),
+                    selected: speed == s,
+                    onSelected: (_) => onSpeed(s),
                   ),
-                  if (round.isOver)
-                    Center(
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                round.isWon ? '太棒了！' : '再试一次',
-                                style: theme.textTheme.headlineMedium,
-                              ),
-                              const SizedBox(height: 12),
-                              FilledButton(
-                                onPressed: () => setState(() => _start(unit)),
-                                child: const Text('再玩一局'),
-                              ),
-                              const SizedBox(height: 8),
-                              OutlinedButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text('返回'),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              );
-            },
-          );
-        },
+              ],
+            ),
+            const SizedBox(height: 24),
+            FilledButton(onPressed: onStart, child: const Text('开始')),
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:material_ui/material_ui.dart';
 
 import '../data/speech_player.dart';
+import 'word_icon.dart';
 import '../data/unit_repository.dart';
+import '../domain/encouragement.dart';
 import '../domain/match_game.dart';
 import '../domain/unit.dart';
 
@@ -80,16 +82,16 @@ class _MatchGamePageState extends State<MatchGamePage> {
                   children: [
                     Text(
                       game.isComplete
-                          ? '太棒了！全部配对，最高连对 ${game.bestStreak} 次'
-                          : '找出英文和中文的一对。已翻 ${game.moves} 次',
+                          ? '${endingMessage(won: true, points: game.points)}（最高连对 ${game.bestStreak} 次）'
+                          : '分数 ${game.points}    已翻 ${game.moves} 次',
                       style: theme.textTheme.titleMedium,
                       textAlign: TextAlign.center,
                     ),
-                    if (!game.isComplete && game.streak >= 2)
+                    if (!game.isComplete && comboText(game.streak) != null)
                       Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Text(
-                          '连对 ${game.streak} 次！',
+                          comboText(game.streak)!,
                           style: theme.textTheme.titleLarge?.copyWith(
                             color: theme.colorScheme.primary,
                           ),
@@ -135,38 +137,90 @@ class _CardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     final showFace = card.faceUp || card.matched;
-    final color = card.matched
-        ? Colors.green.shade100
-        : showFace
-        ? theme.colorScheme.surface
-        : theme.colorScheme.primary;
+
+    final BoxDecoration decoration;
+    if (card.matched) {
+      decoration = BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.green.shade200, Colors.green.shade400],
+        ),
+      );
+    } else if (showFace) {
+      decoration = BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: card.isEnglish
+              ? [Colors.white, Colors.lime.shade100]
+              : [Colors.white, Colors.amber.shade100],
+        ),
+      );
+    } else {
+      decoration = BoxDecoration(
+        gradient: LinearGradient(
+          colors: [scheme.primary, scheme.primaryContainer],
+        ),
+      );
+    }
+
     return InkWell(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(14),
       onTap: card.matched || showFace ? null : onTap,
       child: AnimatedScale(
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeOutBack,
-        scale: card.matched ? 1.06 : 1,
+        scale: card.matched ? 1.05 : 1,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: theme.colorScheme.outline),
+          decoration: decoration.copyWith(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: scheme.outline.withValues(alpha: 0.5)),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 4,
+                offset: Offset(0, 2),
+              ),
+            ],
           ),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(4),
-          child: Text(
-            showFace ? card.text : '?',
-            textAlign: TextAlign.center,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: showFace
-                  ? theme.colorScheme.onSurface
-                  : theme.colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          padding: const EdgeInsets.all(6),
+          child: showFace
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (card.isEnglish)
+                      Icon(wordIcon(card.text), size: 22, color: scheme.primary)
+                    else
+                      const Icon(
+                        Icons.translate,
+                        size: 20,
+                        color: Colors.brown,
+                      ),
+                    const SizedBox(height: 4),
+                    Text(
+                      card.text,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (card.matched)
+                      const Icon(
+                        Icons.check_circle,
+                        size: 16,
+                        color: Colors.green,
+                      ),
+                  ],
+                )
+              : const Center(
+                  child: Icon(
+                    Icons.star_border,
+                    color: Colors.white70,
+                    size: 28,
+                  ),
+                ),
         ),
       ),
     );
