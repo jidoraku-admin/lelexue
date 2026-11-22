@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+  <g stroke="#3b2414" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+    <!-- 身体（圆滚滚） -->
+    <ellipse cx="110" cy="164" rx="58" ry="46" fill="#b07a4b"/>
+    <ellipse cx="110" cy="172" rx="32" ry="26" fill="#f2d3ae"/>
+    <!-- 大圆耳朵 -->
+    <circle cx="58" cy="60" r="24" fill="#b07a4b"/>
+    <circle cx="58" cy="62" r="12" fill="#f2d3ae"/>
+    <circle cx="162" cy="60" r="24" fill="#b07a4b"/>
+    <circle cx="162" cy="62" r="12" fill="#f2d3ae"/>
+    <!-- 脑袋 -->
+    <circle cx="110" cy="100" r="54" fill="#b07a4b"/>
+    <!-- 眼睛：眯眯笑 -->
+    <path d="M80 92 Q88 80 96 92" stroke-width="5" fill="none"/>
+    <path d="M124 92 Q132 80 140 92" stroke-width="5" fill="none"/>
+    <!-- 鼻口 -->
+    <ellipse cx="110" cy="116" rx="13" ry="10" fill="#f2d3ae"/>
+    <ellipse cx="110" cy="112" rx="7" ry="5" fill="#3b2414"/>
+    <!-- 大嘴傻笑 -->
+    <path d="M94 126 Q110 146 126 126" fill="#f2d3ae" stroke-width="4"/>
+    <!-- 腮红 -->
+    <ellipse cx="78" cy="112" rx="8" ry="5" fill="#ff8a7a" stroke="none" opacity="0.7"/>
+    <ellipse cx="142" cy="112" rx="8" ry="5" fill="#ff8a7a" stroke="none" opacity="0.7"/>
+    <!-- 小脚丫 -->
+    <ellipse cx="84" cy="206" rx="20" ry="10" fill="#8a5a33"/>
+    <ellipse cx="136" cy="206" rx="20" ry="10" fill="#8a5a33"/>
+  </g>
+</svg>

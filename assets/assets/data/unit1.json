@@ -1,0 +1,296 @@
+{
+  "unit": "Unit 1",
+  "title": "Greetings",
+  "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）书后 Vocabulary in each unit（课本第 87-90 页），页码为课本页码，逐屏截图核对",
+  "validation": "failed: 见 #44 待核对",
+  "scenario": "镇口的门需要用问候打开。小栗、阿圆、团团依次问候你，你学会打招呼与自我介绍，门才会打开。",
+  "characters": [
+    {
+      "id": "xiaoli",
+      "name": "小栗",
+      "kind": "松鼠",
+      "asset": "assets/art/xiaoli.svg",
+      "line": "我找不到我的书包啦！"
+    },
+    {
+      "id": "abu",
+      "name": "阿圆",
+      "kind": "机器人",
+      "asset": "assets/art/abu.svg",
+      "line": "门上的锁要用问候才能打开哦。"
+    },
+    {
+      "id": "tuantuan",
+      "name": "团团",
+      "kind": "小熊",
+      "asset": "assets/art/tuantuan.svg",
+      "line": "我饿啦，谁来陪我玩？"
+    }
+  ],
+  "words": [
+    {
+      "en": "hello",
+      "zh": "喂；你好",
+      "page": 4
+    },
+    {
+      "en": "hi",
+      "zh": "嗨；你好（hello 的非正式用语）",
+      "page": 4
+    },
+    {
+      "en": "I",
+      "zh": "我",
+      "page": 4
+    },
+    {
+      "en": "am",
+      "zh": "（用于第一人称代词 I 后）是",
+      "page": 4
+    },
+    {
+      "en": "I'm",
+      "zh": "我是（I am）",
+      "page": 4
+    },
+    {
+      "en": "Miss",
+      "zh": "（用于未婚女子的姓氏或姓名前）小姐，女士",
+      "page": 4
+    },
+    {
+      "en": "what",
+      "zh": "什么",
+      "page": 4
+    },
+    {
+      "en": "is",
+      "zh": "（用于代词 he、she、it，单数名词或不可数名词后）是",
+      "page": 4
+    },
+    {
+      "en": "what's",
+      "zh": "……是什么（what is）",
+      "page": 4
+    },
+    {
+      "en": "your",
+      "zh": "你的；你们的",
+      "page": 4
+    },
+    {
+      "en": "name",
+      "zh": "名字",
+      "page": 4
+    },
+    {
+      "en": "stand up",
+      "zh": "起立；站起来",
+      "page": 6
+    },
+    {
+      "en": "boy",
+      "zh": "男孩",
+      "page": 6
+    },
+    {
+      "en": "and",
+      "zh": "和",
+      "page": 6
+    },
+    {
+      "en": "girl",
+      "zh": "女孩",
+      "page": 6
+    },
+    {
+      "en": "sit down",
+      "zh": "坐下",
+      "page": 6
+    },
+    {
+      "en": "Good morning!",
+      "zh": "早上好！上午好！",
+      "page": 6
+    },
+    {
+      "en": "Good afternoon!",
+      "zh": "下午好！",
+      "page": 6
+    },
+    {
+      "en": "Good evening!",
+      "zh": "晚上好！",
+      "page": 6
+    },
+    {
+      "en": "Mr",
+      "zh": "（用于男子的姓氏或姓名前）先生",
+      "page": 8
+    },
+    {
+      "en": "dad",
+      "zh": "（非正式用语）爸爸",
+      "page": 8
+    },
+    {
+      "en": "Goodbye!",
+      "zh": "再见！",
+      "page": 8
+    },
+    {
+      "en": "Good night!",
+      "zh": "晚安！",
+      "page": 8
+    },
+    {
+      "en": "Bye!",
+      "zh": "再见！",
+      "page": 8
+    }
+  ],
+  "sentences": [
+    "Good morning / afternoon / evening / night.",
+    "Goodbye. / Bye.",
+    "Hello. / Hi.",
+    "What's your name?",
+    "I'm ___.",
+    "Hi, ___. I'm ___."
+  ],
+  "sentenceQuestions": [
+    {
+      "id": "s-morning",
+      "prompt": "早上见到老师，应该说？",
+      "options": [
+        "Good morning!",
+        "Good night!",
+        "Goodbye!",
+        "Good evening!"
+      ],
+      "answer": 0,
+      "explanation": "早上用 Good morning!（早上好）。"
+    },
+    {
+      "id": "s-afternoon",
+      "prompt": "下午见到同学，应该说？",
+      "options": [
+        "Good night!",
+        "Good afternoon!",
+        "Good morning!",
+        "Bye!"
+      ],
+      "answer": 1,
+      "explanation": "下午用 Good afternoon!（下午好）。"
+    },
+    {
+      "id": "s-evening",
+      "prompt": "晚上见到朋友，应该说？",
+      "options": [
+        "Good evening!",
+        "Good morning!",
+        "Hello!",
+        "Good afternoon!"
+      ],
+      "answer": 0,
+      "explanation": "晚上用 Good evening!（晚上好）。"
+    },
+    {
+      "id": "s-night",
+      "prompt": "睡觉前对家人说？",
+      "options": [
+        "Good morning!",
+        "Good night!",
+        "Hi!",
+        "Miss!"
+      ],
+      "answer": 1,
+      "explanation": "睡前用 Good night!（晚安）。"
+    },
+    {
+      "id": "s-bye",
+      "prompt": "离开时对朋友说？",
+      "options": [
+        "What's your name?",
+        "Hello.",
+        "Goodbye.",
+        "I'm Tom."
+      ],
+      "answer": 2,
+      "explanation": "离开时说 Goodbye. 或 Bye.（再见）。"
+    },
+    {
+      "id": "s-name",
+      "prompt": "想问对方叫什么名字，应该说？",
+      "options": [
+        "What's your name?",
+        "I'm Lily.",
+        "Good night!",
+        "Bye!"
+      ],
+      "answer": 0,
+      "explanation": "问名字用 What's your name?（你叫什么名字？）。"
+    }
+  ],
+  "useQuestions": [
+    {
+      "id": "u-gate-1",
+      "prompt": "镇口的小栗先向你打招呼，你回答「你好」，应该说？",
+      "options": [
+        "Hi.",
+        "Goodbye.",
+        "Good night!",
+        "What's your name?"
+      ],
+      "answer": 0,
+      "explanation": "Hi. 是非正式的问候，与 Hello. 同义。"
+    },
+    {
+      "id": "u-gate-2",
+      "prompt": "阿圆问你叫什么，你应该说？",
+      "options": [
+        "What's your name?",
+        "I'm Lily.",
+        "Good morning!",
+        "Bye!"
+      ],
+      "answer": 1,
+      "explanation": "自我介绍用 I'm ___.（我是……）。"
+    },
+    {
+      "id": "u-gate-3",
+      "prompt": "完整的自我介绍，你应该说：Hi, ___. I'm ___. 其中第一个空填？",
+      "options": [
+        "Tom",
+        "Good",
+        "Goodbye",
+        "Miss"
+      ],
+      "answer": 0,
+      "explanation": "Hi, ___. 中的空位填对方的名字，例如 Tom。"
+    },
+    {
+      "id": "u-gate-4",
+      "prompt": "团团说 Good morning!，你应该回答？",
+      "options": [
+        "Good night!",
+        "Good morning!",
+        "Goodbye!",
+        "What's your name?"
+      ],
+      "answer": 1,
+      "explanation": "对方问候时，用同样的问候语回应。"
+    },
+    {
+      "id": "u-gate-5",
+      "prompt": "门打开后，团团要离开，你应该说？",
+      "options": [
+        "Hello!",
+        "Good afternoon!",
+        "Bye!",
+        "I'm Lily."
+      ],
+      "answer": 2,
+      "explanation": "Bye! 是告别语（再见）。"
+    }
+  ]
+}

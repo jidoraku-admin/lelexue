@@ -1,0 +1,301 @@
+{
+  "unit": "Unit 2",
+  "title": "School things",
+  "source": "国家中小学智慧教育平台 人教版三年级上册（2022修订版）书后 Vocabulary in each unit（课本第 87-90 页），页码为课本页码，逐屏截图核对",
+  "validation": "not_checked",
+  "scenario": "小栗的书包找不到东西。你来帮忙找回文具，学会借用、归还和道谢的礼貌用语。",
+  "characters": [
+    {
+      "id": "pig",
+      "name": "小猪",
+      "kind": "猪",
+      "asset": "assets/art/pig.svg",
+      "line": "我的铅笔盒找不到啦！"
+    },
+    {
+      "id": "duck",
+      "name": "小鸭",
+      "kind": "鸭子",
+      "asset": "assets/art/duck.svg",
+      "line": "借我一下尺子，好吗？"
+    }
+  ],
+  "words": [
+    {
+      "en": "pencil",
+      "zh": "铅笔",
+      "page": 16
+    },
+    {
+      "en": "sharpener",
+      "zh": "卷笔刀",
+      "page": 16
+    },
+    {
+      "en": "pencil box",
+      "zh": "文具盒",
+      "page": 16
+    },
+    {
+      "en": "schoolbag",
+      "zh": "书包",
+      "page": 16
+    },
+    {
+      "en": "eraser",
+      "zh": "橡皮；黑板擦",
+      "page": 18
+    },
+    {
+      "en": "crayon",
+      "zh": "蜡笔",
+      "page": 18
+    },
+    {
+      "en": "pen",
+      "zh": "钢笔",
+      "page": 18
+    },
+    {
+      "en": "ruler",
+      "zh": "直尺",
+      "page": 18
+    },
+    {
+      "en": "look",
+      "zh": "看",
+      "page": 16
+    },
+    {
+      "en": "have",
+      "zh": "有",
+      "page": 16
+    },
+    {
+      "en": "a",
+      "zh": "一个",
+      "page": 16
+    },
+    {
+      "en": "new",
+      "zh": "新的；新来的；新买的",
+      "page": 16
+    },
+    {
+      "en": "it",
+      "zh": "它",
+      "page": 16
+    },
+    {
+      "en": "it's",
+      "zh": "它是（it is）",
+      "page": 16
+    },
+    {
+      "en": "nice",
+      "zh": "好看的；令人愉悦的",
+      "page": 16
+    },
+    {
+      "en": "can",
+      "zh": "能；会",
+      "page": 18
+    },
+    {
+      "en": "use",
+      "zh": "用；使用",
+      "page": 18
+    },
+    {
+      "en": "find",
+      "zh": "发现；找到",
+      "page": 18
+    },
+    {
+      "en": "my",
+      "zh": "我的",
+      "page": 18
+    },
+    {
+      "en": "sure",
+      "zh": "（表示同意）当然",
+      "page": 18
+    },
+    {
+      "en": "you",
+      "zh": "你；你们",
+      "page": 18
+    },
+    {
+      "en": "sorry",
+      "zh": "抱歉",
+      "page": 18
+    },
+    {
+      "en": "don't",
+      "zh": "（do not）（表示否定）没，不",
+      "page": 18
+    },
+    {
+      "en": "Here you are.",
+      "zh": "给你。",
+      "page": 18
+    },
+    {
+      "en": "Thank you!",
+      "zh": "谢谢你！",
+      "page": 18
+    },
+    {
+      "en": "You're welcome!",
+      "zh": "不用谢！",
+      "page": 18
+    }
+  ],
+  "sentences": [
+    "I have a ___.",
+    "Me too.",
+    "I can't find my ___.",
+    "Can I use your ___?",
+    "Sure, here you are.",
+    "Sorry, I don't have a ___.",
+    "Here you are. / Thank you! / You're welcome!",
+    "It's nice!"
+  ],
+  "sentenceQuestions": [
+    {
+      "id": "s2-have",
+      "prompt": "同学说 I have a pencil. 你也有铅笔，应该说？",
+      "options": [
+        "Me too.",
+        "Sorry.",
+        "Goodbye.",
+        "It's nice!"
+      ],
+      "answer": 0,
+      "explanation": "Me too. 表示「我也是」。"
+    },
+    {
+      "id": "s2-use",
+      "prompt": "想借同学的橡皮，应该说？",
+      "options": [
+        "I can't find my eraser.",
+        "Can I use your eraser?",
+        "Good night!",
+        "Here you are."
+      ],
+      "answer": 1,
+      "explanation": "借用东西用 Can I use your ___? 询问。"
+    },
+    {
+      "id": "s2-find",
+      "prompt": "找不到自己的书包，应该说？",
+      "options": [
+        "Can I use your pen?",
+        "Me too.",
+        "I can't find my schoolbag.",
+        "Sure, here you are."
+      ],
+      "answer": 2,
+      "explanation": "找不到东西用 I can't find my ___."
+    },
+    {
+      "id": "s2-sorry",
+      "prompt": "没有尺子，抱歉地说？",
+      "options": [
+        "Me too.",
+        "It's nice!",
+        "Can I use your ruler?",
+        "Sorry, I don't have a ruler."
+      ],
+      "answer": 3,
+      "explanation": "没有某物用 Sorry, I don't have a ___."
+    },
+    {
+      "id": "s2-here",
+      "prompt": "把铅笔递给同学，应该说？",
+      "options": [
+        "Here you are.",
+        "What's this?",
+        "I can't find my ruler.",
+        "Bye!"
+      ],
+      "answer": 0,
+      "explanation": "递东西时说 Here you are.（给你）。"
+    },
+    {
+      "id": "s2-thanks",
+      "prompt": "同学把橡皮借给你，你应该说？",
+      "options": [
+        "Good morning!",
+        "Thank you!",
+        "Sorry!",
+        "Goodbye!"
+      ],
+      "answer": 1,
+      "explanation": "别人帮忙时说 Thank you!（谢谢）。"
+    }
+  ],
+  "useQuestions": [
+    {
+      "id": "u2-ruler",
+      "prompt": "小栗的书包里没有尺子，它想借你的尺子。它应该说？",
+      "options": [
+        "Sorry, I don't have a ruler.",
+        "It's nice!",
+        "Can I use your ruler?",
+        "Me too."
+      ],
+      "answer": 2,
+      "explanation": "借东西用 Can I use your ___?"
+    },
+    {
+      "id": "u2-welcome",
+      "prompt": "你把尺子借给小栗，它说 Thank you! 你应该回答？",
+      "options": [
+        "Goodbye!",
+        "Good night!",
+        "What's your name?",
+        "You're welcome!"
+      ],
+      "answer": 3,
+      "explanation": "对方道谢，回答 You're welcome!（不客气）。"
+    },
+    {
+      "id": "u2-nice",
+      "prompt": "小猪的铅笔盒很漂亮，你想夸它，应该说？",
+      "options": [
+        "It's nice!",
+        "Sure!",
+        "Sorry!",
+        "Hi!"
+      ],
+      "answer": 0,
+      "explanation": "夸东西漂亮用 It's nice!"
+    },
+    {
+      "id": "u2-box",
+      "prompt": "小鸭找不到文具盒，问你有没有。你没有，应该说？",
+      "options": [
+        "Here you are.",
+        "Sorry, I don't have a pencil box.",
+        "Can I use your pen?",
+        "I have a pencil box."
+      ],
+      "answer": 1,
+      "explanation": "没有东西时用 Sorry, I don't have a ___."
+    },
+    {
+      "id": "u2-sure",
+      "prompt": "同学问 Can I use your eraser? 你同意，应该说？",
+      "options": [
+        "I can't find my eraser.",
+        "Me too.",
+        "Sure, here you are.",
+        "Good night!"
+      ],
+      "answer": 2,
+      "explanation": "同意借用时说 Sure, here you are."
+    }
+  ]
+}

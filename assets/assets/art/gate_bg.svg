@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+  <rect width="400" height="200" fill="#c8f0ff"/>
+  <circle cx="352" cy="36" r="20" fill="#ffe04a" stroke="#2b2118" stroke-width="3"/>
+  <path d="M30 60 Q45 40 60 60 Q75 40 90 60 Z" fill="#ffffff" stroke="#2b2118" stroke-width="2"/>
+  <path d="M0 128 Q90 84 180 128 T400 116 V200 H0 Z" fill="#7fd36a" stroke="#2b2118" stroke-width="3"/>
+  <path d="M0 158 Q110 124 220 160 T400 150 V200 H0 Z" fill="#5cbf4e" stroke="#2b2118" stroke-width="3"/>
+  <ellipse cx="50" cy="118" rx="22" ry="16" fill="#3fa34a" stroke="#2b2118" stroke-width="3"/>
+  <ellipse cx="350" cy="110" rx="26" ry="18" fill="#3fa34a" stroke="#2b2118" stroke-width="3"/>
+  <rect x="44" y="126" width="12" height="28" fill="#8a5a33" stroke="#2b2118" stroke-width="2"/>
+  <rect x="344" y="120" width="12" height="30" fill="#8a5a33" stroke="#2b2118" stroke-width="2"/>
+  <rect x="150" y="76" width="14" height="110" fill="#b07a4b" stroke="#2b2118" stroke-width="3"/>
+  <rect x="236" y="76" width="14" height="110" fill="#b07a4b" stroke="#2b2118" stroke-width="3"/>
+  <path d="M136 78 Q200 28 264 78 Z" fill="#2fa84f" stroke="#2b2118" stroke-width="3"/>
+  <rect x="158" y="50" width="84" height="26" rx="8" fill="#fff" stroke="#2b2118" stroke-width="3"/>
+  <text x="200" y="69" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2118" font-family="sans-serif">Hello!</text>
+  <g stroke="#2b2118" stroke-width="1.5">
+    <circle cx="60" cy="176" r="6" fill="#ff8fb1"/>
+    <circle cx="90" cy="186" r="5" fill="#ffe04a"/>
+    <circle cx="120" cy="174" r="6" fill="#ffffff"/>
+    <circle cx="300" cy="180" r="6" fill="#ff8fb1"/>
+    <circle cx="330" cy="172" r="5" fill="#ffffff"/>
+    <circle cx="362" cy="186" r="6" fill="#ffe04a"/>
+  </g>
+</svg>
