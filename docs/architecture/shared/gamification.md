@@ -72,3 +72,26 @@ GM.redeem(userId, rewardCode) -> RedeemResult            // 仅学习或会员�
 2. 数据平台的掌握度事件格式与发布方式（需数据平台的设计，由项目总监协调）。
 3. 积分兑换时长与未成年人上限（真人与法务）。
 4. 分享与推荐奖励是否纳入（项目总监）。
+
+## 9. 掌握等级判定规则格式（共通 v1，#86 待办，2026-11-22）
+
+数据平台据此计算掌握等级并发布 `MasteryChanged`（#1 裁定）。共通只定义规则的**格式**，数值与指标由各学科定义。
+
+```text
+MasteryRule {
+  subject: SubjectCode
+  level: int                 // 1、2、3，对应 1★、2★、3★
+  itemType: string?          // 参与计算的题型编码（如英语的应用题），由学科注册
+  metric: accuracy           // 共通 v1 仅支持正确率
+  threshold: number          // 0–1，如 0.8
+  minCount: int              // 最少作答题数，如 5
+  window: attempt | all      // 统计范围，由学科决定
+}
+```
+
+- 同一 `(subject, knowledgePointId, level)` 首次满足规则时，数据平台发布一次 `MasteryChanged`，并以业务唯一键去重。
+- 规则数值存放于学科配置，不写死在共通代码中。
+- 已确认的规则实例：
+  - 英语：`level=2, itemType=应用题, metric=accuracy, threshold=0.8, minCount=5`（英语 #23 留言，2026-11-22）。
+  - 化学：沿用英语规则的 2★ 判定（化学 #23 留言，2026-11-22）。
+  - 数学、语文、物理：待各学科提交。
