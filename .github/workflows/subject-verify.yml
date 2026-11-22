@@ -1,0 +1,57 @@
+name: subject-verify
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  flutter:
+    name: flutter ${{ matrix.app }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [english, math, chinese, physics, chemistry]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check app exists
+        id: check
+        run: |
+          if [ -f apps/${{ matrix.app }}/pubspec.yaml ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: subosito/flutter-action@v2
+        if: steps.check.outputs.run == 'true'
+        with:
+          flutter-version: '3.50.1'
+          channel: stable
+      - name: analyze and test
+        if: steps.check.outputs.run == 'true'
+        working-directory: apps/${{ matrix.app }}
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
+
+  java:
+    name: java ${{ matrix.module }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        module: [data-platform, identity]
+    services: {}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check module exists
+        id: check
+        run: |
+          if [ -f services/${{ matrix.module }}/pom.xml ]; then echo "run=true" >> "$GITHUB_OUTPUT"; else echo "run=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/setup-java@v4
+        if: steps.check.outputs.run == 'true'
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+      - name: mvn test (Testcontainers uses Docker on the runner)
+        if: steps.check.outputs.run == 'true'
+        working-directory: services/${{ matrix.module }}
+        run: mvn -B test
