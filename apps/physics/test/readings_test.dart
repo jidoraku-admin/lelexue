@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lelexue_physics/core/readings.dart';
 import 'package:lelexue_physics/first_slice_questions.dart';
 import 'package:lelexue_physics/mastery/mastery_draft.dart';
+import 'package:lelexue_physics/mastery/mastery_rules.dart';
 
 void main() {
   group('刻度尺读数判定', () {
@@ -72,4 +73,16 @@ void main() {
       );
     });
   });
+
+  group('规则声明', () {
+    test('1★ 已声明且不发放经验，2★ 发放经验', () {
+      final l1 = physicsMasteryRules.firstWhere((r) => r.level == 1);
+      final l2 = physicsMasteryRules.firstWhere((r) => r.level == 2);
+      expect(l1.grantsExperience, isFalse);
+      expect(l2.grantsExperience, isTrue);
+      expect(l1.minAccuracy, level1MinAccuracy);
+      expect(l1.minAttempts, level1MinAttempts);
+    });
+  });
 }
+

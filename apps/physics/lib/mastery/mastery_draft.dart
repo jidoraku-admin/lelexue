@@ -3,10 +3,10 @@
 // 按共通 v1 与 #5（2026-11-22 21:54 JST 修改）：
 // - 物理只产生草稿，不生成 eventId，也不直接发布 MasteryChanged。
 // - eventId 由数据平台在发布时生成（gamification.md 第 2 节）。
-// - 1★ 的发布方式以 #5 项目总监确认为准，此处只给出判定结果。
+// - 1★ 已由项目总监于 #5 审核通过（2026-11-22 14:11 UTC）；规则在 mastery_rules.dart 声明。
 import 'package:shared/core/core.dart';
 
-/// 物理 1★ 规则（学科自定，起始值沿用英语）：识别正确率 ≥80% 且不少于 5 题。
+/// 物理 1★ 规则数值与 mastery_rules.dart 保持一致。
 const double level1MinAccuracy = 0.8;
 const int level1MinAttempts = 5;
 
