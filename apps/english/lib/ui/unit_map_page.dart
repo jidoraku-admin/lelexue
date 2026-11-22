@@ -32,7 +32,12 @@ class _UnitMapPageState extends State<UnitMapPage> {
     return _Loaded(unit, progress);
   }
 
-  void _reload() => setState(() => _future = _load());
+  void _reload() {
+    final next = _load();
+    setState(() {
+      _future = next;
+    });
+  }
 
   Future<void> _open(Unit unit, Progress progress, Level level) async {
     final changed = await Navigator.of(context).push<bool>(
