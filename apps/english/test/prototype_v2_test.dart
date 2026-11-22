@@ -1,3 +1,5 @@
+import 'package:lelexue_english/data/speech_player.dart';
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -27,8 +29,18 @@ Future<void> openUnit1(WidgetTester tester) async {
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  SpeechPlayer.enabled = false;
 
   setUpAll(() {
+    // 音频插件在测试环境没有实现，这里模拟掉，发音相关的代码照常执行。
+    for (final ch in [
+      'xyz.luan/audioplayers.global',
+      'xyz.luan/audioplayers.global/events',
+      'xyz.luan/audioplayers',
+    ]) {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMessageHandler(ch, (message) async => null);
+    }
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMessageHandler('flutter/assets', (message) async {
           final key = utf8.decode(message!.buffer.asUint8List());
@@ -57,7 +69,9 @@ void main() {
     expect(find.text('动画开场'), findsOneWidget, reason: '回到单元地图');
 
     // 翻卡挑战：可以翻牌，翻开的牌显示文字，未翻的牌仍是问号。
-    await tester.tap(find.text('翻卡挑战'));
+    await tester.tap(find.text('小游戏'));
+    await settle(tester);
+    await tester.tap(find.text('翻卡配对'));
     await settle(tester);
     expect(find.text('?'), findsWidgets);
     final before = find.text('?').evaluate().length;
