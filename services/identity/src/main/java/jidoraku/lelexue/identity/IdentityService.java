@@ -1,6 +1,8 @@
 package jidoraku.lelexue.identity;
 
 import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +18,7 @@ import java.util.regex.Pattern;
  * - 学生不能独立注册、付费；权益挂母账号，学生继承。
  * 席位计数在父账号行上加 FOR UPDATE 锁，保证并发创建学生时不超额。
  */
+@Service
 public final class IdentityService {
 
     private static final Pattern LOGIN_NAME = Pattern.compile("^[a-z0-9]{4,16}$");
@@ -23,7 +26,8 @@ public final class IdentityService {
     private final DataSource dataSource;
     private final int maxStudentsPerParent;
 
-    public IdentityService(DataSource dataSource, int maxStudentsPerParent) {
+    public IdentityService(DataSource dataSource,
+                           @Value("${identity.max-students-per-parent:3}") int maxStudentsPerParent) {
         this.dataSource = dataSource;
         this.maxStudentsPerParent = maxStudentsPerParent;
     }
