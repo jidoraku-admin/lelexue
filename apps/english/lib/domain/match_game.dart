@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'falling_round.dart' show pointsForStreak;
 import 'unit.dart';
 
 /// 翻卡配对：英文卡与中文卡成对，翻开两张，相同则配对成功，不同则翻回。
@@ -29,6 +30,7 @@ class MatchGame {
   int moves = 0;
   int streak = 0; // 当前连续配对次数
   int bestStreak = 0;
+  int points = 0;
 
   /// 用单元词表生成一局。取前 [pairs] 个词，每个词做成一对卡。
   factory MatchGame.fromWords(List<Word> words, {int pairs = 8, int seed = 0}) {
@@ -72,6 +74,7 @@ class MatchGame {
       first.matched = true;
       card.matched = true;
       streak++;
+      points += pointsForStreak(streak);
       if (streak > bestStreak) bestStreak = streak;
       return FlipOutcome.matched;
     }

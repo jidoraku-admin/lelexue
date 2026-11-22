@@ -1,4 +1,5 @@
 import 'package:lelexue_english/data/speech_player.dart';
+import 'package:material_ui/material_ui.dart' show Icons;
 
 import 'dart:convert';
 import 'dart:io';
@@ -73,10 +74,10 @@ void main() {
     await settle(tester);
     await tester.tap(find.text('翻卡配对'));
     await settle(tester);
-    expect(find.text('?'), findsWidgets);
-    final before = find.text('?').evaluate().length;
-    await tester.tap(find.text('?').first);
+    expect(find.byIcon(Icons.star_border), findsWidgets);
+    final before = find.byIcon(Icons.star_border).evaluate().length;
+    await tester.tap(find.byIcon(Icons.star_border).first);
     await settle(tester, rounds: 5);
-    expect(find.text('?').evaluate().length, before - 1);
+    expect(find.byIcon(Icons.star_border).evaluate().length, before - 1);
   });
 }

@@ -40,4 +40,22 @@ void main() {
       expect(r.randomDistractor().en, isNot(r.target.en));
     }
   });
+
+  test('分数与连击：连续命中加分更多，失误清零连击', () {
+    final r = FallingRound(words: words, goal: 10, seed: 3);
+    expect(r.hit(r.target), isTrue);
+    expect(r.points, 10);
+    expect(r.hit(r.target), isTrue);
+    expect(r.streak, 2);
+    expect(r.points, 10 + 15);
+    r.hit(words.firstWhere((w) => w.en != r.target.en));
+    expect(r.streak, 0);
+    expect(r.bestStreak, 2);
+  });
+
+  test('速度等级从慢到快，下落更快、出现更密', () {
+    expect(FallingSpeed.slow.step < FallingSpeed.normal.step, isTrue);
+    expect(FallingSpeed.normal.step < FallingSpeed.fast.step, isTrue);
+    expect(FallingSpeed.slow.spawnEvery > FallingSpeed.fast.spawnEvery, isTrue);
+  });
 }
