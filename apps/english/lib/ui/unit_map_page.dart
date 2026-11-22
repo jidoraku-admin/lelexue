@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../domain/progress.dart';
 import '../domain/unit.dart';
+import '../domain/unit_summary.dart';
 import '../data/unit_repository.dart';
 import '../data/progress_store.dart';
 import 'level_page.dart';
@@ -94,6 +95,8 @@ class _UnitMapPageState extends State<UnitMapPage> {
                     title: Text('词表待核对（#44），仅供内部试玩'),
                   ),
                 ),
+              _SummaryCard(summary: UnitSummary.of(unit, progress)),
+              const SizedBox(height: 12),
               Card(
                 clipBehavior: Clip.antiAlias,
                 child: Column(
@@ -223,6 +226,37 @@ class _LevelTile extends StatelessWidget {
                 size: 18,
                 color: s <= stars ? Colors.amber : Colors.grey.shade300,
               ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// 单元总结卡片：星星、学会的词、错题本，通关后显示祝贺。
+class _SummaryCard extends StatelessWidget {
+  const _SummaryCard({required this.summary});
+
+  final UnitSummary summary;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Card(
+      color: summary.complete ? Colors.green.shade50 : null,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              summary.complete ? '单元通关！' : '单元进度',
+              style: theme.textTheme.titleMedium,
+            ),
+            const SizedBox(height: 8),
+            Text('星星 ${summary.starsEarned}/${summary.starsTotal}'),
+            Text('学会的单词 ${summary.wordsLearned}/${summary.wordsTotal}'),
+            Text('错题本 ${summary.missedLeft} 个待复习'),
           ],
         ),
       ),

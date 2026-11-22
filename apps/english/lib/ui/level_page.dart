@@ -237,6 +237,10 @@ class _LevelPageState extends State<LevelPage> {
             Text(
               '首次作答正确率 ${run.percent}%（通过线 ${(widget.level.passRate * 100).round()}%）',
             ),
+            if (passed && isBoss) ...[
+              const SizedBox(height: 12),
+              const Text('单元 Boss 通过！回到地图查看单元总结。', textAlign: TextAlign.center),
+            ],
             if (!passed && isBoss) ...[
               const SizedBox(height: 12),
               Text(
