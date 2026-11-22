@@ -28,7 +28,7 @@ class MysqlMasteryServiceTest {
     }
 
     private AnswerAttempt ans(boolean correct, int sec) {
-        return new AnswerAttempt(correct, null, T0.plusSeconds(sec));
+        return new AnswerAttempt("att-" + sec, correct, null, T0.plusSeconds(sec));
     }
 
     private List<MasteryChangedEvent> feed(String user, boolean... results) {
@@ -37,6 +37,55 @@ class MysqlMasteryServiceTest {
             all.addAll(svc.record(user, KP, ans(results[i], i)));
         }
         return all;
+    }
+
+    @Test
+    void duplicateSubmitReturnsExistingResultWithoutRepublishing() {
+        feed("u6", true, true, true, true);
+        AnswerAttempt trigger = ans(true, 4);
+        List<MasteryChangedEvent> first = svc.record("u6", KP, trigger);
+        assertEquals(1, first.size());
+
+        List<MasteryChangedEvent> retry = svc.record("u6", KP, trigger);
+        assertEquals(1, retry.size(), "重复提交返回已有判定结果");
+        assertEquals(first.get(0).eventId(), retry.get(0).eventId());
+        assertEquals(5, count("SELECT COUNT(*) FROM mastery_attempt WHERE user_id = 'u6'"), "重复提交不重复插入");
+        assertEquals(1, count("SELECT COUNT(*) FROM outbox_event WHERE event_id = 'math:u6:math.g3.v1.u01.k001:1'"),
+                "重复提交不重复发布");
+    }
+
+    @Test
+    void duplicatedAnswersDoNotInflateTheWindow() {
+        // 最近 5 题正确率为 2/5，未达 0.8。重复提交 a4（正确）若被计数，窗口会被虚高。
+        feed("u7", true, false, false, true, false);
+        AnswerAttempt a4 = new AnswerAttempt("att-3", true, null, T0.plusSeconds(3));
+        for (int i = 0; i < 5; i++) {
+            assertTrue(svc.record("u7", KP, a4).isEmpty());
+        }
+        assertEquals(5, count("SELECT COUNT(*) FROM mastery_attempt WHERE user_id = 'u7'"));
+        assertEquals(0, count("SELECT COUNT(*) FROM outbox_event"));
+    }
+
+    @Test
+    void overlongUserIdIsRejectedBeforeAnyWrite() {
+        String longUser = "u".repeat(65);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> svc.record(longUser, KP, ans(true, 0)));
+        assertTrue(ex.getMessage().contains("userId") && ex.getMessage().contains("64"), ex.getMessage());
+        assertEquals(0, count("SELECT COUNT(*) FROM mastery_attempt"), "校验失败时不写入作答");
+    }
+
+    @Test
+    void overlongEventIdIsRejectedBeforeAnyWrite() {
+        String longSubject = "a".repeat(32);
+        KnowledgePointId longKp = new KnowledgePointId(longSubject + ".g3.v1.u01.k001");
+        MysqlMasteryService longSvc = new MysqlMasteryService(ds, CLOCK, List.of(
+                new MasteryRule(longSubject, 1, null, new BigDecimal("0.8"), 1, WindowKind.ATTEMPT)));
+        String longUser = "u".repeat(50);
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> longSvc.record(longUser, longKp, ans(true, 0)));
+        assertTrue(ex.getMessage().contains("eventId") && ex.getMessage().contains("128"), ex.getMessage());
+        assertEquals(0, count("SELECT COUNT(*) FROM mastery_attempt"), "eventId 超长时作答不得写入");
     }
 
     @Test

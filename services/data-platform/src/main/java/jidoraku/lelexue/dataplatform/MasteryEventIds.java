@@ -12,7 +12,9 @@ public final class MasteryEventIds {
     public static String of(String subject, String userId, KnowledgePointId kp, int level) {
         String id = subject + ":" + userId + ":" + kp.value() + ":" + level;
         if (id.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException("eventId 超过 " + MAX_LENGTH + " 字符: " + id.length());
+            throw new IllegalArgumentException("eventId 长度为 " + id.length() + "，超过上限 " + MAX_LENGTH
+                    + "（subject " + subject.length() + "、userId " + userId.length()
+                    + "、knowledgePointId " + kp.value().length() + "；请缩短这些字段）");
         }
         return id;
     }

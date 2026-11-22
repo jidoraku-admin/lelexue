@@ -19,7 +19,7 @@ class MasteryEvaluatorTest {
     private static List<AnswerAttempt> seq(String itemType, boolean... correct) {
         List<AnswerAttempt> out = new ArrayList<>();
         for (int i = 0; i < correct.length; i++) {
-            out.add(new AnswerAttempt(correct[i], itemType, T0.plusSeconds(i)));
+            out.add(new AnswerAttempt("a" + i, correct[i], itemType, T0.plusSeconds(i)));
         }
         return out;
     }
