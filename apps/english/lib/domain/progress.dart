@@ -1,6 +1,7 @@
 import 'level_run.dart';
 import 'mastery.dart';
 import 'mastery_rules.dart';
+import 'xp.dart';
 import 'unit.dart';
 
 /// 一次逐题作答记录（首次作答），带知识点编码，供掌握记录使用。
@@ -52,7 +53,9 @@ class Progress {
     List<QuestionAttempt>? attempts,
     List<MasteryAchievement>? pendingAchievements,
     List<String>? mastered,
-  }) : stars = stars ?? {},
+    int? xp,
+  }) : xp = xp ?? 0,
+       stars = stars ?? {},
        remediation = remediation ?? [],
        missed = missed ?? [],
        attempts = attempts ?? [],
@@ -73,6 +76,9 @@ class Progress {
 
   /// 已首次达到的掌握规则，键为 `knowledgePointId#level`。
   final List<String> mastered;
+
+  /// 英语经验（本地，首次达到 2★ 时获得，见 xp.dart）。
+  int xp;
 
   /// 已达到但尚未交给数据平台的掌握结果（本地待发布队列，不含 userId 与 eventId）。
   final List<MasteryAchievement> pendingAchievements;
@@ -124,6 +130,7 @@ class Progress {
     for (final m in found) {
       mastered.add(m.key);
       pendingAchievements.add(m);
+      xp += xpPerMastery;
     }
   }
 
@@ -211,6 +218,7 @@ class Progress {
     'missed': missed,
     'attempts': [for (final a in attempts) a.toJson()],
     'mastered': mastered,
+    'xp': xp,
     'pendingAchievements': [for (final m in pendingAchievements) m.toJson()],
   };
 
@@ -225,6 +233,7 @@ class Progress {
         QuestionAttempt.fromJson(a as Map<String, dynamic>),
     ],
     mastered: (json['mastered'] as List?)?.cast<String>(),
+    xp: json['xp'] as int?,
     pendingAchievements: [
       for (final m in (json['pendingAchievements'] as List?) ?? const [])
         MasteryAchievement.fromJson(m as Map<String, dynamic>),
