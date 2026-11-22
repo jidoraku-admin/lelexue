@@ -36,6 +36,8 @@ void main() {
     await tester.pumpAndSettle(const Duration(seconds: 1));
     expect(find.text('认词关 1'), findsOneWidget);
 
+    await tester.ensureVisible(find.text('认词关 1'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('认词关 1'));
     await tester.pumpAndSettle();
 
