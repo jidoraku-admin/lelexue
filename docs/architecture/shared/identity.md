@@ -19,7 +19,7 @@
 | 对象 | 说明 |
 | --- | --- |
 | `UserId` | 全局唯一、不复用。学科数据只引用它，不保存个人资料 |
-| `Profile` | 昵称、头像、`stage`、`grade`（见 README 第 1.2 节） |
+| `Profile` | 昵称、头像、`stage`、`grade`、`volume`（见 README 第 1.2 节） |
 | `Guardian` | 家长身份核验结果（实名状态、核验时间） |
 | `Seat` | 席位：总数、已用、到期时间 |
 | `Link` | 母子关系：`parentUserId` 与 `studentUserId`，一个学生同一时间只属于一个母账号 |
