@@ -25,6 +25,7 @@ class Question {
     required this.options,
     required this.answer,
     required this.explanation,
+    this.knowledgePointId,
   });
 
   final String id;
@@ -33,12 +34,17 @@ class Question {
   final int answer;
   final String explanation;
 
+  /// 所属知识点编码（格式 english.g<年级>.v<册>.u<单元>.k<序号>）。
+  /// 未标注的题目（如认词题）为 null，不参与掌握记录。
+  final String? knowledgePointId;
+
   factory Question.fromJson(Map<String, dynamic> json) => Question(
     id: json['id'] as String,
     prompt: json['prompt'] as String,
     options: (json['options'] as List).cast<String>(),
     answer: json['answer'] as int,
     explanation: json['explanation'] as String,
+    knowledgePointId: json['knowledgePointId'] as String?,
   );
 }
 

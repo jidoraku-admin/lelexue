@@ -1,4 +1,39 @@
+import 'level_run.dart';
 import 'unit.dart';
+
+/// 一次逐题作答记录（首次作答），带知识点编码，供掌握记录使用。
+class QuestionAttempt {
+  const QuestionAttempt({
+    required this.questionId,
+    required this.knowledgePointId,
+    required this.levelId,
+    required this.correct,
+    required this.answeredAt,
+  });
+
+  final String questionId;
+  final String knowledgePointId;
+  final String levelId;
+  final bool correct;
+  final DateTime answeredAt;
+
+  Map<String, dynamic> toJson() => {
+    'questionId': questionId,
+    'knowledgePointId': knowledgePointId,
+    'levelId': levelId,
+    'correct': correct,
+    'answeredAt': answeredAt.toUtc().toIso8601String(),
+  };
+
+  factory QuestionAttempt.fromJson(Map<String, dynamic> json) =>
+      QuestionAttempt(
+        questionId: json['questionId'] as String,
+        knowledgePointId: json['knowledgePointId'] as String,
+        levelId: json['levelId'] as String,
+        correct: json['correct'] as bool,
+        answeredAt: DateTime.parse(json['answeredAt'] as String),
+      );
+}
 
 /// 学习进度（纯领域规则，不依赖存储）。
 class Progress {
@@ -6,9 +41,11 @@ class Progress {
     Map<String, int>? stars,
     List<String>? remediation,
     List<String>? missed,
+    List<QuestionAttempt>? attempts,
   }) : stars = stars ?? {},
        remediation = remediation ?? [],
-       missed = missed ?? [];
+       missed = missed ?? [],
+       attempts = attempts ?? [];
 
   /// 关卡 id → 历史最高星级（0 表示未通过）。
   final Map<String, int> stars;
@@ -19,6 +56,9 @@ class Progress {
   /// 学过程中答错、尚未复习通过的题目 id，供复习关使用（v0.16 §2.2）。
   final List<String> missed;
 
+  /// 带知识点编码的逐题首次作答记录（按时间追加）。
+  final List<QuestionAttempt> attempts;
+
   static const remediationId = 'remediation-1';
   static const reviewId = 'review-1';
   static const maxMissed = 30;
@@ -28,6 +68,27 @@ class Progress {
   void record(String levelId, int starCount) {
     final best = stars[levelId] ?? 0;
     if (starCount > best) stars[levelId] = starCount;
+  }
+
+  /// 记录一关的首次作答；未标注知识点的题目不记录。
+  void recordAttempts(
+    String levelId,
+    Iterable<FirstAnswer> answers,
+    DateTime answeredAt,
+  ) {
+    for (final a in answers) {
+      final kp = a.question.knowledgePointId;
+      if (kp == null) continue;
+      attempts.add(
+        QuestionAttempt(
+          questionId: a.question.id,
+          knowledgePointId: kp,
+          levelId: levelId,
+          correct: a.correct,
+          answeredAt: answeredAt,
+        ),
+      );
+    }
   }
 
   /// 记录一次挑战中答错的题目（去重，超出上限时丢弃最早的）。
@@ -112,6 +173,7 @@ class Progress {
     'stars': stars,
     'remediation': remediation,
     'missed': missed,
+    'attempts': [for (final a in attempts) a.toJson()],
   };
 
   factory Progress.fromJson(Map<String, dynamic> json) => Progress(
@@ -120,5 +182,9 @@ class Progress {
     ),
     remediation: (json['remediation'] as List?)?.cast<String>(),
     missed: (json['missed'] as List?)?.cast<String>(),
+    attempts: [
+      for (final a in (json['attempts'] as List?) ?? const [])
+        QuestionAttempt.fromJson(a as Map<String, dynamic>),
+    ],
   );
 }
