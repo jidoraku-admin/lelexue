@@ -9,3 +9,4 @@
 ## 索引
 - [0001 后端语言选择 Java](0001-backend-java.md)
 - [0009 先做第一单元，功能复用，数据替换](0009-unit-first-reusable-features.md)
+- [0010 共通玩法框架（game kit）与学科选用](0010-shared-game-kit.md)
