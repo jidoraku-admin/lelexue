@@ -74,7 +74,7 @@ GM.redeem(userId, rewardCode) -> RedeemResult            // 仅学习或会员�
      - `userId`：学生的 `UserId`（由身份服务解析，英语本地标识需先迁移，见 identity.md 第 6 节）。
      - `subject`：`english`。`knowledgePointId`：按 README 第 1.5 节编码。`level`：规则所属层级（1、2、3）。
      - `achievedAt`：满足规则时的 UTC 时间。
-     - `eventId`：确定性生成，格式 `english:<userId>:<knowledgePointId>:<level>`，保证重放不重复计分。
+     - `eventId`：由数据平台在发布时生成，格式 `<subject>:<userId>:<knowledgePointId>:<level>`，同一业务键始终得到同一 eventId（#23 项目总监 13:33 要求，见 #92）。学科适配层不生成 eventId。
 2. 数据平台的掌握度事件格式与发布方式（需数据平台的设计，由项目总监协调）。
 3. 积分兑换时长与未成年人上限（真人与法务）。
 4. 分享与推荐奖励是否纳入（项目总监）。
@@ -91,11 +91,14 @@ MasteryRule {
   metric: accuracy           // 共通 v1 仅支持正确率
   threshold: number          // 0–1，如 0.8
   minCount: int              // 最少作答题数，如 5
-  window: attempt | all      // 统计范围，由学科决定
+  window: attempt | all      // 统计范围，取值含义见下文，数值由学科选择
 }
 ```
 
 - 同一 `(subject, knowledgePointId, level)` 首次满足规则时，数据平台发布一次 `MasteryChanged`，并以业务唯一键去重。
+- `window` 的取值（#92 裁定）：
+  - `all`：该知识点的全部答题。
+  - `attempt`：按 `minCount` 条的滚动窗口，即最近 `minCount` 条作答。
 - **门槛由学科自定**（#1 裁定，中事）。`threshold`、`minCount`、`window` 是学科参数，存放于学科配置，不写死在共通代码或共通文档中。
 - 共通只提供判定机制：首次达到的语义、事件、去重。数据平台只执行各学科给出的判定结果，不内置数值。
 - 英语的 1★–3★ 数值（≥80%、≥5 题、间隔复习）是英语的起始参考，不是共通规则。物理与化学沿用英语起始值，各自学科内定义。
