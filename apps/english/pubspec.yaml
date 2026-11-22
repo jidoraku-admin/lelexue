@@ -26,3 +26,4 @@ flutter:
     - assets/audio/
     - assets/audio/audio_index.json
     - assets/art/
+    - assets/art/words/

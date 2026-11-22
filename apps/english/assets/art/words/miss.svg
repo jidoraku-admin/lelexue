@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <ellipse cx="128" cy="232" rx="60" ry="9" fill="#2b2118" opacity="0.15"/>
+  <path d="M96.8 72.0 H159.2 Q195.2 72.0 195.2 108.0 V128.0 Q195.2 164.0 159.2 164.0 H130.8 L94.8 194.0 L100.8 164.0 H96.8 Q60.8 164.0 60.8 128.0 V108.0 Q60.8 72.0 96.8 72.0 Z"
+        fill="#ffffff" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
+  <text text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="40" font-weight="700" fill="#e8552f"><tspan x="128" y="132.4">Miss</tspan></text>
+  <path d="M196 56 L204 46 M212 34 L220 24 M226 54 L234 46" stroke="#2b2118" stroke-width="4" stroke-linecap="round"/>
+</svg>
