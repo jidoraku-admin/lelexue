@@ -1,20 +1,20 @@
-import 'unit.dart';
+import 'game_item.dart';
 
-/// 20 个问题（英语版）：系统想好一个单词，玩家只能问「是/否」问题，缩小范围后猜出单词。
+/// 20 个问题：系统想好一个单词，玩家只能问「是/否」问题，缩小范围后猜出单词。
 /// 每个问题的答案由规则自动算出，不需要为每个单词单独写问题。
 class TwentyQuestions {
   TwentyQuestions({
-    required List<Word> words,
+    required List<GameItem> items,
     this.maxQuestions = 20,
     int secretIndex = 0,
-  }) : _candidates = List<Word>.of(words),
-       _secret = words[secretIndex % words.length];
+  }) : _candidates = List<GameItem>.of(items),
+       _secret = items[secretIndex % items.length];
 
   static const int defaultMax = 20;
 
   final int maxQuestions;
-  final Word _secret;
-  List<Word> _candidates;
+  final GameItem _secret;
+  List<GameItem> _candidates;
   int asked = 0;
   bool solved = false;
 
@@ -26,16 +26,16 @@ class TwentyQuestions {
   List<YesNoQuestion> availableQuestions() {
     // 先放按词长、词组、首字母的问题，再放字母问题，保证问题种类多样。
     final out = <YesNoQuestion>[
-      YesNoQuestion('超过 4 个字母吗？', (w) => w.en.length > 4),
-      YesNoQuestion('是词组（有空格）吗？', (w) => w.en.contains(' ')),
+      YesNoQuestion('超过 4 个字母吗？', (w) => w.text.length > 4),
+      YesNoQuestion('是词组（有空格）吗？', (w) => w.text.contains(' ')),
       YesNoQuestion(
         '首字母在 a 到 m 之间吗？',
-        (w) => w.en.toLowerCase().compareTo('n') < 0,
+        (w) => w.text.toLowerCase().compareTo('n') < 0,
       ),
     ];
     for (final c in _lettersInCandidates()) {
       out.add(
-        YesNoQuestion('包含字母 $c 吗？', (w) => w.en.toLowerCase().contains(c)),
+        YesNoQuestion('包含字母 $c 吗？', (w) => w.text.toLowerCase().contains(c)),
       );
     }
     return out.where((q) => _splits(q)).toList();
@@ -49,31 +49,31 @@ class TwentyQuestions {
     asked++;
     final answer = q.test(_secret);
     _candidates = _candidates.where((w) => q.test(w) == answer).toList();
-    if (_candidates.length == 1 && _candidates.first.en == _secret.en) {
+    if (_candidates.length == 1 && _candidates.first.id == _secret.id) {
       solved = true;
     }
     return answer;
   }
 
   /// 直接猜单词。猜中即胜利；猜错算一次提问，并把这个词排除掉。
-  bool guess(Word word) {
+  bool guess(GameItem word) {
     if (isOver) {
       throw StateError('游戏已结束');
     }
     asked++;
-    if (word.en == _secret.en) {
+    if (word.id == _secret.id) {
       solved = true;
       return true;
     }
-    _candidates = _candidates.where((c) => c.en != word.en).toList();
+    _candidates = _candidates.where((c) => c.id != word.id).toList();
     return false;
   }
 
   /// 这个词是否仍是候选（没被排除）。
-  bool candidatesContain(Word w) => _candidates.any((c) => c.en == w.en);
+  bool candidatesContain(GameItem w) => _candidates.any((c) => c.id == w.id);
 
   /// 只在游戏结束时揭示答案。
-  Word reveal() => _secret;
+  GameItem reveal() => _secret;
 
   bool _splits(YesNoQuestion q) {
     final yes = _candidates.where(q.test).length;
@@ -83,7 +83,7 @@ class TwentyQuestions {
   Iterable<String> _lettersInCandidates() {
     final letters = <String>{};
     for (final w in _candidates) {
-      for (final ch in w.en.toLowerCase().split('')) {
+      for (final ch in w.text.toLowerCase().split('')) {
         if (RegExp(r'[a-z]').hasMatch(ch)) {
           letters.add(ch);
         }
@@ -99,5 +99,5 @@ class YesNoQuestion {
   const YesNoQuestion(this.text, this.test);
 
   final String text;
-  final bool Function(Word) test;
+  final bool Function(GameItem) test;
 }

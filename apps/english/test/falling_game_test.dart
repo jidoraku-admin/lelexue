@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:lelexue_english/data/speech_player.dart';
 import 'package:lelexue_english/data/unit_repository.dart';
-import 'package:lelexue_english/domain/match_game.dart' show shortMeaning;
+import 'package:lelexue_english/domain/english_game_adapter.dart' show shortMeaning;
 import 'package:lelexue_english/domain/unit.dart';
 import 'package:lelexue_english/ui/falling_game_page.dart';
 

@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../data/speech_player.dart';
 import '../data/unit_repository.dart';
 import '../domain/unit.dart';
+import '../domain/english_game_adapter.dart';
 import '../domain/word_uno.dart';
 
 /// 单词 UNO：顶牌是英文或中文；同色、或是它的另一半，才能出。出完手牌即胜利。
@@ -33,7 +34,7 @@ class _WordUnoPageState extends State<WordUnoPage> {
 
   void _newGame(Unit unit) {
     setState(() {
-      _game = WordUno.fromWords(unit.words, seed: _seed++);
+      _game = WordUno.fromItems(wordsToItems(unit.words), seed: _seed++);
       _message = null;
       _pickingWild = null;
     });
@@ -96,7 +97,7 @@ class _WordUnoPageState extends State<WordUnoPage> {
             return const Center(child: CircularProgressIndicator());
           }
           final unit = snapshot.data!;
-          final game = _game ??= WordUno.fromWords(unit.words, seed: _seed++);
+          final game = _game ??= WordUno.fromItems(wordsToItems(unit.words), seed: _seed++);
           final theme = Theme.of(context);
           return Padding(
             padding: const EdgeInsets.all(16),

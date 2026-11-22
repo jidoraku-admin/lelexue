@@ -1,0 +1,17 @@
+{
+  "source": "docs/data/english-g3a-sentences.json（Unit 1 目标句型）",
+  "status": "英语第 1 单元知识点清单 v1。知识点按目标句型划分，共 6 个。编码格式为 <subject>.g<grade>.v<volume>.u<unit>.k<seq>（共通 #23 README 第 1.5 节）。level 1/2/3 对应 1★ 识别、2★ 应用、3★ 迁移。",
+  "subject": "english",
+  "grade": 3,
+  "volume": 1,
+  "units": {
+    "Unit 1": [
+      { "id": "english.g3.v1.u01.k001", "name": "问候时段", "pattern": "Good morning / afternoon / evening / night." },
+      { "id": "english.g3.v1.u01.k002", "name": "告别", "pattern": "Goodbye. / Bye." },
+      { "id": "english.g3.v1.u01.k003", "name": "打招呼", "pattern": "Hello. / Hi." },
+      { "id": "english.g3.v1.u01.k004", "name": "询问名字", "pattern": "What's your name?" },
+      { "id": "english.g3.v1.u01.k005", "name": "自我介绍", "pattern": "I'm ___." },
+      { "id": "english.g3.v1.u01.k006", "name": "互相介绍", "pattern": "Hi, ___. I'm ___." }
+    ]
+  }
+}
