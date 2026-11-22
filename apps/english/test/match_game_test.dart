@@ -59,4 +59,25 @@ void main() {
     }
     expect(g.isComplete, isTrue);
   });
+
+  test('连对计数：配对成功累加，配错清零，记录最高连对', () {
+    final g = MatchGame.fromWords(words, pairs: 4, seed: 5);
+    void pair(int id) {
+      final en = g.cards.indexWhere((c) => c.pairId == id && c.isEnglish);
+      final zh = g.cards.indexWhere((c) => c.pairId == id && !c.isEnglish);
+      g.flip(en);
+      g.flip(zh);
+    }
+
+    pair(0);
+    pair(1);
+    expect(g.streak, 2);
+    // 第 2 对的英文与第 3 对的中文，不是同一对，所以不匹配。
+    final en = g.cards.indexWhere((c) => c.pairId == 2 && c.isEnglish);
+    final wrong = g.cards.indexWhere((c) => c.pairId == 3 && !c.isEnglish);
+    g.flip(en);
+    expect(g.flip(wrong), FlipOutcome.mismatch);
+    expect(g.streak, 0);
+    expect(g.bestStreak, 2);
+  });
 }

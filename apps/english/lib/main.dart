@@ -14,7 +14,7 @@ class LelexueEnglishApp extends StatelessWidget {
     return MaterialApp(
       title: '乐乐学 英语',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorSchemeSeed: Colors.orange, useMaterial3: true),
+      theme: ThemeData(colorSchemeSeed: Colors.green, useMaterial3: true),
       home: const UnitListPage(),
     );
   }

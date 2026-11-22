@@ -15,12 +15,12 @@ void main() {
     // 资源从本地文件读取，避免测试环境依赖打包资源。
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMessageHandler('flutter/assets', (message) async {
-      final key = utf8.decode(message!.buffer.asUint8List());
-      final file = File(key);
-      if (!file.existsSync()) return null;
-      final bytes = file.readAsBytesSync();
-      return ByteData.sublistView(bytes);
-    });
+          final key = utf8.decode(message!.buffer.asUint8List());
+          final file = File(key);
+          if (!file.existsSync()) return null;
+          final bytes = file.readAsBytesSync();
+          return ByteData.sublistView(bytes);
+        });
   });
 
   testWidgets('地图 → 认词关 1 完整通关', (tester) async {
@@ -44,7 +44,11 @@ void main() {
       await tester.ensureVisible(find.text(correct).first);
       await tester.tap(find.text(correct).first);
       await tester.pump(const Duration(milliseconds: 300));
-      expect(find.byKey(ValueKey<String>('next')), findsOneWidget, reason: q.id);
+      expect(
+        find.byKey(ValueKey<String>('next')),
+        findsOneWidget,
+        reason: q.id,
+      );
       await tester.ensureVisible(find.byKey(ValueKey<String>('next')));
       await tester.tap(find.byKey(ValueKey<String>('next')));
       await tester.pump(const Duration(milliseconds: 300));

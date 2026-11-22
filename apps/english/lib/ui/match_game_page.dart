@@ -15,7 +15,9 @@ class MatchGamePage extends StatefulWidget {
 }
 
 class _MatchGamePageState extends State<MatchGamePage> {
-  late final Future<Unit> _future = const UnitRepository().load(widget.assetPath);
+  late final Future<Unit> _future = const UnitRepository().load(
+    widget.assetPath,
+  );
   MatchGame? _game;
   int _seed = 0;
 
@@ -49,8 +51,12 @@ class _MatchGamePageState extends State<MatchGamePage> {
       body: FutureBuilder<Unit>(
         future: _future,
         builder: (context, snapshot) {
-          if (snapshot.hasError) return Center(child: Text('加载失败：${snapshot.error}'));
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+          if (snapshot.hasError) {
+            return Center(child: Text('加载失败：${snapshot.error}'));
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
           final unit = snapshot.data!;
           _game ??= MatchGame.fromWords(unit.words, seed: _seed);
           final game = _game!;
@@ -59,12 +65,26 @@ class _MatchGamePageState extends State<MatchGamePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: Text(
-                  game.isComplete
-                      ? '全部配对！用了 ${game.moves} 次翻牌'
-                      : '找出英文和中文的一对。已翻 ${game.moves} 次',
-                  style: theme.textTheme.titleMedium,
-                  textAlign: TextAlign.center,
+                child: Column(
+                  children: [
+                    Text(
+                      game.isComplete
+                          ? '太棒了！全部配对，最高连对 ${game.bestStreak} 次'
+                          : '找出英文和中文的一对。已翻 ${game.moves} 次',
+                      style: theme.textTheme.titleMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                    if (!game.isComplete && game.streak >= 2)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4),
+                        child: Text(
+                          '连对 ${game.streak} 次！',
+                          style: theme.textTheme.titleLarge?.copyWith(
+                            color: theme.colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               Expanded(
@@ -74,7 +94,8 @@ class _MatchGamePageState extends State<MatchGamePage> {
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                   children: [
-                    for (var i = 0; i < game.cards.length; i++) _CardView(card: game.cards[i], onTap: () => _tap(i)),
+                    for (var i = 0; i < game.cards.length; i++)
+                      _CardView(card: game.cards[i], onTap: () => _tap(i)),
                   ],
                 ),
               ),
@@ -106,26 +127,33 @@ class _CardView extends StatelessWidget {
     final color = card.matched
         ? Colors.green.shade100
         : showFace
-            ? theme.colorScheme.surface
-            : theme.colorScheme.primary;
+        ? theme.colorScheme.surface
+        : theme.colorScheme.primary;
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: card.matched || showFace ? null : onTap,
-      child: AnimatedContainer(
+      child: AnimatedScale(
         duration: const Duration(milliseconds: 250),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: theme.colorScheme.outline),
-        ),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(4),
-        child: Text(
-          showFace ? card.text : '?',
-          textAlign: TextAlign.center,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            color: showFace ? theme.colorScheme.onSurface : theme.colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
+        curve: Curves.easeOutBack,
+        scale: card.matched ? 1.06 : 1,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: theme.colorScheme.outline),
+          ),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(4),
+          child: Text(
+            showFace ? card.text : '?',
+            textAlign: TextAlign.center,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: showFace
+                  ? theme.colorScheme.onSurface
+                  : theme.colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

@@ -11,10 +11,10 @@ class Word {
   final int page;
 
   factory Word.fromJson(Map<String, dynamic> json) => Word(
-        en: json['en'] as String,
-        zh: json['zh'] as String,
-        page: json['page'] as int,
-      );
+    en: json['en'] as String,
+    zh: json['zh'] as String,
+    page: json['page'] as int,
+  );
 }
 
 /// 一道题。answer 为正确选项的下标。
@@ -34,12 +34,12 @@ class Question {
   final String explanation;
 
   factory Question.fromJson(Map<String, dynamic> json) => Question(
-        id: json['id'] as String,
-        prompt: json['prompt'] as String,
-        options: (json['options'] as List).cast<String>(),
-        answer: json['answer'] as int,
-        explanation: json['explanation'] as String,
-      );
+    id: json['id'] as String,
+    prompt: json['prompt'] as String,
+    options: (json['options'] as List).cast<String>(),
+    answer: json['answer'] as int,
+    explanation: json['explanation'] as String,
+  );
 }
 
 class Level {
@@ -64,7 +64,13 @@ class Level {
 
 /// 单元中的角色（由数据决定，界面不写死）。
 class Character {
-  const Character({required this.id, required this.name, required this.kind, required this.asset, required this.line});
+  const Character({
+    required this.id,
+    required this.name,
+    required this.kind,
+    required this.asset,
+    required this.line,
+  });
 
   final String id;
   final String name;
@@ -77,12 +83,12 @@ class Character {
   final String line;
 
   factory Character.fromJson(Map<String, dynamic> json) => Character(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        kind: json['kind'] as String,
-        asset: json['asset'] as String,
-        line: json['line'] as String,
-      );
+    id: json['id'] as String,
+    name: json['name'] as String,
+    kind: json['kind'] as String,
+    asset: json['asset'] as String,
+    line: json['line'] as String,
+  );
 }
 
 class Unit {
@@ -111,7 +117,7 @@ class Unit {
   bool get isValidated => validation == 'passed';
 
   Map<String, Question> get questionIndex => {
-        for (final l in levels)
-          for (final q in l.questions) q.id: q,
-      };
+    for (final l in levels)
+      for (final q in l.questions) q.id: q,
+  };
 }

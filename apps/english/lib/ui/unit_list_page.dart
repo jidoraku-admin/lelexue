@@ -22,8 +22,12 @@ class _UnitListPageState extends State<UnitListPage> {
       body: FutureBuilder<List<UnitIndexEntry>>(
         future: _units,
         builder: (context, snapshot) {
-          if (snapshot.hasError) return Center(child: Text('加载失败：${snapshot.error}'));
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+          if (snapshot.hasError) {
+            return Center(child: Text('加载失败：${snapshot.error}'));
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
           final units = snapshot.data!;
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -36,7 +40,9 @@ class _UnitListPageState extends State<UnitListPage> {
                     subtitle: Text(u.isValidated ? '已核对' : '词表待核对（仅内部试玩）'),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => UnitMapPage(assetPath: u.assetPath)),
+                      MaterialPageRoute(
+                        builder: (_) => UnitMapPage(assetPath: u.assetPath),
+                      ),
                     ),
                   ),
                 ),

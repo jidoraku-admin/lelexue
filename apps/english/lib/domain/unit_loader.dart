@@ -8,7 +8,11 @@ import 'unit.dart';
 /// 句型关与运用关使用 [unit1SentenceQuestions]、[unit1UseQuestions]；
 /// Boss 从全部题目中等距抽取 [bossSize] 题。
 class UnitLoader {
-  const UnitLoader({this.wordsPerLevel = 8, this.bossSize = 12, this.reviewSize = 8});
+  const UnitLoader({
+    this.wordsPerLevel = 8,
+    this.bossSize = 12,
+    this.reviewSize = 8,
+  });
 
   final int wordsPerLevel;
   final int bossSize;
@@ -30,47 +34,53 @@ class UnitLoader {
     final levels = <Level>[];
     final wordQuestions = <Question>[];
     for (var i = 0; i < words.length; i += wordsPerLevel) {
-      final end = (i + wordsPerLevel < words.length) ? i + wordsPerLevel : words.length;
-      final qs = [
-        for (var j = i; j < end; j++) _wordQuestion(words, j),
-      ];
+      final end = (i + wordsPerLevel < words.length)
+          ? i + wordsPerLevel
+          : words.length;
+      final qs = [for (var j = i; j < end; j++) _wordQuestion(words, j)];
       wordQuestions.addAll(qs);
-      levels.add(Level(
-        id: 'word-${levels.length + 1}',
-        stage: Stage.word,
-        title: '认词关 ${levels.length + 1}',
-        questions: qs,
-        passRate: 0.6,
-      ));
+      levels.add(
+        Level(
+          id: 'word-${levels.length + 1}',
+          stage: Stage.word,
+          title: '认词关 ${levels.length + 1}',
+          questions: qs,
+          passRate: 0.6,
+        ),
+      );
     }
 
-    levels.add(Level(
-      id: 'sentence-1',
-      stage: Stage.sentence,
-      title: '句型关',
-      questions: sentenceQuestions,
-      passRate: 0.6,
-    ));
-    levels.add(Level(
-      id: 'use-1',
-      stage: Stage.use,
-      title: '运用关',
-      questions: useQuestions,
-      passRate: 0.6,
-    ));
+    levels.add(
+      Level(
+        id: 'sentence-1',
+        stage: Stage.sentence,
+        title: '句型关',
+        questions: sentenceQuestions,
+        passRate: 0.6,
+      ),
+    );
+    levels.add(
+      Level(
+        id: 'use-1',
+        stage: Stage.use,
+        title: '运用关',
+        questions: useQuestions,
+        passRate: 0.6,
+      ),
+    );
 
     final all = [...wordQuestions, ...sentenceQuestions, ...useQuestions];
     final step = all.length / bossSize;
-    final boss = [
-      for (var k = 0; k < bossSize; k++) all[(k * step).floor()],
-    ];
-    levels.add(Level(
-      id: 'boss-1',
-      stage: Stage.boss,
-      title: '单元 Boss',
-      questions: boss,
-      passRate: 0.8,
-    ));
+    final boss = [for (var k = 0; k < bossSize; k++) all[(k * step).floor()]];
+    levels.add(
+      Level(
+        id: 'boss-1',
+        stage: Stage.boss,
+        title: '单元 Boss',
+        questions: boss,
+        passRate: 0.8,
+      ),
+    );
 
     return Unit(
       code: json['unit'] as String,
@@ -94,18 +104,22 @@ class UnitLoader {
     String value(Word w) => forward ? w.zh : w.en;
     final targetTokens = _tokens(target.zh);
     final candidates = <Word>[
-      for (var step = 1; step < words.length; step++) words[(index + step) % words.length],
+      for (var step = 1; step < words.length; step++)
+        words[(index + step) % words.length],
     ];
     List<String> pick({required bool strict}) {
       final out = <String>[];
       for (final c in candidates) {
         if (out.length == 3) break;
         if (value(c) == value(target) || out.contains(value(c))) continue;
-        if (strict && _tokens(c.zh).intersection(targetTokens).isNotEmpty) continue;
+        if (strict && _tokens(c.zh).intersection(targetTokens).isNotEmpty) {
+          continue;
+        }
         out.add(value(c));
       }
       return out;
     }
+
     var distractors = pick(strict: true);
     if (distractors.length < 3) distractors = pick(strict: false);
     final answerIndex = index % 4;
@@ -120,8 +134,6 @@ class UnitLoader {
   }
 
   /// 释义按分隔符切成词段，用于判断两个释义是否含义重叠。
-  static Set<String> _tokens(String zh) => zh
-      .split(RegExp(r'[；;，,（）()\s]+'))
-      .where((t) => t.isNotEmpty)
-      .toSet();
+  static Set<String> _tokens(String zh) =>
+      zh.split(RegExp(r'[；;，,（）()\s]+')).where((t) => t.isNotEmpty).toSet();
 }

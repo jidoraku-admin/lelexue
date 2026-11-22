@@ -4,7 +4,12 @@ import 'package:flutter/services.dart' show rootBundle;
 
 /// 单元索引（assets/data/index.json，由导出脚本生成）。
 class UnitIndexEntry {
-  const UnitIndexEntry({required this.assetPath, required this.code, required this.title, required this.validation});
+  const UnitIndexEntry({
+    required this.assetPath,
+    required this.code,
+    required this.title,
+    required this.validation,
+  });
 
   final String assetPath;
   final String code;

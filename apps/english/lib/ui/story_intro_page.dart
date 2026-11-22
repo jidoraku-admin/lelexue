@@ -17,7 +17,9 @@ class StoryIntroPage extends StatefulWidget {
 }
 
 class _StoryIntroPageState extends State<StoryIntroPage> {
-  late final Future<Unit> _future = const UnitRepository().load(widget.assetPath);
+  late final Future<Unit> _future = const UnitRepository().load(
+    widget.assetPath,
+  );
   int _shown = 0; // 已经出场的角色数
   int _line = 0; // 当前台词序号（0 为旁白）
   Timer? _timer;
@@ -60,8 +62,12 @@ class _StoryIntroPageState extends State<StoryIntroPage> {
       body: FutureBuilder<Unit>(
         future: _future,
         builder: (context, snapshot) {
-          if (snapshot.hasError) return Center(child: Text('加载失败：${snapshot.error}'));
-          if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
+          if (snapshot.hasError) {
+            return Center(child: Text('加载失败：${snapshot.error}'));
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
           final unit = _unit = snapshot.data!;
           final chars = unit.characters;
           final isEnd = _line >= chars.length;
@@ -73,7 +79,10 @@ class _StoryIntroPageState extends State<StoryIntroPage> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    SvgPicture.asset('assets/art/gate_bg.svg', fit: BoxFit.cover),
+                    SvgPicture.asset(
+                      'assets/art/gate_bg.svg',
+                      fit: BoxFit.cover,
+                    ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
@@ -86,13 +95,24 @@ class _StoryIntroPageState extends State<StoryIntroPage> {
                               AnimatedSlide(
                                 duration: const Duration(milliseconds: 600),
                                 curve: Curves.easeOutBack,
-                                offset: i < _shown ? Offset.zero : const Offset(-1.5, 0),
+                                offset: i < _shown
+                                    ? Offset.zero
+                                    : const Offset(-1.5, 0),
                                 child: AnimatedOpacity(
                                   duration: const Duration(milliseconds: 400),
                                   opacity: i < _shown ? 1 : 0,
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                                    child: SvgPicture.asset(chars[i].asset, width: 96, height: 96),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                    ),
+                                    child: _Bounce(
+                                      speaking: _line == i + 1,
+                                      child: SvgPicture.asset(
+                                        chars[i].asset,
+                                        width: 96,
+                                        height: 96,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -112,18 +132,27 @@ class _StoryIntroPageState extends State<StoryIntroPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     if (speaker != null)
-                      Text(speaker.name, style: Theme.of(context).textTheme.labelLarge),
+                      Text(
+                        speaker.name,
+                        style: Theme.of(context).textTheme.labelLarge,
+                      ),
                     const SizedBox(height: 4),
                     AnimatedSwitcher(
                       duration: const Duration(milliseconds: 250),
-                      child: Text(text, key: ValueKey(_line), style: Theme.of(context).textTheme.titleMedium),
+                      child: Text(
+                        text,
+                        key: ValueKey(_line),
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                     ),
                     const SizedBox(height: 16),
                     FilledButton(
                       key: const ValueKey('story-next'),
                       onPressed: _shown < chars.length && _line == 0
                           ? null
-                          : () => isEnd ? Navigator.of(context).pop() : _next(unit),
+                          : () => isEnd
+                                ? Navigator.of(context).pop()
+                                : _next(unit),
                       child: Text(isEnd ? '开始学习' : '下一句'),
                     ),
                   ],
@@ -133,6 +162,53 @@ class _StoryIntroPageState extends State<StoryIntroPage> {
           );
         },
       ),
+    );
+  }
+}
+
+/// 角色待机时轻微弹跳；正在说话时放大并加快，让画面动起来。
+class _Bounce extends StatefulWidget {
+  const _Bounce({required this.speaking, required this.child});
+
+  final bool speaking;
+  final Widget child;
+
+  @override
+  State<_Bounce> createState() => _BounceState();
+}
+
+class _BounceState extends State<_Bounce> with SingleTickerProviderStateMixin {
+  late final AnimationController _c = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 600),
+  )..repeat(reverse: true);
+
+  @override
+  void didUpdateWidget(covariant _Bounce old) {
+    super.didUpdateWidget(old);
+    _c.duration = Duration(milliseconds: widget.speaking ? 260 : 600);
+    _c.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _c,
+      builder: (context, child) {
+        final lift = -10 * _c.value;
+        return AnimatedScale(
+          duration: const Duration(milliseconds: 200),
+          scale: widget.speaking ? 1.15 : 1,
+          child: Transform.translate(offset: Offset(0, lift), child: child),
+        );
+      },
+      child: widget.child,
     );
   }
 }
