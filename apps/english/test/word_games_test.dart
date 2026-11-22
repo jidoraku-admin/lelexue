@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lelexue_english/domain/english_game_adapter.dart';
 import 'package:lelexue_english/domain/twenty_questions.dart';
 import 'package:lelexue_english/domain/unit.dart';
 import 'package:lelexue_english/domain/word_uno.dart';
@@ -10,33 +11,34 @@ void main() {
     Word(en: 'bye', zh: '再见', page: 1),
     Word(en: 'good night', zh: '晚安', page: 1),
   ];
+  final items = wordsToItems(words);
 
   group('20 个问题', () {
     test('每个可用问题都能把候选词分开', () {
-      final g = TwentyQuestions(words: words, secretIndex: 0);
+      final g = TwentyQuestions(items: items, secretIndex: 0);
       for (final q in g.availableQuestions()) {
-        final yes = words.where(q.test).length;
-        expect(yes > 0 && yes < words.length, isTrue, reason: q.text);
+        final yes = items.where(q.test).length;
+        expect(yes > 0 && yes < items.length, isTrue, reason: q.text);
       }
     });
 
     test('问题缩小候选词，直到只剩一个就算猜中', () {
-      final g = TwentyQuestions(words: words, secretIndex: 3); // good night
-      final lengthQ = YesNoQuestion('超过 4 个字母吗？', (w) => w.en.length > 4);
+      final g = TwentyQuestions(items: items, secretIndex: 3); // good night
+      final lengthQ = YesNoQuestion('超过 4 个字母吗？', (w) => w.text.length > 4);
       expect(g.ask(lengthQ), isTrue);
-      expect(g.remainingCandidates, lessThan(words.length));
-      final spaceQ = YesNoQuestion('是词组吗？', (w) => w.en.contains(' '));
+      expect(g.remainingCandidates, lessThan(items.length));
+      final spaceQ = YesNoQuestion('是词组吗？', (w) => w.text.contains(' '));
       expect(g.ask(spaceQ), isTrue);
       expect(g.solved, isTrue);
       expect(g.isOver, isTrue);
     });
 
     test('猜错不结束，猜中即胜利，超过 20 次提问后结束', () {
-      final g = TwentyQuestions(words: words, secretIndex: 0, maxQuestions: 2);
-      expect(g.guess(words[1]), isFalse);
-      expect(g.candidatesContain(words[1]), isFalse, reason: '猜错的词应被排除');
+      final g = TwentyQuestions(items: items, secretIndex: 0, maxQuestions: 2);
+      expect(g.guess(items[1]), isFalse);
+      expect(g.candidatesContain(items[1]), isFalse, reason: '猜错的词应被排除');
       expect(g.isOver, isFalse);
-      expect(g.guess(words[0]), isTrue);
+      expect(g.guess(items[0]), isTrue);
       expect(g.isWon, isTrue);
     });
 
@@ -47,14 +49,14 @@ void main() {
 
   group('单词 UNO', () {
     test('牌数正确：每个词两张加两张万能牌，手牌加摸牌堆加顶牌等于总数', () {
-      final g = WordUno.fromWords(words, pairs: 4, seed: 1);
+      final g = WordUno.fromItems(items, pairs: 4, seed: 1);
       expect(g.hand.length + g.drawPile.length + 1, 10);
-      final noWild = WordUno.fromWords(words, pairs: 4, wilds: 0, seed: 1);
+      final noWild = WordUno.fromItems(items, pairs: 4, wilds: 0, seed: 1);
       expect(noWild.hand.length + noWild.drawPile.length + 1, 8);
     });
 
     test('万能牌任何时候都能出，但必须选颜色；选色后顶牌变成该颜色', () {
-      final g = WordUno.fromWords(words, pairs: 4, seed: 4);
+      final g = WordUno.fromItems(items, pairs: 4, seed: 4);
       // 手里放一张万能牌，保证可测
       g.hand.add(UnoCard.wild);
       final wild = g.hand.last;
@@ -66,13 +68,13 @@ void main() {
 
     test('开局顶牌不是万能牌', () {
       for (var seed = 0; seed < 50; seed++) {
-        final g = WordUno.fromWords(words, pairs: 4, seed: seed);
+        final g = WordUno.fromItems(items, pairs: 4, seed: seed);
         expect(g.top.isWild, isFalse, reason: 'seed $seed');
       }
     });
 
     test('只能出与顶牌同色或互为一对的牌，出牌后顶牌更新', () {
-      final g = WordUno.fromWords(words, pairs: 4, seed: 2);
+      final g = WordUno.fromItems(items, pairs: 4, seed: 2);
       final playable = g.hand.where(g.canPlay).toList();
       for (final c in g.hand) {
         final ok = c.color == g.top.color || c.pairId == g.top.pairId;
@@ -86,7 +88,7 @@ void main() {
     });
 
     test('不能出的牌不能出；摸牌可以补充手牌；手牌出完即胜利', () {
-      final g = WordUno.fromWords(words, pairs: 2, seed: 3);
+      final g = WordUno.fromItems(items, pairs: 2, seed: 3);
       final blocked = g.hand.where((c) => !g.canPlay(c)).toList();
       if (blocked.isNotEmpty) {
         expect(g.play(blocked.first), isFalse);
@@ -106,7 +108,7 @@ void main() {
 
     test('按规则一直出，所有牌局都能出完（不会卡死）', () {
       for (var seed = 0; seed < 100; seed++) {
-        final g = WordUno.fromWords(words, pairs: 4, seed: seed);
+        final g = WordUno.fromItems(items, pairs: 4, seed: seed);
         var guard = 0;
         while (!g.isWon && guard++ < 5000) {
           if (!_playOneTurn(g)) break;

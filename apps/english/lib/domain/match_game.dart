@@ -1,7 +1,6 @@
 import 'dart:math';
 
-import 'falling_round.dart' show pointsForStreak;
-import 'unit.dart';
+import 'game_item.dart';
 
 /// 翻卡配对：英文卡与中文卡成对，翻开两张，相同则配对成功，不同则翻回。
 class MatchCard {
@@ -22,9 +21,10 @@ class MatchCard {
 enum FlipOutcome { ignored, firstOpen, matched, mismatch }
 
 class MatchGame {
-  MatchGame._(this.cards);
+  MatchGame._(this.cards, this._scoreForStreak);
 
   final List<MatchCard> cards;
+  final int Function(int streak) _scoreForStreak;
   int? _open;
   List<int>? _pendingMismatch;
   int moves = 0;
@@ -32,22 +32,23 @@ class MatchGame {
   int bestStreak = 0;
   int points = 0;
 
-  /// 用单元词表生成一局。取前 [pairs] 个词，每个词做成一对卡。
-  factory MatchGame.fromWords(List<Word> words, {int pairs = 8, int seed = 0}) {
-    final chosen = words.take(pairs).toList();
+  /// 用题目生成一局。取前 [pairs] 个题目，每个题目做成一对卡。计分规则由调用方注入。
+  factory MatchGame.fromItems(
+    List<GameItem> items, {
+    required int Function(int streak) scoreForStreak,
+    int pairs = 8,
+    int seed = 0,
+  }) {
+    final chosen = items.take(pairs).toList();
     final cards = <MatchCard>[];
     for (var i = 0; i < chosen.length; i++) {
-      cards.add(MatchCard(pairId: i, text: chosen[i].en, isEnglish: true));
+      cards.add(MatchCard(pairId: i, text: chosen[i].text, isEnglish: true));
       cards.add(
-        MatchCard(
-          pairId: i,
-          text: shortMeaning(chosen[i].zh),
-          isEnglish: false,
-        ),
+        MatchCard(pairId: i, text: chosen[i].label, isEnglish: false),
       );
     }
     cards.shuffle(Random(seed));
-    return MatchGame._(cards);
+    return MatchGame._(cards, scoreForStreak);
   }
 
   bool get isComplete => cards.every((c) => c.matched);
@@ -74,7 +75,7 @@ class MatchGame {
       first.matched = true;
       card.matched = true;
       streak++;
-      points += pointsForStreak(streak);
+      points += _scoreForStreak(streak);
       if (streak > bestStreak) bestStreak = streak;
       return FlipOutcome.matched;
     }
@@ -91,11 +92,4 @@ class MatchGame {
     }
     _pendingMismatch = null;
   }
-}
-
-/// 中文释义取第一个义项，并去掉括号里的用法说明，例如 "（用于…）是" 变成 "是"。
-String shortMeaning(String zh) {
-  final noParen = zh.replaceAll(RegExp(r'[（(][^）)]*[）)]'), '').trim();
-  final first = noParen.split(RegExp(r'[；;，,]')).first.trim();
-  return first.isEmpty ? zh : first;
 }

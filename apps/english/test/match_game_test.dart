@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lelexue_english/domain/english_game_adapter.dart';
 import 'package:lelexue_english/domain/match_game.dart';
 import 'package:lelexue_english/domain/unit.dart';
 
@@ -11,7 +12,7 @@ void main() {
   ];
 
   test('每个词生成一对卡，共 8 张', () {
-    final g = MatchGame.fromWords(words, pairs: 4);
+    final g = MatchGame.fromItems(wordsToItems(words), scoreForStreak: pointsForStreak, pairs: 4);
     expect(g.cards.length, 8);
     for (var i = 0; i < 4; i++) {
       final pair = g.cards.where((c) => c.pairId == i).toList();
@@ -28,7 +29,7 @@ void main() {
   });
 
   test('配对成功与不匹配的流程', () {
-    final g = MatchGame.fromWords(words, pairs: 2, seed: 1);
+    final g = MatchGame.fromItems(wordsToItems(words), scoreForStreak: pointsForStreak, pairs: 2, seed: 1);
     final en = g.cards.indexWhere((c) => c.pairId == 0 && c.isEnglish);
     final zh = g.cards.indexWhere((c) => c.pairId == 0 && !c.isEnglish);
     final other = g.cards.indexWhere((c) => c.pairId == 1 && c.isEnglish);
@@ -50,7 +51,7 @@ void main() {
   });
 
   test('全部配对后完成', () {
-    final g = MatchGame.fromWords(words, pairs: 2, seed: 3);
+    final g = MatchGame.fromItems(wordsToItems(words), scoreForStreak: pointsForStreak, pairs: 2, seed: 3);
     for (var id = 0; id < 2; id++) {
       final en = g.cards.indexWhere((c) => c.pairId == id && c.isEnglish);
       final zh = g.cards.indexWhere((c) => c.pairId == id && !c.isEnglish);
@@ -61,7 +62,7 @@ void main() {
   });
 
   test('连对计数：配对成功累加，配错清零，记录最高连对', () {
-    final g = MatchGame.fromWords(words, pairs: 4, seed: 5);
+    final g = MatchGame.fromItems(wordsToItems(words), scoreForStreak: pointsForStreak, pairs: 4, seed: 5);
     void pair(int id) {
       final en = g.cards.indexWhere((c) => c.pairId == id && c.isEnglish);
       final zh = g.cards.indexWhere((c) => c.pairId == id && !c.isEnglish);

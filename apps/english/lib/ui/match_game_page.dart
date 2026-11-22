@@ -4,6 +4,7 @@ import '../data/speech_player.dart';
 import 'word_icon.dart';
 import '../data/unit_repository.dart';
 import '../domain/encouragement.dart';
+import '../domain/english_game_adapter.dart';
 import '../domain/match_game.dart';
 import '../domain/unit.dart';
 
@@ -33,7 +34,11 @@ class _MatchGamePageState extends State<MatchGamePage> {
   int _seed = 0;
 
   void _start(Unit unit) {
-    _game = MatchGame.fromWords(unit.words, seed: _seed);
+    _game = MatchGame.fromItems(
+      wordsToItems(unit.words),
+      scoreForStreak: pointsForStreak,
+      seed: _seed,
+    );
   }
 
   void _restart(Unit unit) {
@@ -71,7 +76,11 @@ class _MatchGamePageState extends State<MatchGamePage> {
             return const Center(child: CircularProgressIndicator());
           }
           final unit = snapshot.data!;
-          _game ??= MatchGame.fromWords(unit.words, seed: _seed);
+          _game ??= MatchGame.fromItems(
+      wordsToItems(unit.words),
+      scoreForStreak: pointsForStreak,
+      seed: _seed,
+    );
           final game = _game!;
           final theme = Theme.of(context);
           return Column(

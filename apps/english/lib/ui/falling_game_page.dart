@@ -8,7 +8,8 @@ import '../data/speech_player.dart';
 import '../data/unit_repository.dart';
 import '../domain/encouragement.dart';
 import '../domain/falling_round.dart';
-import '../domain/match_game.dart' show shortMeaning;
+import '../domain/english_game_adapter.dart';
+import '../domain/game_item.dart';
 import '../domain/unit.dart';
 
 enum FallingKind { frog, plane }
@@ -30,7 +31,7 @@ class FallingGamePage extends StatefulWidget {
 
 class _Falling {
   _Falling(this.word, this.x);
-  final Word word;
+  final GameItem word;
   final double x; // 0..1，屏幕宽度的比例
   double y = 0.16; // 0..1，屏幕高度的比例；从提示文字下方出现
 }
@@ -69,7 +70,12 @@ class _FallingGamePageState extends State<FallingGamePage> {
     _items.clear();
     _tick = 0;
     _toast = null;
-    _round = FallingRound(words: unit.words, goal: _goal, seed: _seed++);
+    _round = FallingRound(
+      items: wordsToItems(unit.words),
+      goal: _goal,
+      scoreForStreak: pointsForStreak,
+      seed: _seed++,
+    );
     setState(() {});
     _timer = Timer.periodic(const Duration(milliseconds: 33), (_) => _step());
   }
@@ -92,13 +98,13 @@ class _FallingGamePageState extends State<FallingGamePage> {
         item.y += _speed.step;
       }
       final escapedTarget = _items.any(
-        (i) => i.y >= _escapeLine && i.word.en == round.target.en,
+        (i) => i.y >= _escapeLine && i.word.id == round.target.id,
       );
       _items.removeWhere((i) => i.y >= _escapeLine);
       if (escapedTarget) {
-        final gone = round.target.en;
+        final gone = round.target.id;
         round.targetEscaped();
-        _items.removeWhere((i) => i.word.en == gone);
+        _items.removeWhere((i) => i.word.id == gone);
         _showToast('目标飞走了，扣一条命');
       }
       if (round.isOver) {
@@ -116,7 +122,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
       ok = round.hit(item.word);
       if (ok) {
         // 目标词的其他副本也一起消失，否则它们会变成干扰项，误扣命。
-        _items.removeWhere((i) => i.word.en == item.word.en);
+        _items.removeWhere((i) => i.word.id == item.word.id);
         _showToast(
           '${praiseFor(_praiseCount++)}  ${comboText(round.streak) ?? ''}'
               .trim(),
@@ -130,7 +136,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
       _timer?.cancel();
     }
     if (ok) {
-      _speech.speak(item.word.en);
+      _speech.speak(item.word.text);
     }
   }
 
@@ -198,7 +204,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
               child: Column(
                 children: [
                   Text(
-                    round.isOver ? '' : '找：${shortMeaning(round.target.zh)}',
+                    round.isOver ? '' : '找：${round.target.label}',
                     style: theme.textTheme.headlineSmall,
                     textAlign: TextAlign.center,
                   ),
@@ -229,7 +235,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
                 top: item.y * c.maxHeight,
                 child: GestureDetector(
                   onTap: () => _tapItem(item, round),
-                  child: _WordBubble(text: item.word.en, isFrog: isFrog),
+                  child: _WordBubble(text: item.word.text, isFrog: isFrog),
                 ),
               ),
             Positioned(
