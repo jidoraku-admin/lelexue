@@ -5,7 +5,7 @@
       "scenario": "镇口的门需要用问候打开。小栗、阿圆、团团依次问候你，你学会打招呼与自我介绍，门才会打开。",
       "sentenceQuestions": [
         {
-          "id": "s-morning",
+          "id": "s-morning", "knowledgePointId": "english.g3.v1.u01.k001",
           "prompt": "早上见到老师，应该说？",
           "options": [
             "Good morning!",
@@ -17,7 +17,7 @@
           "explanation": "早上用 Good morning!（早上好）。"
         },
         {
-          "id": "s-afternoon",
+          "id": "s-afternoon", "knowledgePointId": "english.g3.v1.u01.k001",
           "prompt": "下午见到同学，应该说？",
           "options": [
             "Good night!",
@@ -29,7 +29,7 @@
           "explanation": "下午用 Good afternoon!（下午好）。"
         },
         {
-          "id": "s-evening",
+          "id": "s-evening", "knowledgePointId": "english.g3.v1.u01.k001",
           "prompt": "晚上见到朋友，应该说？",
           "options": [
             "Good evening!",
@@ -41,7 +41,7 @@
           "explanation": "晚上用 Good evening!（晚上好）。"
         },
         {
-          "id": "s-night",
+          "id": "s-night", "knowledgePointId": "english.g3.v1.u01.k001",
           "prompt": "睡觉前对家人说？",
           "options": [
             "Good morning!",
@@ -53,7 +53,7 @@
           "explanation": "睡前用 Good night!（晚安）。"
         },
         {
-          "id": "s-bye",
+          "id": "s-bye", "knowledgePointId": "english.g3.v1.u01.k002",
           "prompt": "离开时对朋友说？",
           "options": [
             "What's your name?",
@@ -65,7 +65,7 @@
           "explanation": "离开时说 Goodbye. 或 Bye.（再见）。"
         },
         {
-          "id": "s-name",
+          "id": "s-name", "knowledgePointId": "english.g3.v1.u01.k004",
           "prompt": "想问对方叫什么名字，应该说？",
           "options": [
             "What's your name?",
@@ -79,7 +79,7 @@
       ],
       "useQuestions": [
         {
-          "id": "u-gate-1",
+          "id": "u-gate-1", "knowledgePointId": "english.g3.v1.u01.k003",
           "prompt": "镇口的小栗先向你打招呼，你回答「你好」，应该说？",
           "options": [
             "Hi.",
@@ -91,7 +91,7 @@
           "explanation": "Hi. 是非正式的问候，与 Hello. 同义。"
         },
         {
-          "id": "u-gate-2",
+          "id": "u-gate-2", "knowledgePointId": "english.g3.v1.u01.k005",
           "prompt": "阿圆问你叫什么，你应该说？",
           "options": [
             "What's your name?",
@@ -103,7 +103,7 @@
           "explanation": "自我介绍用 I'm ___.（我是……）。"
         },
         {
-          "id": "u-gate-3",
+          "id": "u-gate-3", "knowledgePointId": "english.g3.v1.u01.k006",
           "prompt": "完整的自我介绍，你应该说：Hi, ___. I'm ___. 其中第一个空填？",
           "options": [
             "Tom",
@@ -115,7 +115,7 @@
           "explanation": "Hi, ___. 中的空位填对方的名字，例如 Tom。"
         },
         {
-          "id": "u-gate-4",
+          "id": "u-gate-4", "knowledgePointId": "english.g3.v1.u01.k001",
           "prompt": "团团说 Good morning!，你应该回答？",
           "options": [
             "Good night!",
@@ -127,7 +127,7 @@
           "explanation": "对方问候时，用同样的问候语回应。"
         },
         {
-          "id": "u-gate-5",
+          "id": "u-gate-5", "knowledgePointId": "english.g3.v1.u01.k002",
           "prompt": "门打开后，团团要离开，你应该说？",
           "options": [
             "Hello!",
