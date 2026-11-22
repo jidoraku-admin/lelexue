@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:material_ui/material_ui.dart';
 
 import 'core/readings.dart';
@@ -40,19 +42,12 @@ class _FirstSlicePageState extends State<FirstSlicePage> {
   double? _tapStartCm;
   double? _tapEndCm;
 
-  // 停表题输入
-  final _minutesCtrl = TextEditingController();
-  final _secondsCtrl = TextEditingController();
+  // 停表题的表盘点选状态（小表盘分钟数、大表盘秒数）
+  int? _pickedMinutes;
+  double? _pickedSeconds;
 
   SliceQuestion get _q => firstSliceQuestions[_index];
   bool get _finished => _index >= firstSliceQuestions.length;
-
-  @override
-  void dispose() {
-    _minutesCtrl.dispose();
-    _secondsCtrl.dispose();
-    super.dispose();
-  }
 
   void _submit({double? answerCm, double? answerSec}) {
     final correct = judgeQuestion(_q, answerCm: answerCm, answerSec: answerSec);
@@ -72,8 +67,8 @@ class _FirstSlicePageState extends State<FirstSlicePage> {
       _lastCorrect = null;
       _tapStartCm = null;
       _tapEndCm = null;
-      _minutesCtrl.clear();
-      _secondsCtrl.clear();
+      _pickedMinutes = null;
+      _pickedSeconds = null;
     });
   }
 
@@ -157,43 +152,80 @@ class _FirstSlicePageState extends State<FirstSlicePage> {
 
   Widget _buildStopwatch() {
     final answered = _lastCorrect != null;
+    final m = _pickedMinutes;
+    final s = _pickedSeconds;
     return Column(
       children: [
-        const Text('输入两表盘读数：小表盘分钟数，大表盘秒数（0.1 s 分度）。'),
+        const Text('点击表盘读数：左边小表盘选分钟，右边大表盘选秒（0.1 s 分度）。'),
         const SizedBox(height: 8),
-        Row(children: [
-          Expanded(
-            child: TextField(
-              controller: _minutesCtrl,
-              enabled: !answered,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: '分钟'),
-            ),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          _buildDial(
+            caption: '分钟',
+            size: 140,
+            major: 10,
+            minor: 1,
+            labels: List.generate(10, (i) => '$i'),
+            pointerFraction: m == null ? null : m / 10,
+            enabled: !answered,
+            onTapAt: (dx, dy) => setState(() => _pickedMinutes = minutesFromDial(dx, dy)),
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: TextField(
-              controller: _secondsCtrl,
-              enabled: !answered,
-              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-              decoration: const InputDecoration(labelText: '秒（0–59.9）'),
-            ),
+          _buildDial(
+            caption: '秒',
+            size: 140,
+            major: 6,
+            minor: 10,
+            labels: List.generate(6, (i) => '${i * 10}'),
+            pointerFraction: s == null ? null : s / 60,
+            enabled: !answered,
+            onTapAt: (dx, dy) => setState(() => _pickedSeconds = secondsFromDial(dx, dy)),
           ),
         ]),
         const SizedBox(height: 8),
-        if (!answered)
+        Text(m == null || s == null
+            ? '读数：${m == null ? '- 分' : '$m 分'} ${s == null ? '- 秒' : '${s.toStringAsFixed(1)} 秒'}'
+            : '读数：$m 分 ${s.toStringAsFixed(1)} 秒'),
+        const SizedBox(height: 8),
+        if (!answered && m != null && s != null)
           FilledButton(
-            onPressed: () {
-              final m = int.tryParse(_minutesCtrl.text.trim());
-              final s = double.tryParse(_secondsCtrl.text.trim());
-              if (m == null || s == null || s < 0 || s >= 60) {
-                setState(() => _feedback = '请输入有效的分钟与秒数（秒在 0 到 59.9 之间）。');
-                return;
-              }
-              _submit(answerSec: stopwatchTotalSeconds(minutes: m, seconds: s));
-            },
+            onPressed: () => _submit(answerSec: stopwatchTotalSeconds(minutes: m, seconds: s)),
             child: const Text('确认'),
           ),
+      ],
+    );
+  }
+
+  /// 可点击的表盘。点击位置换算为圆心角，再由 [onTapAt] 转成数值。
+  Widget _buildDial({
+    required String caption,
+    required double size,
+    required int major,
+    required int minor,
+    required List<String> labels,
+    required double? pointerFraction,
+    required bool enabled,
+    required void Function(double dx, double dy) onTapAt,
+  }) {
+    return Column(
+      children: [
+        Text(caption),
+        const SizedBox(height: 4),
+        GestureDetector(
+          onTapDown: enabled
+              ? (d) {
+                  final c = size / 2;
+                  onTapAt(d.localPosition.dx - c, d.localPosition.dy - c);
+                }
+              : null,
+          child: CustomPaint(
+            size: Size(size, size),
+            painter: _DialPainter(
+              major: major,
+              minor: minor,
+              labels: labels,
+              pointerFraction: pointerFraction,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -223,6 +255,73 @@ class _FirstSlicePageState extends State<FirstSlicePage> {
       ],
     );
   }
+}
+
+/// 表盘绘制：外圈刻度与数字，指针指向已选位置（pointerFraction 为圆周比例，0 在正上方）。
+class _DialPainter extends CustomPainter {
+  _DialPainter({
+    required this.major,
+    required this.minor,
+    required this.labels,
+    this.pointerFraction,
+  });
+  final int major;
+  final int minor;
+  final List<String> labels;
+  final double? pointerFraction;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = size.center(Offset.zero);
+    final radius = size.shortestSide / 2 - 4;
+    canvas.drawCircle(center, radius, Paint()..color = const Color(0xFFF5F5F5));
+    canvas.drawCircle(
+        center,
+        radius,
+        Paint()
+          ..color = Colors.black54
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2);
+
+    Offset polar(double frac, double r) {
+      final a = frac * 2 * math.pi - math.pi / 2;
+      return center + Offset(math.cos(a), math.sin(a)) * r;
+    }
+
+    final total = major * minor;
+    final tickPaint = Paint()..color = Colors.black87..strokeWidth = 1;
+    for (int i = 0; i < total; i++) {
+      final isMajor = i % minor == 0;
+      final frac = i / total;
+      canvas.drawLine(polar(frac, radius),
+          polar(frac, radius - (isMajor ? 12 : 6)), tickPaint);
+    }
+    for (int i = 0; i < major; i++) {
+      final tp = TextPainter(
+        text: TextSpan(
+            text: labels[i],
+            style: const TextStyle(color: Colors.black87, fontSize: 12)),
+        textDirection: TextDirection.ltr,
+      )..layout();
+      final p = polar(i / major, radius - 26) - Offset(tp.width / 2, tp.height / 2);
+      tp.paint(canvas, p);
+    }
+    if (pointerFraction != null) {
+      canvas.drawLine(
+          center,
+          polar(pointerFraction!, radius - 18),
+          Paint()
+            ..color = Colors.indigo
+            ..strokeWidth = 3);
+    }
+    canvas.drawCircle(center, 4, Paint()..color = Colors.indigo);
+  }
+
+  @override
+  bool shouldRepaint(covariant _DialPainter old) =>
+      old.pointerFraction != pointerFraction ||
+      old.major != major ||
+      old.minor != minor;
 }
 
 class _RulerPainter extends CustomPainter {

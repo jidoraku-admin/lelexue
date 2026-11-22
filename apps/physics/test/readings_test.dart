@@ -24,6 +24,20 @@ void main() {
       expect(isCorrectStopwatch(83.45, 83.4), isTrue);
       expect(isCorrectStopwatch(83.6, 83.4), isFalse);
     });
+    test('表盘点击位置换算：正上方为 0，顺时针递增', () {
+      // 圆心 (0,0)，y 向下为正
+      expect(secondsFromDial(0, -50), closeTo(0.0, 1e-9)); // 12 点
+      expect(secondsFromDial(50, 0), closeTo(15.0, 1e-9)); // 3 点
+      expect(secondsFromDial(0, 50), closeTo(30.0, 1e-9)); // 6 点
+      expect(secondsFromDial(-50, 0), closeTo(45.0, 1e-9)); // 9 点
+      expect(secondsFromDial(-1, -50), closeTo(59.8, 1e-9)); // 12 点左侧约 1.1°，即 59.8 s
+      expect(secondsFromDial(-5, -50), closeTo(59.0, 1e-9)); // 约 59.0 s
+    });
+    test('表盘分钟取最近刻度', () {
+      expect(minutesFromDial(0, -50), 0);
+      // 72° 方向 = 2 分钟刻度（每格 36°）
+      expect(minutesFromDial(50 * 0.951056516, -50 * 0.309016994), 2);
+    });
   });
 
   group('题目判定', () {

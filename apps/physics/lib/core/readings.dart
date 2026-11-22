@@ -3,6 +3,8 @@
 // 教材依据：人教版八年级上册第一章第 1 节（长度和时间的测量）。
 // 题目与数值为原创，不入库教材原文。
 
+import 'dart:math' as math;
+
 /// 刻度尺的分度值（cm）。1 mm。
 const double rulerDivisionCm = 0.1;
 
@@ -36,4 +38,26 @@ double stopwatchTotalSeconds({required int minutes, required double seconds}) {
     throw ArgumentError.value(seconds, 'seconds', 'must be in [0, 60)');
   }
   return minutes * 60 + seconds;
+}
+
+/// 表盘点击位置换算为顺时针角度（弧度，0 为正上方，范围 [0, 2π)）。
+///
+/// [dx]、[dy] 为点击点相对表盘圆心的坐标，y 轴向下为正。
+double dialAngleRad(double dx, double dy) {
+  var a = math.atan2(dx, -dy);
+  if (a < 0) a += 2 * math.pi;
+  return a;
+}
+
+/// 大表盘：点击位置对应的秒数，按 0.1 s 分度取整，范围 [0, 60)。
+double secondsFromDial(double dx, double dy) {
+  final frac = dialAngleRad(dx, dy) / (2 * math.pi);
+  final tenths = (frac * 600).round() % 600;
+  return tenths / 10.0;
+}
+
+/// 小表盘：点击位置对应的分钟数，取最近刻度，范围 0–9。
+int minutesFromDial(double dx, double dy) {
+  final frac = dialAngleRad(dx, dy) / (2 * math.pi);
+  return (frac * 10).round() % 10;
 }
