@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <ellipse cx="128" cy="232" rx="70" ry="9" fill="#2b2118" opacity="0.15"/>
+  <path d="M85.6 58.0 H170.4 Q206.4 58.0 206.4 94.0 V142.0 Q206.4 178.0 170.4 178.0 H119.6 L83.6 208.0 L89.6 178.0 H85.6 Q49.6 178.0 49.6 142.0 V94.0 Q49.6 58.0 85.6 58.0 Z"
+        fill="#ffffff" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
+  <text text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="34" font-weight="700" fill="#e8552f"><tspan x="128" y="110.7">Good</tspan><tspan x="128" y="149.8">night!</tspan></text>
+  <path d="M196 56 L204 46 M212 34 L220 24 M226 54 L234 46" stroke="#2b2118" stroke-width="4" stroke-linecap="round"/>
+</svg>
