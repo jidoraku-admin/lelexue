@@ -28,7 +28,7 @@
 | --- | --- | --- |
 | `stage` | `primary`（小学）、`junior`（初中）、`senior`（高中） | 学段 |
 | `grade` | 1–12 整数 | 小学 1–6，初中 7–9，高中 10–12。例如三年级为 3，初二为 8，初三为 9 |
-| `volume` | 1 或 2 | 册次：1 为上册，2 为下册。化学初三上为 `stage=junior, grade=9, volume=1` |
+| `volume` | 1 或 2 | 册次：1 为上册，2 为下册。化学初三上为 `stage=junior, grade=9, volume=1`，物理初二上为 `stage=junior, grade=8, volume=1` |
 
 起步学段以 0007 为准（英语、数学、语文小学三年级；物理初二上；化学初三上）。
 
