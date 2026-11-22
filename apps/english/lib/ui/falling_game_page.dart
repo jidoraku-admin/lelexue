@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../data/speech_player.dart';
@@ -31,7 +32,7 @@ class _Falling {
   _Falling(this.word, this.x);
   final Word word;
   final double x; // 0..1，屏幕宽度的比例
-  double y = -0.1; // 0..1，屏幕高度的比例
+  double y = 0.16; // 0..1，屏幕高度的比例；从提示文字下方出现
 }
 
 class _FallingGamePageState extends State<FallingGamePage> {
@@ -51,6 +52,9 @@ class _FallingGamePageState extends State<FallingGamePage> {
   int _seed = 0;
 
   static const int _goal = 10;
+  static const double _bubbleMaxWidth = 150;
+  // 落到这条线以下算飞走，线在主角上方，气泡不会被挡住。
+  static const double _escapeLine = 0.86;
 
   @override
   void dispose() {
@@ -87,12 +91,15 @@ class _FallingGamePageState extends State<FallingGamePage> {
       for (final item in _items) {
         item.y += _speed.step;
       }
-      final escaped = _items.where((i) => i.y >= 1).toList();
-      for (final item in escaped) {
-        _items.remove(item);
-        if (item.word.en == round.target.en) {
-          round.targetEscaped();
-        }
+      final escapedTarget = _items.any(
+        (i) => i.y >= _escapeLine && i.word.en == round.target.en,
+      );
+      _items.removeWhere((i) => i.y >= _escapeLine);
+      if (escapedTarget) {
+        final gone = round.target.en;
+        round.targetEscaped();
+        _items.removeWhere((i) => i.word.en == gone);
+        _showToast('目标飞走了，扣一条命');
       }
       if (round.isOver) {
         _timer?.cancel();
@@ -106,13 +113,17 @@ class _FallingGamePageState extends State<FallingGamePage> {
     }
     late bool ok;
     setState(() {
-      _items.remove(item);
       ok = round.hit(item.word);
       if (ok) {
+        // 目标词的其他副本也一起消失，否则它们会变成干扰项，误扣命。
+        _items.removeWhere((i) => i.word.en == item.word.en);
         _showToast(
           '${praiseFor(_praiseCount++)}  ${comboText(round.streak) ?? ''}'
               .trim(),
         );
+      } else {
+        _items.remove(item);
+        _showToast('不是这个哦，扣一条命');
       }
     });
     if (round.isOver) {
@@ -214,7 +225,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
               ),
             for (final item in _items)
               Positioned(
-                left: item.x * c.maxWidth - 40,
+                left: 8 + item.x * (c.maxWidth - 16 - _bubbleMaxWidth),
                 top: item.y * c.maxHeight,
                 child: GestureDetector(
                   onTap: () => _tapItem(item, round),
@@ -225,12 +236,12 @@ class _FallingGamePageState extends State<FallingGamePage> {
               bottom: 16,
               left: 0,
               right: 0,
-              child: Icon(
-                isFrog ? Icons.pest_control : Icons.airplanemode_active,
-                size: 56,
-                color: isFrog
-                    ? Colors.green.shade800
-                    : Colors.blueGrey.shade700,
+              child: Center(
+                child: SvgPicture.asset(
+                  isFrog ? 'assets/art/frog.svg' : 'assets/art/plane.svg',
+                  width: 84,
+                  height: 84,
+                ),
               ),
             ),
             if (round.isOver)
@@ -298,6 +309,14 @@ class _SpeedPanel extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Text('怎么玩', style: theme.textTheme.headlineSmall),
+            const SizedBox(height: 8),
+            Text(
+              '上面写着中文，点中屏幕上对应的英文单词。'
+              '点对得分，连续点对会加分；点错或目标飞走扣一条命；凑够 10 个就通关。',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
             Text('选择速度', style: theme.textTheme.headlineSmall),
             const SizedBox(height: 16),
             Wrap(
@@ -329,7 +348,7 @@ class _WordBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minWidth: 80),
+      constraints: const BoxConstraints(minWidth: 80, maxWidth: 150),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: isFrog ? Colors.lime.shade300 : Colors.white,
@@ -341,7 +360,12 @@ class _WordBubble extends StatelessWidget {
         children: [
           Icon(isFrog ? Icons.bug_report : Icons.flight, size: 18),
           const SizedBox(width: 4),
-          Text(text, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Flexible(
+            child: Text(
+              text,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
     );
