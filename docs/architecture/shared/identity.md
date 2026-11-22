@@ -1,58 +1,70 @@
-# 共享身份 identity（接口草案 v0.1）
+# 共享身份 identity（接口草案 v0.2）
 
-> 负责：共通对话（#23）。状态：草案，待学科对话与技术总监确认。
+> 负责：共通对话（#23）。状态：修订稿，待项目总监复审。
+> 身份模型以英语设计为准（#7，2026-11-20 留言第 1、5 条；真人 #23 回复确认）。
 
-## 1. 目标
+## 1. 账号类型
 
-- 一个用户在五个学科间只有一个身份，学习进度仍按学科分开存储。
-- 支持母子账号结构：母账号是付费与管理主体（家庭、班级或培训机构），子账号是学习主体，不单独付费（见 0004 第一节）。
-- 客户端覆盖 Flutter（Android、iOS、Web）与微信小程序入口。
+| 类型 | 说明 | 付费 | 席位 |
+| --- | --- | --- | --- |
+| 家长账号（母账号） | 实名，完成监护身份核验，是付费与管理主体。收费权益挂在家长账号上 | 是 | 每位家长最多 3 名学生（英语设计） |
+| 班级或机构账号（母账号） | 真人 2026-11-22 确认纳入：母账号可以是班级或机构，按席位计价 | 是 | 按购买席位，上限后台配置 |
+| 学生账号（子账号） | 学习主体，从属于一个母账号，不单独付费 | 否 | 占用一个席位 |
 
-## 2. 核心概念
+- 学生账号不能独立注册、付费、开启推送（#7 第 1 条）。
+- 学生使用字母账号登录：4–16 位小写字母与数字，不含姓名、生日、学校名。口令由家长设置。系统不收集学生手机号。
 
-| 概念 | 说明 |
+## 2. 核心对象
+
+| 对象 | 说明 |
 | --- | --- |
-| `UserId` | 全局唯一、不可复用的用户 ID，学科数据只引用它，不保存个人资料 |
-| `Profile` | 基础资料：昵称、头像、学段（学段覆盖范围由真人确认，接口只保留字段） |
-| `Seat` | 席位。母账号按席位计价；子账号占用一个席位 |
-| `Link` | 母子关系：`parentUserId` 与 `childUserId`，一个子账号同一时间只属于一个母账号 |
-| `SubjectCode` | 学科编码：`english`、`math`、`chinese`、`physics`、`chemistry`，用于标识学科数据归属 |
+| `UserId` | 全局唯一、不复用。学科数据只引用它，不保存个人资料 |
+| `Profile` | 昵称、头像、`stage`、`grade`（见 README 第 1.2 节） |
+| `Guardian` | 家长身份核验结果（实名状态、核验时间） |
+| `Seat` | 席位：总数、已用、到期时间 |
+| `Link` | 母子关系：`parentUserId` 与 `studentUserId`，一个学生同一时间只属于一个母账号 |
+| `Entitlement` | 权益：挂在母账号上，包含付费状态与试用期状态，学生继承 |
+| `SubjectCode` | `english`、`math`、`chinese`、`physics`、`chemistry` |
 
 ## 3. 接口草案（逻辑接口，不限定传输协议）
 
 ```text
-Identity.login(credential) -> Session
+Identity.registerParent(credential, guardianVerification) -> UserId
+Identity.login(credential) -> Session                      // 家长与学生共用入口，凭证类型不同
 Identity.refresh(session) -> Session
 Identity.logout(session) -> void
+
+Identity.createStudent(parentUserId, profile, loginName) -> UserId   // 占用一个席位，口令由家长设置
+Identity.unlink(parentUserId, studentUserId) -> void
+
 Identity.getProfile(userId) -> Profile
-Identity.updateProfile(userId, patch) -> Profile
-Identity.createChild(parentUserId, profile) -> UserId      // 占用一个席位
-Identity.linkChild(parentUserId, childUserId) -> Link       // 需要子账号确认或监护同意（待法务）
-Identity.unlink(parentUserId, childUserId) -> void
-Identity.listSeats(parentUserId) -> SeatSummary            // 已用、可用、到期
-Identity.resolveSubject(userId, subjectCode) -> SubjectRef // 学科侧用它找到自己的数据分区
+Identity.updateProfile(userId, patch) -> Profile           // stage、grade 等字段由此更新
+
+Identity.getEntitlement(parentUserId) -> Entitlement       // 学生继承家长账号的权益
+Identity.getSeats(accountUserId) -> SeatSummary            // 家长、班级或机构账号
+
+Identity.resolveSubject(userId, subjectCode) -> SubjectRef // 学科服务用它定位自己的数据分区
 ```
 
 说明：
 
-- 学科服务只调用 `resolveSubject` 与 `getProfile`，不直接读取身份库。
-- 微信小程序登录通过同一个 `login` 接口，凭证类型不同（`credential.type`）。
+- 学科服务只调用 `resolveSubject`、`getProfile`、`getEntitlement`，不直接读取身份库。
+- 学生的 `login` 只接受字母账号；家长的 `login` 接受手机号等凭证（具体方式待定）。
+- `createStudent` 只能由母账号发起。学生账号不能调用注册或付费接口。
 
 ## 4. 未成年人与监护（待法务复核）
 
-- 子账号的监护同意、数据最小化收集、推送规则由法务与产品一并确认（见 0004 第三节第 4 条、0006 第三节 3.3）。
-- 草案只预留 `Consent` 记录与 `guardianStatus` 字段，不实现自动判定。
-- 未经复核，`linkChild` 对未成年人的路径保持关闭。
+- 学生账号需要家长监护身份核验，依赖 `Guardian`。
+- 数据最小化：学生账号不收集手机号、学校、联系方式。这些字段不进入任何模型（report-v3 第 6 节）。
+- 未经法务复核，未成年人相关接口保持关闭。
 
 ## 5. 数据与存储
 
-- 身份库只保存账号、资料、席位与母子关系。
-- 不保存学习进度、答题、掌握度；这些归各学科服务。
-- 个人信息字段最小化，具体清单在法务复核后确定。
+- 身份库只保存账号、资料、席位、母子关系与权益。
+- 不保存学习进度、答题、掌握度；这些归各学科库。
 
-## 6. 待确认（在 #23 提出）
+## 6. 待确认
 
-1. 学段字段的取值（待真人确认学段覆盖范围）。
-2. 班级与培训机构是否需要单独的组织对象，还是先用母账号表示。
-3. 席位到期与续费事件由谁触发、通知哪些服务。
-4. 英语现有 `ProgressStore` 的本地用户标识，迁移到 `UserId` 的方式。
+1. 班级与机构的席位上限数值（真人）。
+2. 家长登录凭证的具体方式（待真人确认）。
+3. 英语现有 `ProgressStore` 的本地用户标识，迁移到 `UserId` 的方式（英语对话确认）。
