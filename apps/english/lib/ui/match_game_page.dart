@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../data/speech_player.dart';
 import '../data/unit_repository.dart';
 import '../domain/match_game.dart';
 import '../domain/unit.dart';
@@ -15,6 +16,14 @@ class MatchGamePage extends StatefulWidget {
 }
 
 class _MatchGamePageState extends State<MatchGamePage> {
+  final SpeechPlayer _speech = SpeechPlayer();
+
+  @override
+  void dispose() {
+    _speech.dispose();
+    super.dispose();
+  }
+
   late final Future<Unit> _future = const UnitRepository().load(
     widget.assetPath,
   );
@@ -35,7 +44,9 @@ class _MatchGamePageState extends State<MatchGamePage> {
   void _tap(int index) {
     final game = _game!;
     if (game.hasPendingMismatch) return;
+    final card = game.cards[index];
     setState(() => game.flip(index));
+    if (card.isEnglish) _speech.speak(card.text);
     if (game.hasPendingMismatch) {
       Future.delayed(const Duration(milliseconds: 700), () {
         if (!mounted) return;
@@ -88,9 +99,10 @@ class _MatchGamePageState extends State<MatchGamePage> {
                 ),
               ),
               Expanded(
-                child: GridView.count(
+                child: GridView.extent(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  crossAxisCount: 4,
+                  maxCrossAxisExtent: 84,
+                  childAspectRatio: 1,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                   children: [
