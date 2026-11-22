@@ -5,10 +5,17 @@ import 'unit.dart';
 /// 得分只统计每题首次作答即正确的题目。
 /// 一道题的首次作答结果。
 class FirstAnswer {
-  const FirstAnswer({required this.question, required this.correct});
+  const FirstAnswer({
+    required this.question,
+    required this.correct,
+    this.stage = Stage.word,
+  });
 
   final Question question;
   final bool correct;
+
+  /// 题目所在关卡的类型（如 use 为应用题），用于掌握规则的题型筛选。
+  final Stage stage;
 }
 
 class LevelRun {
@@ -36,7 +43,9 @@ class LevelRun {
     lastChoice = choice;
     lastCorrect = ok;
     if (!_wrongOnCurrent) {
-      firstAnswers.add(FirstAnswer(question: q, correct: ok));
+      firstAnswers.add(
+        FirstAnswer(question: q, correct: ok, stage: level.stage),
+      );
     }
     if (ok) {
       if (!_wrongOnCurrent) firstTryCorrect++;

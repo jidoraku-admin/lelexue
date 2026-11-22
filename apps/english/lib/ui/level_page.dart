@@ -62,7 +62,9 @@ class _LevelPageState extends State<LevelPage> {
     final progress = widget.progress;
     final level = widget.level;
     progress.record(level.id, run.stars);
-    progress.recordAttempts(level.id, run.firstAnswers, DateTime.now());
+    final now = DateTime.now();
+    progress.recordAttempts(level.id, run.firstAnswers, now);
+    progress.applyMastery(now);
     if (level.id == Progress.remediationId && run.passed) {
       progress.remediation.clear();
       progress.stars.remove(Progress.remediationId);
