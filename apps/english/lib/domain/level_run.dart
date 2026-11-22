@@ -3,6 +3,21 @@ import 'unit.dart';
 /// 一次关卡挑战（v0.16 §2.3）。
 /// 答错时保留在本题并给出讲解，直到选中正确选项才进入下一题；
 /// 得分只统计每题首次作答即正确的题目。
+/// 一道题的首次作答结果。
+class FirstAnswer {
+  const FirstAnswer({
+    required this.question,
+    required this.correct,
+    this.stage = Stage.word,
+  });
+
+  final Question question;
+  final bool correct;
+
+  /// 题目所在关卡的类型（如 use 为应用题），用于掌握规则的题型筛选。
+  final Stage stage;
+}
+
 class LevelRun {
   LevelRun(this.level);
 
@@ -10,6 +25,9 @@ class LevelRun {
   int index = 0;
   int firstTryCorrect = 0;
   final List<Question> missed = [];
+
+  /// 每题的首次作答结果（只记录第一次选择），供掌握记录使用。
+  final List<FirstAnswer> firstAnswers = [];
   bool lastCorrect = false;
   int? lastChoice;
   String? feedback;
@@ -24,6 +42,11 @@ class LevelRun {
     final ok = choice == q.answer;
     lastChoice = choice;
     lastCorrect = ok;
+    if (!_wrongOnCurrent) {
+      firstAnswers.add(
+        FirstAnswer(question: q, correct: ok, stage: level.stage),
+      );
+    }
     if (ok) {
       if (!_wrongOnCurrent) firstTryCorrect++;
       feedback = '正确！';

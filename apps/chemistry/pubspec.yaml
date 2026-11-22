@@ -1,0 +1,22 @@
+name: lelexue_chemistry
+description: 乐乐学·化学（初三上，第二单元首个切片）。实现方案见 #20，设计见 docs/product/chemistry.md。
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  material_ui: ^1.11.1
+  shared:
+    path: ../../packages/shared
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
