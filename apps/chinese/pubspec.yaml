@@ -1,0 +1,14 @@
+name: lelexue_chinese
+description: 乐乐学语文子系统（第 1 单元首切片的适配层）。
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  shared:
+    path: ../../packages/shared
+
+dev_dependencies:
+  test: ^1.25.0

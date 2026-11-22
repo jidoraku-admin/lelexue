@@ -1,0 +1,38 @@
+{
+  "subject": "chinese",
+  "stage": "primary",
+  "grade": 3,
+  "volume": 1,
+  "unit": 1,
+  "status": "first-slice-sample",
+  "note": "首切片示例数据。字符取自 docs/data/chinese-g3a-char-lists.json 的识字表与写字表；逐课归属（本课生字）待题库阶段录入后替换。题目为原创，不含课文原文（0003）。",
+  "stepA_match": {
+    "pairs": [
+      { "id": "po", "char": "坡", "pinyin": "pō" },
+      { "id": "qiu", "char": "球", "pinyin": "qiú" },
+      { "id": "zhao", "char": "招", "pinyin": "zhāo" },
+      { "id": "hu", "char": "呼", "pinyin": "hū" }
+    ]
+  },
+  "stepB_cardplay": {
+    "start": { "id": "c-start-zhao", "char": "招", "radical": "扌" },
+    "hand": [
+      { "id": "c-yang", "char": "扬", "radical": "扌" },
+      { "id": "c-du", "char": "读", "radical": "讠" },
+      { "id": "c-qiu", "char": "球", "radical": "王" },
+      { "id": "c-hu", "char": "呼", "radical": "口" }
+    ]
+  },
+  "stepC_falling": {
+    "targets": [
+      { "id": "t-zhao", "char": "招", "radical": "扌" },
+      { "id": "t-yang", "char": "扬", "radical": "扌" }
+    ],
+    "distractors": [
+      { "id": "d-hu", "char": "呼", "radical": "口" },
+      { "id": "d-du", "char": "读", "radical": "讠" },
+      { "id": "d-re", "char": "热", "radical": "灬" }
+    ],
+    "question": "选出偏旁为「扌」的字"
+  }
+}
