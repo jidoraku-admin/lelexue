@@ -1,6 +1,6 @@
 # 英语子系统定稿摘要（v1，供架构师开工与真人审核）
 
-- 状态：技术总监起草，待真人审核。完整细节见 `english.md`、`english-game-design.md`、`english-features.md`。
+- 状态：项目总监起草，待真人审核。完整细节见 `english.md`、`english-game-design.md`、`english-features.md`。
 - 关联：#7、#8、PR #22、0002、0004、0005
 
 ---

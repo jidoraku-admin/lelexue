@@ -1,7 +1,7 @@
 # 英语子系统奖励体系设计
 
 - 版本：v0.1
-- 状态：独立设计稿，待技术总监与真人最终审核
+- 状态：独立设计稿，待项目总监与真人最终审核
 - 负责人：英语子系统产品设计师
 - 关联文档：`english-game-design.md`（游戏设计，v0.2）、`english-viral-growth.md`（裂变设计，v0.2）、`english-user-attraction.md`（吸引与留存，v0.3）、`english.md` §9（平台规则）
 
