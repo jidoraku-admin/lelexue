@@ -4,6 +4,8 @@ import 'package:material_ui/material_ui.dart';
 
 import '../data/unit_repository.dart';
 import '../domain/twenty_questions.dart';
+import '../domain/english_game_adapter.dart';
+import '../domain/game_item.dart';
 import '../domain/unit.dart';
 
 /// 20 个问题：系统想好一个单词，玩家问是/否问题，缩小范围后猜出来。
@@ -27,7 +29,7 @@ class _GuessGamePageState extends State<GuessGamePage> {
   void _newGame(Unit unit) {
     setState(() {
       _game = TwentyQuestions(
-        words: unit.words,
+        items: wordsToItems(unit.words),
         secretIndex: Random(_seed++).nextInt(unit.words.length),
       );
       _log.clear();
@@ -42,11 +44,11 @@ class _GuessGamePageState extends State<GuessGamePage> {
     });
   }
 
-  void _guess(Word w) {
+  void _guess(GameItem w) {
     final game = _game!;
     setState(() {
       final ok = game.guess(w);
-      _log.insert(0, '猜 ${w.en}  →  ${ok ? '猜对了！' : '不对'}');
+      _log.insert(0, '猜 ${w.text}  →  ${ok ? '猜对了！' : '不对'}');
     });
   }
 
@@ -65,7 +67,7 @@ class _GuessGamePageState extends State<GuessGamePage> {
           }
           final unit = snapshot.data!;
           final game = _game ??= TwentyQuestions(
-            words: unit.words,
+            items: wordsToItems(unit.words),
             secretIndex: _seed++ % unit.words.length,
           );
           final theme = Theme.of(context);
@@ -89,8 +91,8 @@ class _GuessGamePageState extends State<GuessGamePage> {
                       children: [
                         Text(
                           game.isWon
-                              ? '猜对了！答案是 ${game.reveal().en}'
-                              : '时间到。答案是 ${game.reveal().en}（${game.reveal().zh}）',
+                              ? '猜对了！答案是 ${game.reveal().text}'
+                              : '时间到。答案是 ${game.reveal().text}（${game.reveal().detail}）',
                           style: theme.textTheme.titleMedium,
                           textAlign: TextAlign.center,
                         ),
@@ -122,12 +124,12 @@ class _GuessGamePageState extends State<GuessGamePage> {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      for (final w in unit.words.where(
+                      for (final w in wordsToItems(unit.words).where(
                         (w) => _stillPossible(game, w),
                       ))
                         OutlinedButton(
                           onPressed: () => _guess(w),
-                          child: Text(w.en),
+                          child: Text(w.text),
                         ),
                     ],
                   ),
@@ -143,6 +145,6 @@ class _GuessGamePageState extends State<GuessGamePage> {
   }
 
   /// 只列出还没被排除的候选词（用于直接猜）。
-  bool _stillPossible(TwentyQuestions game, Word w) =>
+  bool _stillPossible(TwentyQuestions game, GameItem w) =>
       game.candidatesContain(w);
 }

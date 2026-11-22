@@ -1,7 +1,6 @@
 import 'dart:math';
 
-import 'match_game.dart' show shortMeaning;
-import 'unit.dart';
+import 'game_item.dart';
 
 /// 一张牌：英文词或它的中文义。同一个词的英文与中文互为一对。
 class UnoCard {
@@ -42,24 +41,24 @@ class WordUno {
 
   static const int colorCount = 4;
 
-  /// 用词表前 [pairs] 个词建牌。每个词两张（英文、中文），颜色按词序轮换。
-  factory WordUno.fromWords(
-    List<Word> words, {
+  /// 用题目前 [pairs] 个建牌。每个题目两张（主文本、短释义），颜色按顺序轮换。
+  factory WordUno.fromItems(
+    List<GameItem> items, {
     int pairs = 6,
     int wilds = 2,
     int seed = 0,
   }) {
-    final chosen = words.take(pairs).toList();
+    final chosen = items.take(pairs).toList();
     final deck = <UnoCard>[];
     for (var i = 0; i < chosen.length; i++) {
       final color = i % colorCount;
       deck.add(
-        UnoCard(pairId: i, text: chosen[i].en, isEnglish: true, color: color),
+        UnoCard(pairId: i, text: chosen[i].text, isEnglish: true, color: color),
       );
       deck.add(
         UnoCard(
           pairId: i,
-          text: shortMeaning(chosen[i].zh),
+          text: chosen[i].label,
           isEnglish: false,
           color: color,
         ),
