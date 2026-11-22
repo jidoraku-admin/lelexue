@@ -9,12 +9,14 @@
 - 样张：`docs/product/samples/english-hello-2d.svg`（hello，挥手的对话气泡）。
 - 体积参考：矢量原稿约 1 KB；256×256 WebP 约 5 KB。24 张图合计约 130 KB。
 
-## 待真人确认（英语对话在 #7 提出）
-- 图的规则：是"每个词一个小场景"（hello 挥手、name 拿着名牌等），还是统一"气泡 + 词"。样张是按前者画的。
-- 单元 1 的 24 个词，有些是短语或句子（如 Good morning!），需要按规则逐个设计。
+## 已决定（真人，2026-11-22，#7 回复「方案 B」）
+- 图规则：统一用"对话气泡 + 词"（方案 B）。样张 hello 挥手（方案 A）保留为参考，不再用于批量产出。
+- 单元 1 共 24 个词条（含短语与句子，如 Good morning!，以及 am、is、and 等功能词），每个词条一张图。
+- 设计稿：`docs/product/samples/english-words-b-v1/`，文件名为词形小写，空格改为连字符，去掉撇号与标点（如 `good-morning.svg`、`whats.svg`）。映射见同目录 `INDEX.txt`。
+- 已知待审：较长短语（如 Good afternoon!）为缩小字号，是否改为双行，由设计自审与真人定稿时确认。
 
 ## 交接内容
 1. 英语对话按规则设计单元 1 其余 23 张图，先在 #7 提交设计稿（stage:design）。
-2. 图规则经真人确认后，才开始画图。
-3. 画好的 SVG 放在 `apps/english/assets/art/words/`，文件名用词的小写形式（如 `hello.svg`）。
+2. 图规则已确认（方案 B），设计稿按上述规则生成，待真人定稿。
+3. 设计定稿后，SVG 复制到 `apps/english/assets/art/words/`，文件名沿用上述规则。定稿前不放入 apps。
 4. 接入界面前，需要先确认图片加载不影响翻卡与单词 UNO 的流畅度。

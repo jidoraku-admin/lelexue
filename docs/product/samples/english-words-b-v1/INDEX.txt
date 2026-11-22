@@ -1,0 +1,24 @@
+hello	hello.svg
+hi	hi.svg
+I	i.svg
+am	am.svg
+I'm	im.svg
+Miss	miss.svg
+what	what.svg
+is	is.svg
+what's	whats.svg
+your	your.svg
+name	name.svg
+stand up	stand-up.svg
+boy	boy.svg
+and	and.svg
+girl	girl.svg
+sit down	sit-down.svg
+Good morning!	good-morning.svg
+Good afternoon!	good-afternoon.svg
+Good evening!	good-evening.svg
+Mr	mr.svg
+dad	dad.svg
+Goodbye!	goodbye.svg
+Good night!	good-night.svg
+Bye!	bye.svg

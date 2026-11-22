@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <ellipse cx="128" cy="232" rx="106" ry="9" fill="#2b2118" opacity="0.15"/>
+  <path d="M45.1 72.0 H210.9 Q246.9 72.0 246.9 108.0 V128.0 Q246.9 164.0 210.9 164.0 H79.1 L43.1 194.0 L49.1 164.0 H45.1 Q9.1 164.0 9.1 128.0 V108.0 Q9.1 72.0 45.1 72.0 Z"
+        fill="#ffffff" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
+  <text x="128" y="126.6" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="24" font-weight="700" fill="#e8552f">Good afternoon!</text>
+  <path d="M196 56 L204 46 M212 34 L220 24 M226 54 L234 46" stroke="#2b2118" stroke-width="4" stroke-linecap="round"/>
+</svg>
