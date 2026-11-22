@@ -2,7 +2,7 @@
   <ellipse cx="128" cy="232" rx="60" ry="9" fill="#2b2118" opacity="0.15"/>
   <path d="M97.2 72.0 H158.8 Q194.8 72.0 194.8 108.0 V128.0 Q194.8 164.0 158.8 164.0 H131.2 L95.2 194.0 L101.2 164.0 H97.2 Q61.2 164.0 61.2 128.0 V108.0 Q61.2 72.0 97.2 72.0 Z"
         fill="#ffffff" stroke="#2b2118" stroke-width="5" stroke-linejoin="round"/>
-  <text x="128" y="132.4" text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
-        font-size="40" font-weight="700" fill="#e8552f">hello</text>
+  <text text-anchor="middle" font-family="Arial, Helvetica, sans-serif"
+        font-size="40" font-weight="700" fill="#e8552f"><tspan x="128" y="132.4">hello</tspan></text>
   <path d="M196 56 L204 46 M212 34 L220 24 M226 54 L234 46" stroke="#2b2118" stroke-width="4" stroke-linecap="round"/>
 </svg>
