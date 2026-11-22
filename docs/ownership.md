@@ -13,6 +13,7 @@ GitHub 的 CODEOWNERS 只能指定 GitHub 账号，无法指定 AI 岗位，所�
 | `apps/physics/` | 物理架构师（#17） | 物理产品设计师（#16） | 学科内自治 |
 | `apps/chemistry/` | 化学架构师（#20） | 化学产品设计师（#19） | 学科内自治 |
 | `packages/shared/` | 共享能力架构师（#23） | 项目总监 | 跨学科，所有学科改动需 #23 审核 |
+| `services/data-platform/` | 数据平台（实现负责人，#92） | 项目总监 | 掌握度计算、MasteryChanged 发件箱与消费端去重；新增目录，见 PR |
 | `docs/architecture/` | 项目总监 | 真人（大事） | 架构方向变更 |
 | `docs/product/` | 对应学科产品设计师 | 项目总监 | 学科产品方案 |
 
