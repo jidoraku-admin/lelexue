@@ -24,20 +24,20 @@ class TwentyQuestions {
 
   /// 可以问的问题：每个问题都能把候选词分成两部分（否则问了也没用）。
   List<YesNoQuestion> availableQuestions() {
-    final out = <YesNoQuestion>[];
+    // 先放按词长、词组、首字母的问题，再放字母问题，保证问题种类多样。
+    final out = <YesNoQuestion>[
+      YesNoQuestion('超过 4 个字母吗？', (w) => w.en.length > 4),
+      YesNoQuestion('是词组（有空格）吗？', (w) => w.en.contains(' ')),
+      YesNoQuestion(
+        '首字母在 a 到 m 之间吗？',
+        (w) => w.en.toLowerCase().compareTo('n') < 0,
+      ),
+    ];
     for (final c in _lettersInCandidates()) {
       out.add(
         YesNoQuestion('包含字母 $c 吗？', (w) => w.en.toLowerCase().contains(c)),
       );
     }
-    out.add(YesNoQuestion('超过 4 个字母吗？', (w) => w.en.length > 4));
-    out.add(YesNoQuestion('是词组（有空格）吗？', (w) => w.en.contains(' ')));
-    out.add(
-      YesNoQuestion(
-        '首字母在 a 到 m 之间吗？',
-        (w) => w.en.toLowerCase().compareTo('n') < 0,
-      ),
-    );
     return out.where((q) => _splits(q)).toList();
   }
 
@@ -55,7 +55,7 @@ class TwentyQuestions {
     return answer;
   }
 
-  /// 直接猜单词。猜中即胜利，猜错算一次提问。
+  /// 直接猜单词。猜中即胜利；猜错算一次提问，并把这个词排除掉。
   bool guess(Word word) {
     if (isOver) {
       throw StateError('游戏已结束');
@@ -65,6 +65,7 @@ class TwentyQuestions {
       solved = true;
       return true;
     }
+    _candidates = _candidates.where((c) => c.en != word.en).toList();
     return false;
   }
 

@@ -23,6 +23,7 @@ class _WordUnoPageState extends State<WordUnoPage> {
   WordUno? _game;
   int _seed = 0;
   String? _message;
+  UnoCard? _pickingWild; // 正在为哪张万能牌选颜色
 
   @override
   void dispose() {
@@ -34,11 +35,19 @@ class _WordUnoPageState extends State<WordUnoPage> {
     setState(() {
       _game = WordUno.fromWords(unit.words, seed: _seed++);
       _message = null;
+      _pickingWild = null;
     });
   }
 
   void _play(UnoCard card) {
     final game = _game!;
+    if (card.isWild) {
+      setState(() {
+        _pickingWild = card;
+        _message = '万能牌：选一个颜色';
+      });
+      return;
+    }
     if (!game.canPlay(card)) {
       setState(() => _message = '颜色不同，也不是一对。试试别的牌，或者摸一张。');
       return;
@@ -52,11 +61,21 @@ class _WordUnoPageState extends State<WordUnoPage> {
     }
   }
 
+  void _pickColor(int color) {
+    final game = _game!;
+    final card = _pickingWild!;
+    setState(() {
+      game.play(card, chosenColor: color);
+      _pickingWild = null;
+      _message = game.isWon ? '全部出完！你真棒！' : '万能牌换成了${_colorNames[color]}色。';
+    });
+  }
+
   void _draw() {
     final game = _game!;
     setState(() {
       if (!game.draw()) {
-        _message = '摸牌堆空了。';
+        _message = '牌都摸完了。';
       } else {
         _message = '摸了一张牌。';
       }
@@ -93,6 +112,29 @@ class _WordUnoPageState extends State<WordUnoPage> {
                     style: theme.textTheme.titleMedium,
                     textAlign: TextAlign.center,
                   ),
+                if (_pickingWild != null) ...[
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      for (var i = 0; i < _colorNames.length; i++)
+                        ActionChip(
+                          avatar: CircleAvatar(
+                            backgroundColor: _CardTile._colorFor(i),
+                          ),
+                          label: Text(_colorNames[i]),
+                          onPressed: () => _pickColor(i),
+                        ),
+                      ActionChip(
+                        label: const Text('取消'),
+                        onPressed: () => setState(() {
+                          _pickingWild = null;
+                          _message = null;
+                        }),
+                      ),
+                    ],
+                  ),
+                ],
                 const SizedBox(height: 12),
                 Text(
                   '手牌 ${game.hand.length} 张（点能出的牌）',
@@ -126,8 +168,12 @@ class _WordUnoPageState extends State<WordUnoPage> {
                     children: [
                       Expanded(
                         child: FilledButton.tonal(
-                          onPressed: game.drawPile.isEmpty ? null : _draw,
-                          child: Text('摸牌（剩 ${game.drawPile.length}）'),
+                          onPressed: game.canDraw ? _draw : null,
+                          child: Text(
+                            game.drawPile.isEmpty
+                                ? '摸牌（洗回弃牌）'
+                                : '摸牌（剩 ${game.drawPile.length}）',
+                          ),
                         ),
                       ),
                     ],
@@ -149,6 +195,8 @@ class _WordUnoPageState extends State<WordUnoPage> {
   }
 }
 
+const _colorNames = ['红', '蓝', '绿', '橙'];
+
 class _CardTile extends StatelessWidget {
   const _CardTile({
     required this.card,
@@ -164,7 +212,9 @@ class _CardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final base = _colorFor(card.color);
+    final base = card.isWild && card.color < 0
+        ? Colors.blueGrey.shade700
+        : _colorFor(card.color);
     return Opacity(
       opacity: playable ? 1 : 0.5,
       child: InkWell(
