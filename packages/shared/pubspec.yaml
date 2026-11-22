@@ -1,0 +1,7 @@
+name: shared
+description: 乐乐学共享能力（共通玩法框架 game kit 等）。接口草案，见 docs/architecture/shared/game-kit.md。
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
