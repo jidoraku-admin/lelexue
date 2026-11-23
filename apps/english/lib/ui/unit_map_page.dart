@@ -2,6 +2,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../domain/progress.dart';
+import '../domain/xp.dart';
 import '../domain/unit.dart';
 import '../domain/unit_summary.dart';
 import '../data/unit_repository.dart';
@@ -69,6 +70,22 @@ class _UnitMapPageState extends State<UnitMapPage> {
           ),
         ),
         actions: [
+          FutureBuilder<_Loaded>(
+            future: _future,
+            builder: (_, s) {
+              if (!s.hasData) return const SizedBox.shrink();
+              final xp = s.data!.progress.xp;
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Text(
+                    '等级 ${levelForXp(xp)} · 经验 $xp',
+                    key: const ValueKey<String>('xp-badge'),
+                  ),
+                ),
+              );
+            },
+          ),
           IconButton(
             tooltip: '重置进度（仅试玩）',
             icon: const Icon(Icons.restart_alt),
