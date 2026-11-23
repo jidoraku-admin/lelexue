@@ -4,7 +4,7 @@
   "volume": 1,
   "source": "国家中小学智慧教育平台，人教版语文三年级上册电子教材（同 docs/data/chinese-g3a-char-lists.json 的来源页面）。2026-11-24 由语文对话从页面读取，只记字符与拼音，不记课文正文（0003）。",
   "status": "partial",
-  "pending": "第 3 单元的 L9、L10；第 4–8 单元全部未采集",
+  "pending": "第 3 单元 L10 生字未定位；第 4–8 单元全部未采集",
   "units": [
     {
       "unit": 1,
@@ -227,6 +227,37 @@
             "晒"
           ],
           "status": "captured-2026-11-24"
+        },
+        {
+          "lesson": 9,
+          "title": "犟龟",
+          "page": 37,
+          "headerChars": [
+            "陶",
+            "适",
+            "谈",
+            "婚",
+            "庆",
+            "典",
+            "途",
+            "括",
+            "史",
+            "倍",
+            "几",
+            "持",
+            "官"
+          ],
+          "writeGrid": null,
+          "status": "captured-2026-11-24"
+        },
+        {
+          "lesson": 10,
+          "title": "小狗学叫",
+          "page": 41,
+          "headerChars": [],
+          "writeGrid": null,
+          "status": "not-located",
+          "note": "第 41–45 页未找到生字块，需要核对"
         }
       ]
     }
