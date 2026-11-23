@@ -1,0 +1,35 @@
+{
+  "subject": "chinese",
+  "grade": 3,
+  "volume": 1,
+  "unit": 1,
+  "source": "国家中小学智慧教育平台，人教版语文三年级上册电子教材（页面：https://basic.smartedu.cn/tchMaterial/detail?contentType=assets_document&contentId=837f368e-fd4e-404a-ae3f-342d75bc0227&catalogType=tchMaterial&subCatalog=tchMaterial），2026-11-24 由语文对话从页面截图读取。",
+  "note": "只记录每课生字（字符与拼音），不记录课文正文（0003）。拼音未逐字核对。",
+  "lessons": [
+    {
+      "lesson": 1,
+      "title": "大青树下的小学",
+      "page": 7,
+      "chars": ["绒", "昂", "扬", "凤", "墙", "晃", "坡", "球", "招", "呼", "飘", "扬", "读", "热", "闹", "粗", "壮", "洁"],
+      "uniqueChars": 17,
+      "flag": "扬 在两行中各出现一次，待原书核对是否重复"
+    },
+    {
+      "lesson": 2,
+      "title": "花的学校",
+      "page": 10,
+      "chars": ["轰", "湿", "荒", "笛", "罚", "假", "臂"],
+      "gridChars": ["轰", "湿", "润", "笛", "狂", "功", "罚", "互", "碰", "黄", "急"],
+      "flag": "生字标题行与下方字格不一致（荒/润、功 等），需放大核对"
+    },
+    {
+      "lesson": 3,
+      "title": "不懂就要问",
+      "page": 12,
+      "chars": ["诵", "例", "糊", "戒", "厉", "详", "挨"],
+      "flag": "拼音 sòng lì hú jiè lì xiáng āi，已与截图核对"
+    }
+  ],
+  "status": "partial",
+  "pending": "第 1 单元三课以外的课文未采集；全册未采集"
+}
