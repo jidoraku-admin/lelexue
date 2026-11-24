@@ -4,7 +4,7 @@
   "volume": 1,
   "source": "国家中小学智慧教育平台，人教版语文三年级上册电子教材（同 docs/data/chinese-g3a-char-lists.json 的来源页面）。2026-11-24 由语文对话从页面读取，只记字符与拼音，不记课文正文（0003）。",
   "status": "partial",
-  "pending": "第 4 单元 L12 待定位；第 5–8 单元未采集",
+  "pending": "第 5–8 单元未采集",
   "units": [
     {
       "unit": 1,
@@ -287,6 +287,40 @@
           "note": "末两字字形待放大核对"
         },
         {
+          "lesson": 12,
+          "title": "在牛肚子里旅行",
+          "page": 54,
+          "headerChars": [
+            "答",
+            "应",
+            "及",
+            "卷",
+            "骨",
+            "绿",
+            "齿",
+            "嚼",
+            "吞",
+            "胃",
+            "咽"
+          ],
+          "writeGrid": [
+            "旅",
+            "另",
+            "晴",
+            "及",
+            "卷",
+            "救",
+            "命",
+            "尾",
+            "齿",
+            "胃",
+            "管",
+            "刚",
+            "咬"
+          ],
+          "status": "captured-2026-11-24"
+        },
+        {
           "lesson": 13,
           "title": "一块奶酪",
           "page": 53,
@@ -308,15 +342,6 @@
           "writeGrid": null,
           "status": "captured-2026-11-24",
           "note": "生字行位于课文之后（第 53 页），毅 的拼音 yì 已对照"
-        },
-        {
-          "lesson": 12,
-          "title": "在牛肚子里旅行",
-          "page": 54,
-          "headerChars": [],
-          "writeGrid": null,
-          "status": "not-located",
-          "note": "第 49–53 页未找到生字行，需继续核对"
         }
       ]
     }
