@@ -16,7 +16,7 @@
 
 - 静态注册，不用远程配置。hub 维护一张列表 `apps/hub/lib/registry.dart`，每项为 `SubjectModule`：`code`（`SubjectCode`）、`displayName`、`entry`（学科入口 Widget 构造函数）、`progressSummary`（可选，返回进度摘要）。
 - `SubjectModule` 的定义放在 `packages/shared`（共享类型，与 P1 基础类型同包）。
-- 学科以 Dart 包的形式提供入口：每个学科在自己的目录导出一个入口函数，hub 以 path 依赖引用。目录仍按 `docs/ownership.md`，学科只改自己的目录。
+- 学科入口形态：现有学科是可独立运行的 Flutter app（各自 `main.dart`）。学科在自己的目录新增一个可被引用的入口函数 `buildSubjectEntry`（`lib/entry.dart`，并由包的 `lib/<subject>.dart` 导出），独立运行的 `main.dart` 保留。hub 以 path 依赖引用该包。目录仍按 `docs/ownership.md`，学科只改自己的目录。
 - 学科入口签名（最终以 PR 为准）：
 
 ```dart
@@ -47,9 +47,15 @@ Widget buildSubjectEntry({
 | 阶段 | 内容 | 目标 |
 | --- | --- | --- |
 | P0 | apps/hub 空壳：入口页、五张学科卡片、`/subjects/:code` 路由、`SubjectModule` 定义；开发构建使用测试 UserId | 11-25 可访问的入口页 |
-| P1 | 英语作为第一个接入学科（按第 2 节接入，hub 不改英语代码） | 11-26 |
+| P1 | 英语作为第一个接入学科：hub 不改英语游戏逻辑，英语只新增入口导出（`buildSubjectEntry`，按第 2 节） | 11-26 |
 | P2 | 数学、语文、物理、化学依次接入 | 11-27 首切片合并前完成 |
 | P3 | 登录接口就绪后替换测试 UserId | 等身份服务登录接口 PR |
 
 - 每个阶段以 PR 合并为完成。
 - 学科的接入 PR 只改本学科目录，并在本契约定稿后提交。
+
+## 6. 部署目标
+
+- hub 部署到 Cloudflare Pages，独立项目。项目名提议为 `lelexue-hub`（待项目总监确认创建）；地址在项目创建后填写为 `https://<项目名>.pages.dev`，正式域名另定。
+- 学科的 Web 版本仍按各自地址部署，供开发与独立访问；正式用户入口为 hub 地址。学科地址不作为 hub 的依赖。
+- 仓库中现有的 Pages 项目为 `lelexue`（PR 预览地址形如 `https://<hash>.lelexue.pages.dev`），这是现有部署，本契约不改动。
