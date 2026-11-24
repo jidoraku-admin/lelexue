@@ -129,6 +129,7 @@ class UnitLoader {
       prompt: forward ? target.en : target.zh,
       options: options,
       answer: answerIndex,
+      picture: forward ? null : target.en,
       explanation: '${target.en} 的意思是「${target.zh}」（课本第 ${target.page} 页）。',
     );
   }

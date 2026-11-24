@@ -8,6 +8,7 @@ import '../domain/progress.dart';
 import '../data/progress_store.dart';
 import '../domain/unit.dart';
 import '../data/speech_player.dart';
+import 'word_icon.dart';
 
 /// 关卡页：逐题作答，答错即时讲解，结束后结算并保存进度。
 /// 返回 true 表示进度已变化，地图需要刷新。
@@ -138,12 +139,23 @@ class _LevelPageState extends State<LevelPage> {
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   children: [
-                    Text(
-                      q.prompt,
-                      style: theme.textTheme.headlineSmall,
-                      textAlign: TextAlign.center,
-                    ),
-                    if (isEnglish(q.prompt))
+                    if (_showPicture(q))
+                      // 看图选词：静态图标作为题面，不做动画。
+                      Semantics(
+                        label: '看图选词',
+                        child: Icon(
+                          wordIcon(q.picture!),
+                          size: 96,
+                          color: theme.colorScheme.onPrimaryContainer,
+                        ),
+                      )
+                    else
+                      Text(
+                        q.prompt,
+                        style: theme.textTheme.headlineSmall,
+                        textAlign: TextAlign.center,
+                      ),
+                    if (!_showPicture(q) && isEnglish(q.prompt))
                       IconButton(
                         tooltip: '播放',
                         icon: const Icon(Icons.volume_up),
@@ -197,6 +209,10 @@ class _LevelPageState extends State<LevelPage> {
       ),
     );
   }
+
+  /// 看图选词只在有专门图标的词上使用；没有图标的词保留文字题面。
+  bool _showPicture(Question q) =>
+      q.picture != null && hasDedicatedIcon(q.picture!);
 
   bool get _isDialogue =>
       widget.level.stage == Stage.sentence || widget.level.stage == Stage.use;

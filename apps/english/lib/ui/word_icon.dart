@@ -33,6 +33,12 @@ const List<IconData> _fallback = [
   Icons.emoji_objects,
 ];
 
+/// 该单词是否有专门图标（占位的随机图标不算）。看图选词只用有专门图标的词。
+bool hasDedicatedIcon(String en) {
+  final key = en.toLowerCase().replaceAll(RegExp(r'[!?.,]'), '').trim();
+  return _byWord.containsKey(key);
+}
+
 /// 找不到专门图标时，按单词稳定地挑一个，保证同一个词每次都一样。
 IconData wordIcon(String en) {
   final key = en.toLowerCase().replaceAll(RegExp(r'[!?.,]'), '').trim();
