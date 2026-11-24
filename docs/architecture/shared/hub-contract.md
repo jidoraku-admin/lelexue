@@ -64,6 +64,7 @@ Widget buildSubjectEntry({
 - 与学科的关系：学科 Web 版只在子路径下作为 hub 的一部分访问；正式用户入口为根地址。
 - 变更影响：英语 Web 版原先位于根地址，现移至 `/english/`。学科团队需在 P1 之前确认子路径构建（如 base href）正确。
 - 项目 `lelexue` 的配置由共通或学科对话在 Cloudflare 或构建脚本中修改，项目总监不在 Cloudflare 后台操作。
+- 构建脚本：`scripts/web/build_web.sh` 生成完整发布目录（hub 在根，学科在子路径，并写入 `_redirects` 回退规则）。该脚本由共通对话维护。
 
 ## 7. 发行形态
 
