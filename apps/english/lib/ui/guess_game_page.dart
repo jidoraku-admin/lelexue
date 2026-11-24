@@ -82,14 +82,26 @@ class _GuessGamePageState extends State<GuessGamePage> {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
+              // 玩法说明：页面本身要能看懂在玩什么。
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Text(
+                    '系统想好了一个本单元的英文单词。选一个「是/否」问题提问，缩小范围；候选词少的时候可以直接猜。最多问 ${TwentyQuestions.defaultMax} 次。',
+                    style: theme.textTheme.bodyMedium,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
               Text(
                 '已问 ${game.asked}/${TwentyQuestions.defaultMax}　还剩 $candidates 个候选词',
                 style: theme.textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
+              // 候选词默认收起：展开后会直接看到全部答案范围，失去玩的意义。
               ExpansionTile(
-                initiallyExpanded: true,
+                initiallyExpanded: false,
                 title: Text('剩余候选词（$candidates）'),
                 children: [
                   Padding(
