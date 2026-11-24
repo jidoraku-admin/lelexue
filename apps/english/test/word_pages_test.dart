@@ -49,9 +49,12 @@ void main() {
 
     for (var k = 0; k < 25; k++) {
       if (find.text('再来一局').evaluate().isNotEmpty) break;
-      // 候选词不多时直接猜（列表里的第一个），否则提问（第一个问题）。
+      // 先确认待问的问题；候选词不多时直接猜（列表里的第一个），否则选第一个问题。
+      final confirm = find.text('确定提问');
       final guesses = find.byType(OutlinedButton);
-      if (guesses.evaluate().isNotEmpty) {
+      if (confirm.evaluate().isNotEmpty) {
+        await tester.tap(confirm);
+      } else if (guesses.evaluate().isNotEmpty) {
         await tester.tap(guesses.first);
       } else {
         await tester.tap(find.byType(ActionChip).first);

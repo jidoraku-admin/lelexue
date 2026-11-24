@@ -19,6 +19,9 @@ class TwentyQuestions {
   bool solved = false;
 
   int get remainingCandidates => _candidates.length;
+
+  /// 当前仍可能是答案的候选词（只读）。
+  List<GameItem> get candidates => List.unmodifiable(_candidates);
   bool get isOver => solved || asked >= maxQuestions;
   bool get isWon => solved;
 
@@ -26,22 +29,25 @@ class TwentyQuestions {
   List<YesNoQuestion> availableQuestions() {
     // 先放按词长、词组、首字母的问题，再放字母问题，保证问题种类多样。
     final out = <YesNoQuestion>[
-      YesNoQuestion('超过 4 个字母吗？', (w) => w.text.length > 4),
-      YesNoQuestion('是词组（有空格）吗？', (w) => w.text.contains(' ')),
+      YesNoQuestion('系统想的单词超过 4 个字母吗？', (w) => w.text.length > 4),
+      YesNoQuestion('系统想的单词是词组（有空格）吗？', (w) => w.text.contains(' ')),
       YesNoQuestion(
-        '首字母在 a 到 m 之间吗？',
+        '系统想的单词首字母在 a 到 m 之间吗？',
         (w) => w.text.toLowerCase().compareTo('n') < 0,
       ),
     ];
     for (final c in _lettersInCandidates()) {
       out.add(
-        YesNoQuestion('包含字母 $c 吗？', (w) => w.text.toLowerCase().contains(c)),
+        YesNoQuestion(
+          '系统想的单词包含字母 $c 吗？',
+          (w) => w.text.toLowerCase().contains(c),
+        ),
       );
     }
     return out.where((q) => _splits(q)).toList();
   }
 
-  /// 提问。返回答案；候选词只剩一个时，问题自动转为猜测。
+  /// 提问。返回答案。候选词只剩一个时不自动判胜，由玩家用「直接猜」确认。
   bool ask(YesNoQuestion q) {
     if (isOver) {
       throw StateError('游戏已结束');
@@ -49,9 +55,6 @@ class TwentyQuestions {
     asked++;
     final answer = q.test(_secret);
     _candidates = _candidates.where((w) => q.test(w) == answer).toList();
-    if (_candidates.length == 1 && _candidates.first.id == _secret.id) {
-      solved = true;
-    }
     return answer;
   }
 
