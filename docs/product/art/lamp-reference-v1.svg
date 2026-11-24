@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 480" width="400" height="480">
+  <title>灯灯 参考草图 v1（原创，待美术定稿）</title>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE38A"/>
+      <stop offset="100%" stop-color="#FFE38A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- 天线 -->
+  <line x1="200" y1="70" x2="200" y2="30" stroke="#4A5568" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="200" cy="26" r="10" fill="#63B3ED"/>
+  <!-- 头部 -->
+  <rect x="120" y="70" width="160" height="110" rx="46" fill="#E2E8F0" stroke="#4A5568" stroke-width="5"/>
+  <!-- 透镜（头部配件，凸透镜示意） -->
+  <ellipse cx="200" cy="125" rx="38" ry="28" fill="#BEE3F8" stroke="#2B6CB0" stroke-width="4"/>
+  <ellipse cx="200" cy="125" rx="14" ry="10" fill="#FFFFFF" opacity="0.7"/>
+  <!-- 眼睛 -->
+  <circle cx="160" cy="165" r="7" fill="#2D3748"/>
+  <circle cx="240" cy="165" r="7" fill="#2D3748"/>
+  <!-- 身体 -->
+  <rect x="110" y="190" width="180" height="170" rx="60" fill="#F7FAFC" stroke="#4A5568" stroke-width="5"/>
+  <!-- 中央指示灯（核心识别点） -->
+  <circle cx="200" cy="265" r="58" fill="url(#glow)"/>
+  <circle cx="200" cy="265" r="30" fill="#FFD166" stroke="#B7791F" stroke-width="4"/>
+  <!-- 手臂 -->
+  <line x1="110" y1="260" x2="70" y2="320" stroke="#4A5568" stroke-width="10" stroke-linecap="round"/>
+  <line x1="290" y1="260" x2="330" y2="320" stroke="#4A5568" stroke-width="10" stroke-linecap="round"/>
+  <!-- 底座 -->
+  <rect x="150" y="360" width="100" height="30" rx="12" fill="#4A5568"/>
+  <rect x="120" y="390" width="160" height="28" rx="14" fill="#2D3748"/>
+  <text x="200" y="460" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#4A5568">灯灯 · 参考草图 v1（原创）</text>
+</svg>
