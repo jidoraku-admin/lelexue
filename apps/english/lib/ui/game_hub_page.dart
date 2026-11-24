@@ -38,12 +38,6 @@ class GameHubPage extends StatelessWidget {
         icon: Icons.pest_control,
         page: FallingGamePage(assetPath: assetPath, kind: FallingKind.frog),
       ),
-      _Game(
-        title: '打飞机',
-        desc: '敌机从天上掉下来，击中提示的那个单词。',
-        icon: Icons.airplanemode_active,
-        page: FallingGamePage(assetPath: assetPath, kind: FallingKind.plane),
-      ),
     ];
     return Scaffold(
       appBar: AppBar(title: const Text('游戏大厅')),
