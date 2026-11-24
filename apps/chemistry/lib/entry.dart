@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:shared/core/core.dart';
 
+import 'config.dart';
 import 'scoring/chemistry_scoring.dart';
 import 'slices/e1_collect_method/e1_page.dart';
 import 'slices/e3_oxygen_test/e3_page.dart';
@@ -28,10 +29,10 @@ class _ChemistryEntry extends StatefulWidget {
 }
 
 class _ChemistryEntryState extends State<_ChemistryEntry> {
-  // 复习间隔为学科参数，正式值由后台配置传入；此处为占位值。
+  // 复习间隔由后台配置下发（lib/config.dart）；未配置时 3★ 不启用。
   late final ChemistryScoring _scoring = ChemistryScoring(
     userId: widget.userId,
-    reviewInterval: const Duration(hours: 24),
+    reviewInterval: chemistryReviewInterval,
   );
 
   @override
