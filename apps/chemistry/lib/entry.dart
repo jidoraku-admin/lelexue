@@ -2,9 +2,11 @@ import 'package:material_ui/material_ui.dart';
 import 'package:shared/core/core.dart';
 
 import 'config.dart';
+import 'content/chemistry_unit1_content.dart';
 import 'scoring/chemistry_scoring.dart';
 import 'slices/e1_collect_method/e1_page.dart';
 import 'slices/e3_oxygen_test/e3_page.dart';
+import 'slices/quiz_page.dart';
 
 /// hub 调用的学科入口（契约 #141 第 2 节）。
 ///
@@ -60,6 +62,32 @@ class _ChemistryEntryState extends State<_ChemistryEntry> {
               MaterialPageRoute(builder: (_) => E3Page(scoring: _scoring)),
             ),
             child: const Text('E3 氧气的检验'),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => QuizPage(
+                  title: 'U1 物理变化与化学变化',
+                  questions: u1aQuestions,
+                  scoring: _scoring,
+                ),
+              ),
+            ),
+            child: const Text('U1 物理变化与化学变化'),
+          ),
+          const SizedBox(height: 12),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => QuizPage(
+                  title: 'U1 仪器与基本操作',
+                  questions: u1bQuestions,
+                  scoring: _scoring,
+                ),
+              ),
+            ),
+            child: const Text('U1 仪器与基本操作'),
           ),
         ],
       ),
