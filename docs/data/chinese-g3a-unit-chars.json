@@ -4,7 +4,7 @@
   "volume": 1,
   "source": "国家中小学智慧教育平台，人教版语文三年级上册电子教材（同 docs/data/chinese-g3a-char-lists.json 的来源页面）。2026-11-24 由语文对话从页面读取，只记字符与拼音，不记课文正文（0003）。",
   "status": "partial",
-  "pending": "第 5–8 单元未采集",
+  "pending": "第 3 单元 L10 小狗学叫未定位；第 4 单元 L12 已补采",
   "units": [
     {
       "unit": 1,
@@ -740,6 +740,30 @@
             "秒"
           ],
           "status": "captured-2026-11-24"
+        },
+        {
+          "lesson": 26,
+          "title": "一个粗瓷大碗",
+          "page": 108,
+          "headerChars": [
+            "瓷",
+            "赵",
+            "抗",
+            "束",
+            "缸",
+            "还",
+            "顿",
+            "灶",
+            "沾",
+            "禁",
+            "锅",
+            "侦"
+          ],
+          "writeGrid": null,
+          "status": "captured-2026-11-24",
+          "flags": [
+            "header 第4字（束，读音 shù）低清晰度，待放大复核"
+          ]
         }
       ]
     }
