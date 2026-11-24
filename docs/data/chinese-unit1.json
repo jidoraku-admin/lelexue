@@ -1,0 +1,130 @@
+{
+  "subject": "chinese",
+  "stage": "primary",
+  "grade": 3,
+  "volume": 1,
+  "unit": 1,
+  "status": "first-slice-sample",
+  "note": "首切片示例数据。字符取自 docs/data/chinese-g3a-char-lists.json 的识字表与写字表；逐课归属（本课生字）待题库阶段录入后替换。题目为原创，不含课文原文（0003）。",
+  "stepA_match": {
+    "pairs": [
+      {
+        "id": "po",
+        "char": "坡",
+        "pinyin": "pō"
+      },
+      {
+        "id": "qiu",
+        "char": "球",
+        "pinyin": "qiú"
+      },
+      {
+        "id": "zhao",
+        "char": "招",
+        "pinyin": "zhāo"
+      },
+      {
+        "id": "hu",
+        "char": "呼",
+        "pinyin": "hū"
+      }
+    ]
+  },
+  "stepB_cardplay": {
+    "start": {
+      "id": "c-start-zhao",
+      "char": "招",
+      "radical": "扌"
+    },
+    "hand": [
+      {
+        "id": "c-yang",
+        "char": "扬",
+        "radical": "扌"
+      },
+      {
+        "id": "c-du",
+        "char": "读",
+        "radical": "讠"
+      },
+      {
+        "id": "c-qiu",
+        "char": "球",
+        "radical": "王"
+      },
+      {
+        "id": "c-hu",
+        "char": "呼",
+        "radical": "口"
+      }
+    ]
+  },
+  "stepC_falling": {
+    "targets": [
+      {
+        "id": "t-zhao",
+        "char": "招",
+        "radical": "扌"
+      },
+      {
+        "id": "t-yang",
+        "char": "扬",
+        "radical": "扌"
+      }
+    ],
+    "distractors": [
+      {
+        "id": "d-hu",
+        "char": "呼",
+        "radical": "口"
+      },
+      {
+        "id": "d-du",
+        "char": "读",
+        "radical": "讠"
+      },
+      {
+        "id": "d-re",
+        "char": "热",
+        "radical": "灬"
+      }
+    ],
+    "question": "选出偏旁为「扌」的字"
+  },
+  "stepD_reading": {
+    "note": "阅读选择题（学科内静态题，不属于框架）。短文为语文对话原创，不复制课文原文（0003）。",
+    "passage": "校园里有一棵大树，枝叶像一把绿伞。清晨，同学们踩着露水走进校园，先在树下读书，再去教室。午后，风轻轻吹过，树叶沙沙作响，仿佛在和大家打招呼。",
+    "questions": [
+      {
+        "id": "r1",
+        "question": "短文主要写的是什么？",
+        "options": [
+          "一次远足",
+          "校园里的一棵树",
+          "一场大雨"
+        ],
+        "answerIndex": 1
+      },
+      {
+        "id": "r2",
+        "question": "同学们清晨先做什么？",
+        "options": [
+          "在树下读书",
+          "去操场跑步",
+          "在教室里午睡"
+        ],
+        "answerIndex": 0
+      },
+      {
+        "id": "r3",
+        "question": "作者为什么说树叶“在和大家打招呼”？",
+        "options": [
+          "树叶被风吹得沙沙响，像是在问好",
+          "树叶掉到了地上",
+          "树叶变成了黄色"
+        ],
+        "answerIndex": 0
+      }
+    ]
+  }
+}

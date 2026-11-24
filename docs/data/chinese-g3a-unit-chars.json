@@ -1,0 +1,88 @@
+{
+  "subject": "chinese",
+  "grade": 3,
+  "volume": 1,
+  "source": "国家中小学智慧教育平台，人教版语文三年级上册电子教材（同 docs/data/chinese-g3a-char-lists.json 的来源页面）。2026-11-24 由语文对话从页面读取，只记字符与拼音，不记课文正文（0003）。",
+  "status": "partial",
+  "pending": "第 2–3 单元采集结果保存在分支 chinese-units-2-3-chars，待单独审核；第 4–8 单元未采集",
+  "units": [
+    {
+      "unit": 1,
+      "lessons": [
+        {
+          "lesson": 1,
+          "title": "大青树下的小学",
+          "page": 7,
+          "headerChars": [
+            "绒",
+            "昂",
+            "扬",
+            "凤",
+            "墙",
+            "晃"
+          ],
+          "writeGrid": [
+            "坡",
+            "球",
+            "招",
+            "呼",
+            "飘",
+            "扬",
+            "读",
+            "热",
+            "闹",
+            "粗",
+            "壮",
+            "洁"
+          ],
+          "status": "confirmed-by-human"
+        },
+        {
+          "lesson": 2,
+          "title": "花的学校",
+          "page": 10,
+          "headerChars": [
+            "轰",
+            "湿",
+            "荒",
+            "笛",
+            "罚",
+            "假",
+            "臂"
+          ],
+          "writeGrid": [
+            "轰",
+            "湿",
+            "润",
+            "笛",
+            "狂",
+            "功",
+            "罚",
+            "互",
+            "碰",
+            "黄",
+            "急"
+          ],
+          "status": "confirmed-by-human",
+          "note": "标题行与字格不一致（荒/润）按原书记录"
+        },
+        {
+          "lesson": 3,
+          "title": "不懂就要问",
+          "page": 12,
+          "headerChars": [
+            "诵",
+            "例",
+            "糊",
+            "戒",
+            "厉",
+            "详",
+            "挨"
+          ],
+          "writeGrid": null,
+          "status": "confirmed-by-human"
+        }
+      ]
+    }
+  ]
+}
