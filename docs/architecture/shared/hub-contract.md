@@ -15,7 +15,7 @@
 ## 2. 学科注册方式
 
 - 静态注册，不用远程配置。hub 维护一张列表 `apps/hub/lib/registry.dart`，每项为 `SubjectModule`：`code`（`SubjectCode`）、`displayName`、`entry`（学科入口 Widget 构造函数）、`progressSummary`（可选，返回进度摘要）。
-- `SubjectModule` 的定义放在 `packages/shared`（共享类型，与 P1 基础类型同包）。
+- `SubjectModule` 的定义放在 `apps/hub/lib/registry.dart`，不放在 `packages/shared`。理由：`SubjectModule` 含 Flutter Widget，而 `packages/shared` 为纯 Dart 包，供所有服务与平台共用，不加 Flutter 依赖（总监决定，2026-11-24）。
 - 学科入口形态：现有学科是可独立运行的 Flutter app（各自 `main.dart`）。学科在自己的目录新增一个可被引用的入口函数 `buildSubjectEntry`（`lib/entry.dart`，并由包的 `lib/<subject>.dart` 导出），独立运行的 `main.dart` 保留。hub 以 path 依赖引用该包。目录仍按 `docs/ownership.md`，学科只改自己的目录。
 - 学科入口签名（最终以 PR 为准）：
 
