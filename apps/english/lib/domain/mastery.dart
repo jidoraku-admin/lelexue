@@ -71,3 +71,23 @@ List<MasteryAchievement> evaluateMastery({
   }
   return result;
 }
+
+/// 组装发送给数据平台的 MasteryChanged 业务字段。
+///
+/// 不含 eventId：由数据平台生成（gamification §8.1）。
+/// 调用方必须提供已取得的 userId；没有 userId 时不应调用本函数。
+Map<String, Object?> masteryChangedPayload(
+  MasteryAchievement a, {
+  required String userId,
+}) {
+  if (userId.trim().isEmpty) {
+    throw ArgumentError.value(userId, 'userId', 'must not be empty');
+  }
+  return {
+    'userId': userId,
+    'subject': MasteryAchievement.subject,
+    'knowledgePointId': a.knowledgePointId,
+    'level': a.level,
+    'achievedAt': a.achievedAt.toUtc().toIso8601String(),
+  };
+}
