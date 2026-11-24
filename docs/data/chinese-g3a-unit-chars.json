@@ -4,7 +4,7 @@
   "volume": 1,
   "source": "国家中小学智慧教育平台，人教版语文三年级上册电子教材（同 docs/data/chinese-g3a-char-lists.json 的来源页面）。2026-11-24 由语文对话从页面读取，只记字符与拼音，不记课文正文（0003）。",
   "status": "partial",
-  "pending": "第 3 单元 L10 生字未定位；第 4–8 单元全部未采集",
+  "pending": "第 4 单元 L12、L13；第 5–8 单元未采集",
   "units": [
     {
       "unit": 1,
@@ -258,6 +258,33 @@
           "writeGrid": null,
           "status": "not-located",
           "note": "第 41–45 页未找到生字块，需要核对"
+        }
+      ]
+    },
+    {
+      "unit": 4,
+      "lessons": [
+        {
+          "lesson": 11,
+          "title": "宝葫芦的秘密（节选）",
+          "page": 51,
+          "headerChars": [
+            "普",
+            "少",
+            "矩",
+            "丫",
+            "宫",
+            "摇",
+            "希",
+            "冲",
+            "联",
+            "系",
+            "葵",
+            "瘦"
+          ],
+          "writeGrid": null,
+          "status": "captured-2026-11-24",
+          "note": "末两字字形待放大核对"
         }
       ]
     }
