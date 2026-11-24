@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:shared/core/subject_code.dart';
 import 'package:shared/core/user_id.dart';
+import 'package:lelexue_english/entry.dart' as english;
 
 /// 学科入口签名（契约第 2 节）。学科在 P1/P2 中按此导出 buildSubjectEntry。
 typedef SubjectEntryBuilder = Widget Function({
@@ -27,7 +28,11 @@ class SubjectModule {
 
 /// 静态注册表，顺序固定：英语、数学、语文、物理、化学。
 const List<SubjectModule> subjectRegistry = [
-  SubjectModule(code: SubjectCode.english, displayName: '英语'),
+  SubjectModule(
+    code: SubjectCode.english,
+    displayName: '英语',
+    entry: english.buildSubjectEntry,
+  ),
   SubjectModule(code: SubjectCode.math, displayName: '数学'),
   SubjectModule(code: SubjectCode.chinese, displayName: '语文'),
   SubjectModule(code: SubjectCode.physics, displayName: '物理'),

@@ -12,6 +12,8 @@ dependencies:
   material_ui: ^1.11.1
   shared:
     path: ../../packages/shared
+  lelexue_english:
+    path: ../english
 
 dev_dependencies:
   flutter_test:
