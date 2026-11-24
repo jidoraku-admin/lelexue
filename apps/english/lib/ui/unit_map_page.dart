@@ -1,6 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:material_ui/material_ui.dart';
 
+import '../domain/knowledge_points.dart';
+import '../domain/knowledge_status.dart';
 import '../domain/progress.dart';
 import '../domain/xp.dart';
 import '../domain/unit.dart';
@@ -54,6 +56,45 @@ class _UnitMapPageState extends State<UnitMapPage> {
     if (changed == true) _reload();
   }
 
+  void _showKnowledge(BuildContext context, Progress progress) {
+    final statuses = knowledgeStatus(
+      points: unit1KnowledgePoints,
+      attempts: progress.attempts,
+      mastered: progress.mastered.toSet(),
+    );
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('知识点学情（应用题）'),
+        content: SizedBox(
+          width: 360,
+          child: ListView(
+            shrinkWrap: true,
+            children: [
+              for (final s in statuses)
+                ListTile(
+                  key: ValueKey<String>('kp-${s.point.name}'),
+                  title: Text(s.point.name),
+                  subtitle: Text(s.point.pattern),
+                  trailing: Text(
+                    s.total == 0
+                        ? s.label
+                        : '${s.label} ${s.correct}/${s.total}',
+                  ),
+                ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('关闭'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _resetProgress() async {
     await store.reset();
     _reload();
@@ -85,6 +126,16 @@ class _UnitMapPageState extends State<UnitMapPage> {
                 ),
               );
             },
+          ),
+          FutureBuilder<_Loaded>(
+            future: _future,
+            builder: (context, s) => IconButton(
+              tooltip: '知识点学情',
+              icon: const Icon(Icons.insights),
+              onPressed: s.hasData
+                  ? () => _showKnowledge(context, s.data!.progress)
+                  : null,
+            ),
           ),
           IconButton(
             tooltip: '重置进度（仅试玩）',
