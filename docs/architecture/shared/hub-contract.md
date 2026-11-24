@@ -54,14 +54,16 @@ Widget buildSubjectEntry({
 - 每个阶段以 PR 合并为完成。
 - 学科的接入 PR 只改本学科目录，并在本契约定稿后提交。
 
-## 6. 部署目标（定义，待总监审核）
+## 6. 部署目标（总监决定，2026-11-24）
 
-- 平台：Cloudflare Pages，独立项目，项目名 `lelexue-hub`。
-- 构建与发布：`main` 分支的构建发布到生产地址 `https://lelexue-hub.pages.dev`；其他分支自动生成预览地址，与现有 `lelexue` 项目的做法一致。
+- 平台：Cloudflare Pages，沿用现有项目 `lelexue`，不新建项目。
+- 根地址 `https://lelexue.pages.dev/` 为 hub 入口页（`apps/hub` 的 Web 构建）。
+- 学科 Web 版部署到子路径：英语 `/english/`，数学 `/math/`，语文 `/chinese/`，物理 `/physics/`，化学 `/chemistry/`。子路径由 hub 的学科入口路由使用。
+- 构建与发布：`main` 分支的构建发布到上述地址；其他分支自动生成预览地址。
 - 正式域名：另定，不在本契约内。
-- 创建方式：项目由项目总监或真人在 Cloudflare 中创建并绑定本仓库，共通不自行创建。创建后在 #23 回复地址，若与上面不同以实际地址为准。
-- 与学科的关系：学科的 Web 版本仍按各自地址部署，供开发与独立访问；正式用户入口为 hub 地址。学科地址不作为 hub 的依赖。
-- 仓库中现有的 Pages 项目 `lelexue` 不改动。
+- 与学科的关系：学科 Web 版只在子路径下作为 hub 的一部分访问；正式用户入口为根地址。
+- 变更影响：英语 Web 版原先位于根地址，现移至 `/english/`。学科团队需在 P1 之前确认子路径构建（如 base href）正确。
+- 项目 `lelexue` 的配置由共通或学科对话在 Cloudflare 或构建脚本中修改，项目总监不在 Cloudflare 后台操作。
 
 ## 7. 发行形态
 
