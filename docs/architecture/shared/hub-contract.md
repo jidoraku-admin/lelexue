@@ -54,8 +54,11 @@ Widget buildSubjectEntry({
 - 每个阶段以 PR 合并为完成。
 - 学科的接入 PR 只改本学科目录，并在本契约定稿后提交。
 
-## 6. 部署目标
+## 6. 部署目标（定义，待总监审核）
 
-- hub 部署到 Cloudflare Pages，独立项目。项目名提议为 `lelexue-hub`（待项目总监确认创建）；地址在项目创建后填写为 `https://<项目名>.pages.dev`，正式域名另定。
-- 学科的 Web 版本仍按各自地址部署，供开发与独立访问；正式用户入口为 hub 地址。学科地址不作为 hub 的依赖。
-- 仓库中现有的 Pages 项目为 `lelexue`（PR 预览地址形如 `https://<hash>.lelexue.pages.dev`），这是现有部署，本契约不改动。
+- 平台：Cloudflare Pages，独立项目，项目名 `lelexue-hub`。
+- 构建与发布：`main` 分支的构建发布到生产地址 `https://lelexue-hub.pages.dev`；其他分支自动生成预览地址，与现有 `lelexue` 项目的做法一致。
+- 正式域名：另定，不在本契约内。
+- 创建方式：项目由项目总监或真人在 Cloudflare 中创建并绑定本仓库，共通不自行创建。创建后在 #23 回复地址，若与上面不同以实际地址为准。
+- 与学科的关系：学科的 Web 版本仍按各自地址部署，供开发与独立访问；正式用户入口为 hub 地址。学科地址不作为 hub 的依赖。
+- 仓库中现有的 Pages 项目 `lelexue` 不改动。
