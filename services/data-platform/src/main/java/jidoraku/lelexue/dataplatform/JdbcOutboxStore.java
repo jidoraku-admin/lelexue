@@ -26,13 +26,24 @@ public final class JdbcOutboxStore implements OutboxStore {
 
     @Override
     public void append(MasteryChangedEvent e, Instant now) {
+        try (Connection c = dataSource.getConnection()) {
+            appendInTx(c, e, now);
+        } catch (SQLException ex) {
+            throw new IllegalStateException("outbox 写入失败", ex);
+        }
+    }
+
+    /**
+     * 在调用方的事务内写入发件箱（与业务写入同一事务，#92 方案）。
+     * 同一 eventId 重复写入视为幂等；其他错误照常抛出。
+     */
+    public void appendInTx(Connection c, MasteryChangedEvent e, Instant now) {
         String sql = """
                 INSERT INTO outbox_event
                   (event_id, user_id, subject, knowledge_point_id, level, achieved_at,
                    status, attempts, last_error, created_at, updated_at)
                 VALUES (?, ?, ?, ?, ?, ?, 'PENDING', 0, NULL, ?, ?)""";
-        try (Connection c = dataSource.getConnection();
-             PreparedStatement ps = c.prepareStatement(sql)) {
+        try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, e.eventId());
             ps.setString(2, e.userId());
             ps.setString(3, e.subject());
@@ -43,7 +54,6 @@ public final class JdbcOutboxStore implements OutboxStore {
             ps.setObject(8, utc(now));
             ps.executeUpdate();
         } catch (SQLException ex) {
-            // 同一 eventId 重复写入视为幂等；其他错误照常抛出。
             if (!isDuplicateKey(ex)) throw new IllegalStateException("outbox 写入失败", ex);
         }
     }
