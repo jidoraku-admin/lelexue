@@ -23,7 +23,7 @@
     {
       "id": "math.g3.v1.u01.k002",
       "game": "observe_choice",
-      "prompt": "3 个相同的小方块排成一排，从前面看，看到几个方块？",
+      "prompt": "3 个相同的小方块从左到右排成一排，从正面看，看到几个方块？",
       "answer": "3",
       "distractors": [
         "1",
