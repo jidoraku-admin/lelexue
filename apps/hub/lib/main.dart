@@ -59,20 +59,32 @@ class HubHomePage extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(12),
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
-            child: Text(
-              userId == null ? '未登录' : '已登录（开发测试账号）',
+            child: Row(
+              children: [
+                Icon(
+                  userId == null ? Icons.person_outline : Icons.verified_user,
+                  size: 18,
+                ),
+                const SizedBox(width: 8),
+                Text(userId == null ? '未登录' : '已登录（开发测试账号）'),
+              ],
             ),
           ),
           Expanded(
-            child: GridView.count(
-              padding: const EdgeInsets.all(16),
-              crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              children: [
-                for (final m in subjectRegistry)
-                  _SubjectCard(module: m),
-              ],
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final columns = constraints.maxWidth >= 720 ? 3 : 2;
+                return GridView.count(
+                  padding: const EdgeInsets.all(16),
+                  crossAxisCount: columns,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 1.3,
+                  children: [
+                    for (final m in subjectRegistry) _SubjectCard(module: m),
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -81,6 +93,15 @@ class HubHomePage extends StatelessWidget {
   }
 }
 
+/// 每个学科的图标与颜色（仅用于入口卡片的视觉区分）。
+const Map<String, (IconData, Color)> _subjectStyle = {
+  'english': (Icons.translate, Colors.indigo),
+  'math': (Icons.calculate, Colors.teal),
+  'chinese': (Icons.menu_book, Colors.deepOrange),
+  'physics': (Icons.bolt, Colors.blue),
+  'chemistry': (Icons.science, Colors.green),
+};
+
 class _SubjectCard extends StatelessWidget {
   const _SubjectCard({required this.module});
 
@@ -88,7 +109,12 @@ class _SubjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final style = _subjectStyle[module.code.wireName];
+    final color = style?.$2 ?? theme.colorScheme.primary;
+    final icon = style?.$1 ?? Icons.school;
     return Card(
+      clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () => Navigator.of(context)
             .pushNamed('/subjects/${module.code.wireName}'),
@@ -97,10 +123,20 @@ class _SubjectCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(module.displayName,
-                  style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 8),
-              const Text('进入'),
+              CircleAvatar(
+                radius: 26,
+                backgroundColor: color.withValues(alpha: 0.15),
+                child: Icon(icon, color: color, size: 28),
+              ),
+              const SizedBox(height: 10),
+              Text(module.displayName, style: theme.textTheme.titleLarge),
+              const SizedBox(height: 4),
+              Text(
+                '进入学习',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
             ],
           ),
         ),
