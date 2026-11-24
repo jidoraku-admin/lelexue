@@ -15,7 +15,7 @@ void main() {
       'math.g3.v1.u01.k002',
       'math.g3.v1.u01.k003',
     ]);
-    expect(items[1].options, ['2', '1', '3']);
+    expect(items[1].options, ['3', '1', '2']);
   });
 
   test('缺少 items 或为空时报错', () {
