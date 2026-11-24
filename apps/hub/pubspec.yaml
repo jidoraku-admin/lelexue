@@ -1,0 +1,24 @@
+name: lelexue_hub
+description: 乐乐学统一入口（apps/hub）：入口页与学科注册。契约见 docs/architecture/shared/hub-contract.md。
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  material_ui: ^1.11.1
+  shared:
+    path: ../../packages/shared
+  lelexue_english:
+    path: ../english
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
