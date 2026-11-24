@@ -14,7 +14,7 @@ class ChemistryApp extends StatefulWidget {
   ChemistryApp({super.key});
 
   // 演示用：本地用户与计分。持久化与发布由后续 PR 接入（发件箱 #92）。
-  final ChemistryScoring _scoring = ChemistryScoring(userId: UserId('local-dev'));
+  final ChemistryScoring _scoring = ChemistryScoring(userId: UserId('local-dev'), reviewInterval: const Duration(hours: 24));
 
   @override
   State<ChemistryApp> createState() => _ChemistryAppState();
