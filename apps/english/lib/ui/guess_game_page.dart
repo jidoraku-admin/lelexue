@@ -23,32 +23,39 @@ class _GuessGamePageState extends State<GuessGamePage> {
     widget.assetPath,
   );
   TwentyQuestions? _game;
+  YesNoQuestion? _pending;
   final List<String> _log = [];
-  int _seed = 0;
 
-  void _newGame(Unit unit) {
+  /// 每局随机选答案，不使用固定种子，避免每次答案相同。
+  TwentyQuestions _newRound(Unit unit) => TwentyQuestions(
+    items: wordsToItems(unit.words),
+    secretIndex: Random().nextInt(unit.words.length),
+  );
+
+  void _restart(Unit unit) {
     setState(() {
-      _game = TwentyQuestions(
-        items: wordsToItems(unit.words),
-        secretIndex: Random(_seed++).nextInt(unit.words.length),
-      );
+      _game = _newRound(unit);
+      _pending = null;
       _log.clear();
     });
   }
 
-  void _ask(YesNoQuestion q) {
+  void _confirmAsk() {
+    final q = _pending!;
     final game = _game!;
     setState(() {
+      _pending = null;
       final yes = game.ask(q);
-      _log.insert(0, '${q.text}  →  ${yes ? '是' : '否'}');
+      _log.insert(0, '问：${q.text}  系统答：${yes ? '是' : '否'}');
     });
   }
 
   void _guess(GameItem w) {
     final game = _game!;
     setState(() {
+      _pending = null;
       final ok = game.guess(w);
-      _log.insert(0, '猜 ${w.text}  →  ${ok ? '猜对了！' : '不对'}');
+      _log.insert(0, '直接猜：${w.text}  →  ${ok ? '猜对了！' : '不对'}');
     });
   }
 
@@ -66,13 +73,12 @@ class _GuessGamePageState extends State<GuessGamePage> {
             return const Center(child: CircularProgressIndicator());
           }
           final unit = snapshot.data!;
-          final game = _game ??= TwentyQuestions(
-            items: wordsToItems(unit.words),
-            secretIndex: _seed++ % unit.words.length,
-          );
+          final game = _game ??= _newRound(unit);
           final theme = Theme.of(context);
           final questions = game.availableQuestions().take(8).toList();
           final candidates = game.remainingCandidates;
+          final allWords = wordsToItems(unit.words);
+          final possible = allWords.where(game.candidatesContain).toList();
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -80,6 +86,20 @@ class _GuessGamePageState extends State<GuessGamePage> {
                 '已问 ${game.asked}/${TwentyQuestions.defaultMax}　还剩 $candidates 个候选词',
                 style: theme.textTheme.titleMedium,
                 textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              ExpansionTile(
+                initiallyExpanded: true,
+                title: Text('剩余候选词（$candidates）'),
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                    child: Text(
+                      possible.map((w) => w.text).join('、'),
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 12),
               if (game.isOver)
@@ -98,7 +118,7 @@ class _GuessGamePageState extends State<GuessGamePage> {
                         ),
                         const SizedBox(height: 8),
                         FilledButton(
-                          onPressed: () => _newGame(unit),
+                          onPressed: () => _restart(unit),
                           child: const Text('再来一局'),
                         ),
                       ],
@@ -106,6 +126,38 @@ class _GuessGamePageState extends State<GuessGamePage> {
                   ),
                 )
               else ...[
+                if (_pending != null)
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Column(
+                        children: [
+                          Text(
+                            '确定问：${_pending!.text}',
+                            style: theme.textTheme.titleSmall,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                onPressed: () =>
+                                    setState(() => _pending = null),
+                                child: const Text('取消'),
+                              ),
+                              const SizedBox(width: 12),
+                              FilledButton(
+                                onPressed: _confirmAsk,
+                                child: const Text('确定提问'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                const SizedBox(height: 8),
                 Text('选一个问题问：', style: theme.textTheme.titleSmall),
                 const SizedBox(height: 8),
                 Wrap(
@@ -113,7 +165,10 @@ class _GuessGamePageState extends State<GuessGamePage> {
                   runSpacing: 8,
                   children: [
                     for (final q in questions)
-                      ActionChip(label: Text(q.text), onPressed: () => _ask(q)),
+                      ActionChip(
+                        label: Text(q.text),
+                        onPressed: () => setState(() => _pending = q),
+                      ),
                   ],
                 ),
                 if (candidates <= 6) ...[
@@ -124,9 +179,7 @@ class _GuessGamePageState extends State<GuessGamePage> {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      for (final w in wordsToItems(unit.words).where(
-                        (w) => _stillPossible(game, w),
-                      ))
+                      for (final w in possible)
                         OutlinedButton(
                           onPressed: () => _guess(w),
                           child: Text(w.text),
@@ -143,8 +196,4 @@ class _GuessGamePageState extends State<GuessGamePage> {
       ),
     );
   }
-
-  /// 只列出还没被排除的候选词（用于直接猜）。
-  bool _stillPossible(TwentyQuestions game, GameItem w) =>
-      game.candidatesContain(w);
 }

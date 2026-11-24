@@ -22,15 +22,32 @@ void main() {
       }
     });
 
-    test('问题缩小候选词，直到只剩一个就算猜中', () {
+    test('问题缩小候选词；只剩一个时不自动判胜，需要玩家直接猜', () {
       final g = TwentyQuestions(items: items, secretIndex: 3); // good night
-      final lengthQ = YesNoQuestion('超过 4 个字母吗？', (w) => w.text.length > 4);
+      final lengthQ = YesNoQuestion(
+        '系统想的单词超过 4 个字母吗？',
+        (w) => w.text.length > 4,
+      );
       expect(g.ask(lengthQ), isTrue);
       expect(g.remainingCandidates, lessThan(items.length));
-      final spaceQ = YesNoQuestion('是词组吗？', (w) => w.text.contains(' '));
+      final spaceQ = YesNoQuestion('系统想的单词是词组吗？', (w) => w.text.contains(' '));
       expect(g.ask(spaceQ), isTrue);
+      expect(g.remainingCandidates, 1);
+      expect(g.candidates.single.text, 'good night');
+      expect(g.solved, isFalse, reason: '不得自动判胜');
+      expect(g.isOver, isFalse);
+      expect(g.guess(items[3]), isTrue);
       expect(g.solved, isTrue);
       expect(g.isOver, isTrue);
+    });
+
+    test('候选词列表只读，问题文字说明提问对象', () {
+      final g = TwentyQuestions(items: items, secretIndex: 0);
+      expect(g.candidates.length, items.length);
+      expect(() => g.candidates.add(items[0]), throwsUnsupportedError);
+      for (final q in g.availableQuestions()) {
+        expect(q.text.startsWith('系统想的单词'), isTrue, reason: q.text);
+      }
     });
 
     test('猜错不结束，猜中即胜利，超过 20 次提问后结束', () {
