@@ -1,5 +1,7 @@
 package jidoraku.lelexue.identity;
 
+import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,6 +21,15 @@ class IdentityApiTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private Flyway flyway;
+
+    @BeforeEach
+    void resetSchema() {
+        flyway.clean();
+        flyway.migrate();
+    }
 
     @Test
     void parentCreatesStudentAndSeatsCount() throws Exception {

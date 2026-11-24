@@ -4,8 +4,7 @@ import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.sql.DataSource;
-import org.h2.jdbcx.JdbcDataSource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -18,11 +17,14 @@ class IdentityServiceTest {
 
     @BeforeEach
     void setUp() {
-        JdbcDataSource ds = new JdbcDataSource();
-        ds.setURL("jdbc:h2:mem:" + java.util.UUID.randomUUID() + ";MODE=MySQL;DB_CLOSE_DELAY=-1");
-        ds.setUser("sa");
-        ds.setPassword("");
-        Flyway.configure().dataSource(ds).locations("classpath:db/migration").load().migrate();
+        DriverManagerDataSource ds = new DriverManagerDataSource(
+                System.getenv().getOrDefault("IDENTITY_TEST_DB_URL",
+                        "jdbc:mysql://localhost:3306/identity_test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC"),
+                System.getenv().getOrDefault("IDENTITY_TEST_DB_USER", "identity_test"),
+                System.getenv().getOrDefault("IDENTITY_TEST_DB_PASSWORD", "identity_test"));
+        Flyway flyway = Flyway.configure().dataSource(ds).locations("classpath:db/migration").cleanDisabled(false).load();
+        flyway.clean();
+        flyway.migrate();
         svc = new IdentityService(ds, 3);
         svc.registerParent("p1", null);
     }
