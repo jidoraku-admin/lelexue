@@ -20,7 +20,7 @@ class _Unit01PageState extends State<Unit01Page> {
   void _answer(Unit01Item item, String choice) {
     final correct = judgeChoice(item, choice);
     setState(() {
-      _feedback = correct ? '答对了！' : '再看看，换个角度想想。';
+      _feedback = correct ? '对啦！你已经会从不同的地方看啦。' : '别着急，换个角度再看一次。';
     });
   }
 
@@ -34,7 +34,7 @@ class _Unit01PageState extends State<Unit01Page> {
   @override
   Widget build(BuildContext context) {
     if (_index >= widget.items.length) {
-      return const Center(child: Text('第 1 单元完成！'));
+      return const Center(child: Text('这一单元你学会了从不同位置观察，下一站再见！'));
     }
     final item = widget.items[_index];
     return Padding(
@@ -42,6 +42,8 @@ class _Unit01PageState extends State<Unit01Page> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          const Text('视视：我是视视！同一个东西，换个地方看，样子可能不一样哦。', key: Key('guide-opening')),
+          const SizedBox(height: 12),
           Text(item.prompt, key: const Key('prompt'), style: const TextStyle(fontSize: 20)),
           const SizedBox(height: 16),
           for (final option in item.options)
