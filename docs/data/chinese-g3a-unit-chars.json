@@ -248,16 +248,33 @@
             "官"
           ],
           "writeGrid": null,
-          "status": "captured-2026-11-24"
+          "status": "needs-recheck",
+          "note": "第 32–35 页（视图页 37–40）未见生字表，本表头数据待核对"
         },
         {
           "lesson": 10,
           "title": "小狗学叫",
-          "page": 41,
-          "headerChars": [],
+          "page": 40,
+          "headerChars": [
+            "陌",
+            "呜",
+            "讨",
+            "厌",
+            "访",
+            "记",
+            "忍",
+            "委",
+            "屈",
+            "中",
+            "弹",
+            "疯",
+            "局",
+            "汪",
+            "搞"
+          ],
           "writeGrid": null,
-          "status": "not-located",
-          "note": "第 41–45 页未找到生字块，需要核对"
+          "status": "captured-2026-11-24",
+          "note": "生字表在教材第 40 页（视图页 45）页首，表头 15 字；未见田字格"
         }
       ]
     },
