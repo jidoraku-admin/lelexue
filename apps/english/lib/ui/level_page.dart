@@ -37,8 +37,14 @@ class _LevelPageState extends State<LevelPage> {
   bool saved = false;
   final SpeechPlayer _speech = SpeechPlayer();
 
+  /// 错误选项的红色提示停留 1.5 秒后淡去；讲解文字保留，直到选中正确选项。
+  static const _wrongFlashDuration = Duration(milliseconds: 1500);
+  bool _wrongFlash = false;
+  Timer? _wrongTimer;
+
   @override
   void dispose() {
+    _wrongTimer?.cancel();
     _speech.dispose();
     super.dispose();
   }
@@ -46,6 +52,13 @@ class _LevelPageState extends State<LevelPage> {
   void _choose(int i) {
     if (run.lastCorrect || run.finished) return;
     final ok = run.answer(i);
+    _wrongTimer?.cancel();
+    _wrongFlash = !ok;
+    if (!ok) {
+      _wrongTimer = Timer(_wrongFlashDuration, () {
+        if (mounted) setState(() => _wrongFlash = false);
+      });
+    }
     setState(() {});
     if (ok && isEnglish(run.current.options[i])) {
       _speech.speak(run.current.options[i]);
@@ -224,6 +237,7 @@ class _LevelPageState extends State<LevelPage> {
 
   Color? _optionColor(ThemeData theme, int i) {
     if (run.lastChoice != i) return null;
+    if (!run.lastCorrect && !_wrongFlash) return null;
     return run.lastCorrect ? Colors.green.shade200 : Colors.orange.shade200;
   }
 
