@@ -26,6 +26,7 @@ class Question {
     required this.answer,
     required this.explanation,
     this.knowledgePointId,
+    this.picture,
   });
 
   final String id;
@@ -33,6 +34,9 @@ class Question {
   final List<String> options;
   final int answer;
   final String explanation;
+
+  /// 看图选词：若非空，表示以该英文词的图标作为题面（选项为英文词）。
+  final String? picture;
 
   /// 所属知识点编码（格式 english.g<年级>.v<册>.u<单元>.k<序号>）。
   /// 未标注的题目（如认词题）为 null，不参与掌握记录。
