@@ -3,7 +3,7 @@
     "subject": "math",
     "knowledgePointPrefix": "math.g3.v1.u01",
     "unit": "第 1 单元 观察物体（人教版三年级上册，国家平台目录核对，2026-11-22）",
-    "status": "核对完成（2026-11-24，数学对话，见 docs/data/math-g3-unit01-proofread.md）：三题为原创题目，不复制教材原文（0003）；待总监审核",
+    "status": "扩充稿：新增 k004–k006（2026-11-25，数学对话），原创题目，不复制教材原文（0003）；待总监审核",
     "games": [
       "match_viewpoint",
       "observe_choice"
@@ -38,6 +38,36 @@
       "distractors": [
         "长方形",
         "三角形"
+      ]
+    },
+    {
+      "id": "math.g3.v1.u01.k004",
+      "game": "match_viewpoint",
+      "prompt": "从上面看一个平放的长方体纸盒，看到的形状是？",
+      "answer": "长方形",
+      "distractors": [
+        "正方形",
+        "圆形"
+      ]
+    },
+    {
+      "id": "math.g3.v1.u01.k005",
+      "game": "observe_choice",
+      "prompt": "两个相同的小方块上下叠放成一摞，从上面看，看到几个方块？",
+      "answer": "1",
+      "distractors": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "math.g3.v1.u01.k006",
+      "game": "observe_choice",
+      "prompt": "正方体的每个面都是什么形状？",
+      "answer": "正方形",
+      "distractors": [
+        "长方形",
+        "圆形"
       ]
     }
   ]

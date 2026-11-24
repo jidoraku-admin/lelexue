@@ -14,6 +14,9 @@ void main() {
       'math.g3.v1.u01.k001',
       'math.g3.v1.u01.k002',
       'math.g3.v1.u01.k003',
+      'math.g3.v1.u01.k004',
+      'math.g3.v1.u01.k005',
+      'math.g3.v1.u01.k006',
     ]);
     expect(items[1].options, ['3', '1', '2']);
   });
