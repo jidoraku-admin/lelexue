@@ -1,6 +1,7 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:shared/core/subject_code.dart';
 import 'package:shared/core/user_id.dart';
+import 'package:lelexue_chemistry/entry.dart' as chemistry;
 import 'package:lelexue_english/entry.dart' as english;
 
 /// 学科入口签名（契约第 2 节）。学科在 P1/P2 中按此导出 buildSubjectEntry。
@@ -36,7 +37,11 @@ const List<SubjectModule> subjectRegistry = [
   SubjectModule(code: SubjectCode.math, displayName: '数学'),
   SubjectModule(code: SubjectCode.chinese, displayName: '语文'),
   SubjectModule(code: SubjectCode.physics, displayName: '物理'),
-  SubjectModule(code: SubjectCode.chemistry, displayName: '化学'),
+  SubjectModule(
+    code: SubjectCode.chemistry,
+    displayName: '化学',
+    entry: chemistry.buildSubjectEntry,
+  ),
 ];
 
 SubjectModule? findSubject(String wireName) {
