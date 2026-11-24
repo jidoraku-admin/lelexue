@@ -1,0 +1,44 @@
+{
+  "_meta": {
+    "subject": "math",
+    "knowledgePointPrefix": "math.g3.v1.u01",
+    "unit": "第 1 单元 观察物体（人教版三年级上册，国家平台目录核对，2026-11-22）",
+    "status": "核对完成（2026-11-24，数学对话，见 docs/data/math-g3-unit01-proofread.md）：三题为原创题目，不复制教材原文（0003）；待总监审核",
+    "games": [
+      "match_viewpoint",
+      "observe_choice"
+    ]
+  },
+  "items": [
+    {
+      "id": "math.g3.v1.u01.k001",
+      "game": "match_viewpoint",
+      "prompt": "从上面看一个正方体积木，看到的形状是？",
+      "answer": "正方形",
+      "distractors": [
+        "长方形",
+        "圆形"
+      ]
+    },
+    {
+      "id": "math.g3.v1.u01.k002",
+      "game": "observe_choice",
+      "prompt": "3 个相同的小方块从左到右排成一排，从正面看，看到几个方块？",
+      "answer": "3",
+      "distractors": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "math.g3.v1.u01.k003",
+      "game": "observe_choice",
+      "prompt": "从上面看一个圆柱体，看到的形状是？",
+      "answer": "圆",
+      "distractors": [
+        "长方形",
+        "三角形"
+      ]
+    }
+  ]
+}
