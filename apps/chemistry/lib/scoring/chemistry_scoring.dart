@@ -11,7 +11,7 @@ import 'package:shared/core/core.dart';
 /// - 同一 (knowledgePointId, level) 只在首次达到门槛时产生一条掌握草稿（经验只给一次）。
 /// - 本类不发布事件，eventId 由发件箱在发布时生成（幂等键）。
 class ChemistryScoring {
-  ChemistryScoring({required this.userId, required this.reviewInterval});
+  ChemistryScoring({required this.userId, this.reviewInterval});
 
   /// 掌握判定的最少题数。
   static const int minAttempts = 5;
@@ -22,8 +22,8 @@ class ChemistryScoring {
 
   final UserId userId;
 
-  /// 间隔复习的最短间隔（学科参数，由后台配置传入）。
-  final Duration reviewInterval;
+  /// 间隔复习的最短间隔（学科参数，由后台配置传入）。为空时 3★ 不启用。
+  final Duration? reviewInterval;
 
   final Map<_Key, _Tally> _tallies = {};
   final Set<_Key> _mastered = {};
@@ -46,6 +46,7 @@ class ChemistryScoring {
     bool newContext = false,
   }) {
     _validate(knowledgePointId, level);
+    if (level == 3 && reviewInterval == null) return false;
     if (level == 3 && !newContext) {
       throw ArgumentError.value(newContext, 'newContext', '3★ 只统计新语境作答');
     }
@@ -84,11 +85,13 @@ class ChemistryScoring {
     required DateTime answeredAt,
   }) {
     _validate(knowledgePointId, 1);
+    final interval = reviewInterval;
+    if (interval == null) return false;
     final twoStar = _twoStarAt[knowledgePointId];
     if (twoStar == null) return false;
     if (_reviewPassed.contains(knowledgePointId)) return false;
     final utc = answeredAt.toUtc();
-    if (utc.difference(twoStar) < reviewInterval) return false;
+    if (utc.difference(twoStar) < interval) return false;
     if (!correct) return false;
     _reviewPassed.add(knowledgePointId);
     return _tryMaster3(knowledgePointId, utc);

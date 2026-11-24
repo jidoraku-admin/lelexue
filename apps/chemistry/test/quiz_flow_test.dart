@@ -7,7 +7,7 @@ import 'package:shared/core/core.dart';
 
 void main() {
   testWidgets('E1 全部答对：显示结果并记录 1★ 掌握草稿', (tester) async {
-    final scoring = ChemistryScoring(userId: UserId('test-user'), reviewInterval: const Duration(hours: 24));
+    final scoring = ChemistryScoring(userId: UserId('test-user'));
     await tester.pumpWidget(MaterialApp(home: E1Page(scoring: scoring)));
 
     // 题目数不足 5 题时不会达到门槛，这里只验证流程与计分不报错。
@@ -24,7 +24,7 @@ void main() {
   });
 
   testWidgets('E1 选错后显示正确答案与原理解释，选项不可再选', (tester) async {
-    final scoring = ChemistryScoring(userId: UserId('test-user'), reviewInterval: const Duration(hours: 24));
+    final scoring = ChemistryScoring(userId: UserId('test-user'));
     await tester.pumpWidget(MaterialApp(home: E1Page(scoring: scoring)));
 
     final first = e1Questions.first;

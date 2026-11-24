@@ -154,4 +154,23 @@ void main() {
       isFalse,
     );
   });
+
+  test('reviewInterval 为空时 3★ 不启用', () {
+    final s = ChemistryScoring(userId: user);
+    for (var i = 0; i < 5; i++) {
+      s.recordAnswer(knowledgePointId: _kp, level: 2, correct: true, answeredAt: at);
+    }
+    s.drainPendingMastery();
+    expect(
+      s.recordReview(knowledgePointId: _kp, correct: true, answeredAt: at.add(_interval)),
+      isFalse,
+    );
+    for (var i = 0; i < 5; i++) {
+      expect(
+        s.recordAnswer(knowledgePointId: _kp, level: 3, correct: true, answeredAt: at, newContext: true),
+        isFalse,
+      );
+    }
+    expect(s.drainPendingMastery(), isEmpty);
+  });
 }
