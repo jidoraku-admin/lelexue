@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: ${IDENTITY_TEST_DB_URL:jdbc:mysql://localhost:3306/identity_test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${IDENTITY_TEST_DB_USER:identity_test}
+    password: ${IDENTITY_TEST_DB_PASSWORD:identity_test}
+  flyway:
+    enabled: true
+    clean-disabled: false
+
+identity:
+  max-students-per-parent: 3
