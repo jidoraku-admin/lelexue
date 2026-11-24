@@ -74,4 +74,4 @@
 
 - 试玩反馈与法务：docs/decisions/0006-prototype-feedback-and-legal-2026-11-21.md
 - 单元名与词表：docs/product/english.md、docs/data/english-g3a-vocab.json
-- 当前试玩版：https://lelexue.pages.dev/
+- 当前试玩版：已停用线上预览（Cloudflare Pages），改为部署机本地构建的 Web 版，见 `apps/english/README.md` 与 `docs/decisions/0014`。
