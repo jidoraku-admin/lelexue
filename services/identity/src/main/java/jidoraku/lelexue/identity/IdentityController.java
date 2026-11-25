@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
 
-/** 身份服务的内网接口（#23）。仅内网可达，服务间调用使用内网服务令牌（ai-gateway §8，待接入）。 */
+/** 身份服务的内网接口（#23）。仅内网可达，服务间调用须带服务密钥（ai-gateway §8、0015 第一条，见 ServiceKeyFilter）。 */
 @RestController
 @RequestMapping("/api/identity")
 public class IdentityController {

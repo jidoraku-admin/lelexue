@@ -23,7 +23,15 @@ IDENTITY_DB_URL='jdbc:mysql://localhost:3306/identity?useSSL=false&allowPublicKe
 ```
 默认端口 8081（`IDENTITY_PORT` 可改）。
 
-## 4. 停止
+## 4. 服务密钥（0015 第一条）
+身份服务的全部接口都要求服务密钥，缺少或不一致一律返回 401。
+- 每个调用方一把密钥，由部署环境以环境变量注入：`LELEXUE_SVC_KEY_<服务名大写>`，服务名中的 `-` 换成 `_`（如 `LELEXUE_SVC_KEY_MATH`、`LELEXUE_SVC_KEY_DATA_PLATFORM`）。密钥不入仓库、不写入代码。
+- 调用方请求头：`X-Lelexue-Caller: <服务名>`、`X-Lelexue-Service-Key: <密钥>`。
+- 允许的调用方由 `identity.allowed-callers` 配置，默认 `english,math,chinese,physics,chemistry`。名单内但环境中没有密钥的调用方同样被拒绝。
+- 只记录拒绝次数，不记录请求内容与密钥。
+- 本地启动示例：在第 3 步的命令前加 `LELEXUE_SVC_KEY_MATH='<本地自取>'`。
+
+## 5. 停止
 ```
 docker compose -f services/identity/docker-compose.yml down
 ```
