@@ -15,6 +15,17 @@ OUT="${1:-$ROOT/dist/web}"
 FLUTTER="${FLUTTER:-flutter}"
 SUBJECTS=(english math chinese physics chemistry)
 
+# 试用构建：设置 HUB_DEV_USER_ID 时使用 profile 模式并注入测试 UserId，
+# 否则为 release 构建（生产模式，hub 未登录，学科入口不可进入）。
+# 注意：release 模式下 currentDevUserId() 恒为 null（apps/hub/lib/identity.dart）。
+BUILD_MODE="--release"
+DEFINE_ARGS=()
+if [ -n "${HUB_DEV_USER_ID:-}" ]; then
+  BUILD_MODE="--profile"
+  DEFINE_ARGS=("--dart-define=HUB_DEV_USER_ID=${HUB_DEV_USER_ID}")
+  echo "试用构建：profile 模式，HUB_DEV_USER_ID=${HUB_DEV_USER_ID}"
+fi
+
 if ! command -v "$FLUTTER" >/dev/null 2>&1; then
   echo "未找到 flutter：请加入 PATH 或设置 FLUTTER=/path/to/flutter" >&2
   exit 1
@@ -25,7 +36,7 @@ fi
 build_app() {
   local app="$1" base="$2" sub="$3"
   echo "==> 构建 apps/$app，base href: $base"
-  (cd "$ROOT/apps/$app" && "$FLUTTER" build web --release --base-href "$base")
+  (cd "$ROOT/apps/$app" && "$FLUTTER" build web "$BUILD_MODE" --base-href "$base" ${DEFINE_ARGS[@]+"${DEFINE_ARGS[@]}"})
   local dest="$OUT${sub:+/$sub}"
   mkdir -p "$dest"
   cp -R "$ROOT/apps/$app/build/web/." "$dest/"
