@@ -4,29 +4,45 @@
   "grade": 3,
   "volume": 1,
   "unit": 1,
-  "status": "first-slice-sample",
-  "note": "首切片示例数据。字符取自 docs/data/chinese-g3a-char-lists.json 的识字表与写字表；逐课归属（本课生字）待题库阶段录入后替换。题目为原创，不含课文原文（0003）。",
+  "status": "unit1-lesson-assigned",
+  "note": "第 1 单元首切片数据。每个字标注所属课次（lesson），字符均取自 docs/data/chinese-g3a-unit1-chars.json（真人 2026-11-24 确认）。题目为原创，不含课文原文（0003）。待办：拼音与偏旁未逐字对照原书核对，上线前核对。",
   "stepA_match": {
     "pairs": [
       {
         "id": "po",
         "char": "坡",
-        "pinyin": "pō"
+        "pinyin": "pō",
+        "lesson": 1
       },
       {
         "id": "qiu",
         "char": "球",
-        "pinyin": "qiú"
+        "pinyin": "qiú",
+        "lesson": 1
       },
       {
-        "id": "zhao",
-        "char": "招",
-        "pinyin": "zhāo"
+        "id": "shi",
+        "char": "湿",
+        "pinyin": "shī",
+        "lesson": 2
       },
       {
-        "id": "hu",
-        "char": "呼",
-        "pinyin": "hū"
+        "id": "di",
+        "char": "笛",
+        "pinyin": "dí",
+        "lesson": 2
+      },
+      {
+        "id": "song",
+        "char": "诵",
+        "pinyin": "sòng",
+        "lesson": 3
+      },
+      {
+        "id": "xiang",
+        "char": "详",
+        "pinyin": "xiáng",
+        "lesson": 3
       }
     ]
   },
@@ -34,28 +50,45 @@
     "start": {
       "id": "c-start-zhao",
       "char": "招",
-      "radical": "扌"
+      "radical": "扌",
+      "lesson": 1
     },
     "hand": [
       {
         "id": "c-yang",
         "char": "扬",
-        "radical": "扌"
+        "radical": "扌",
+        "lesson": 1
+      },
+      {
+        "id": "c-ai",
+        "char": "挨",
+        "radical": "扌",
+        "lesson": 3
       },
       {
         "id": "c-du",
         "char": "读",
-        "radical": "讠"
+        "radical": "讠",
+        "lesson": 1
+      },
+      {
+        "id": "c-song",
+        "char": "诵",
+        "radical": "讠",
+        "lesson": 3
       },
       {
         "id": "c-qiu",
         "char": "球",
-        "radical": "王"
+        "radical": "王",
+        "lesson": 1
       },
       {
         "id": "c-hu",
         "char": "呼",
-        "radical": "口"
+        "radical": "口",
+        "lesson": 1
       }
     ]
   },
@@ -64,29 +97,46 @@
       {
         "id": "t-zhao",
         "char": "招",
-        "radical": "扌"
+        "radical": "扌",
+        "lesson": 1
       },
       {
         "id": "t-yang",
         "char": "扬",
-        "radical": "扌"
+        "radical": "扌",
+        "lesson": 1
+      },
+      {
+        "id": "t-ai",
+        "char": "挨",
+        "radical": "扌",
+        "lesson": 3
       }
     ],
     "distractors": [
       {
         "id": "d-hu",
         "char": "呼",
-        "radical": "口"
+        "radical": "口",
+        "lesson": 1
       },
       {
         "id": "d-du",
         "char": "读",
-        "radical": "讠"
+        "radical": "讠",
+        "lesson": 1
       },
       {
         "id": "d-re",
         "char": "热",
-        "radical": "灬"
+        "radical": "灬",
+        "lesson": 1
+      },
+      {
+        "id": "d-shi",
+        "char": "湿",
+        "radical": "氵",
+        "lesson": 2
       }
     ],
     "question": "选出偏旁为「扌」的字"
