@@ -11,3 +11,4 @@
 - [0009 先做第一单元，功能复用，数据替换](0009-unit-first-reusable-features.md)
 - [0010 共通玩法框架（game kit）与学科选用](0010-shared-game-kit.md)
 - [0011 真人决定记录（2026-11-22 下午）](0011-human-decisions-2026-11-22.md)
+- [0015 项目总监决定（2026-11-26）：服务间密钥、家长登录、化学台词基准](0015-director-decisions-2026-11-26.md)
