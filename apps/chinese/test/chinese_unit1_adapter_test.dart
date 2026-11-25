@@ -22,9 +22,44 @@ void main() {
       expect(data.fallingDistractors, isNotEmpty);
     });
 
+    test('每个字都标有课次，且出现在真人确认的该课生字表中', () {
+      final unit = jsonDecode(
+        File('../../docs/data/chinese-g3a-unit1-chars.json').readAsStringSync(),
+      ) as Map<String, dynamic>;
+      final confirmed = <int, Set<String>>{
+        for (final l in (unit['lessons'] as List).cast<Map<String, dynamic>>())
+          l['lesson'] as int: {
+            ...(l['chars'] as List).cast<String>(),
+            ...((l['gridChars'] as List?) ?? const []).cast<String>(),
+          },
+      };
+      final raw = jsonDecode(
+        File('../../docs/data/chinese-unit1.json').readAsStringSync(),
+      ) as Map<String, dynamic>;
+      final items = <Map<String, dynamic>>[
+        ...(raw['stepA_match']['pairs'] as List).cast<Map<String, dynamic>>(),
+        raw['stepB_cardplay']['start'] as Map<String, dynamic>,
+        ...(raw['stepB_cardplay']['hand'] as List).cast<Map<String, dynamic>>(),
+        ...(raw['stepC_falling']['targets'] as List)
+            .cast<Map<String, dynamic>>(),
+        ...(raw['stepC_falling']['distractors'] as List)
+            .cast<Map<String, dynamic>>(),
+      ];
+      for (final m in items) {
+        final lesson = m['lesson'];
+        expect(lesson, isA<int>(), reason: '${m['id']} 缺少课次');
+        expect(confirmed[lesson], contains(m['char']),
+            reason: '${m['char']} 不在第 $lesson 课生字表中');
+      }
+      // 首切片覆盖第 1 单元全部三课。
+      expect(items.map((m) => m['lesson']).toSet(), {1, 2, 3});
+    });
+
     test('缺少步骤时解析失败（不静默通过）', () {
       expect(
-        () => ChineseUnit1Data.fromJson({'stepA_match': {'pairs': []}}),
+        () => ChineseUnit1Data.fromJson({
+          'stepA_match': {'pairs': []}
+        }),
         throwsA(anything),
       );
     });
@@ -47,7 +82,8 @@ void main() {
       final cfg = buildCardPlayConfig(data, (_) {});
       expect(cfg.kind, GameMechanicKind.cardPlay);
       expect(cfg.startCard.attribute, isNotEmpty);
-      expect(cfg.hand.where((c) => c.item.id == cfg.startCard.item.id), isEmpty);
+      expect(
+          cfg.hand.where((c) => c.item.id == cfg.startCard.item.id), isEmpty);
     });
   });
 
