@@ -20,10 +20,14 @@ class FallingGamePage extends StatefulWidget {
     super.key,
     required this.assetPath,
     required this.kind,
+    this.seed,
   });
 
   final String assetPath;
   final FallingKind kind;
+
+  /// 随机种子。不传时每局随机；测试传固定值，使单词出现的顺序与位置可复现。
+  final int? seed;
 
   @override
   State<FallingGamePage> createState() => _FallingGamePageState();
@@ -41,7 +45,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
     widget.assetPath,
   );
   final SpeechPlayer _speech = SpeechPlayer();
-  final Random _random = Random();
+  late final Random _random = Random(widget.seed);
   FallingRound? _round;
   FallingSpeed _speed = FallingSpeed.slow;
   final List<_Falling> _items = [];
@@ -50,7 +54,7 @@ class _FallingGamePageState extends State<FallingGamePage> {
   String? _toast;
   int _tick = 0;
   int _praiseCount = 0;
-  int _seed = 0;
+  late int _seed = widget.seed ?? 0;
 
   static const int _goal = 10;
   static const double _bubbleMaxWidth = 150;
@@ -216,16 +220,19 @@ class _FallingGamePageState extends State<FallingGamePage> {
                 ],
               ),
             ),
+            // 提示文字与主角只用于展示，不拦截点击，否则会挡住下面的单词。
             if (_toast != null)
               Positioned(
                 top: 110,
                 left: 0,
                 right: 0,
-                child: Text(
-                  _toast!,
-                  textAlign: TextAlign.center,
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    color: Colors.deepOrange,
+                child: IgnorePointer(
+                  child: Text(
+                    _toast!,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      color: Colors.deepOrange,
+                    ),
                   ),
                 ),
               ),
@@ -242,11 +249,13 @@ class _FallingGamePageState extends State<FallingGamePage> {
               bottom: 16,
               left: 0,
               right: 0,
-              child: Center(
-                child: SvgPicture.asset(
-                  isFrog ? 'assets/art/frog.svg' : 'assets/art/plane.svg',
-                  width: 84,
-                  height: 84,
+              child: IgnorePointer(
+                child: Center(
+                  child: SvgPicture.asset(
+                    isFrog ? 'assets/art/frog.svg' : 'assets/art/plane.svg',
+                    width: 84,
+                    height: 84,
+                  ),
                 ),
               ),
             ),
