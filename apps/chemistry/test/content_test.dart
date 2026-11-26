@@ -4,7 +4,7 @@ import 'package:lelexue_chemistry/content/chemistry_content.dart';
 final _kpPattern = RegExp(r'^chemistry\.g\d+\.v\d+\.u\d+\.k\d{3}$');
 
 void main() {
-  for (final entry in {'E1': e1Questions, 'E3': e3Questions}.entries) {
+  for (final entry in {'E1': e1Questions, 'E2': e2Questions, 'E3': e3Questions}.entries) {
     test('${entry.key} 题目结构合法', () {
       expect(entry.value, isNotEmpty);
       for (final q in entry.value) {
@@ -19,7 +19,7 @@ void main() {
   }
 
   test('题目 id 全局唯一', () {
-    final ids = [...e1Questions, ...e3Questions].map((q) => q.id).toList();
+    final ids = [...e1Questions, ...e2Questions, ...e3Questions].map((q) => q.id).toList();
     expect(ids.toSet().length, ids.length);
   });
 }
