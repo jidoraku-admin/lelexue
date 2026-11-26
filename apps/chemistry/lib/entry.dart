@@ -5,6 +5,7 @@ import 'config.dart';
 import 'content/chemistry_unit1_content.dart';
 import 'scoring/chemistry_scoring.dart';
 import 'slices/e1_collect_method/e1_page.dart';
+import 'slices/e2_h2o2_oxygen/e2_page.dart';
 import 'slices/e3_oxygen_test/e3_page.dart';
 import 'slices/quiz_page.dart';
 
@@ -55,6 +56,13 @@ class _ChemistryEntryState extends State<_ChemistryEntry> {
               MaterialPageRoute(builder: (_) => E1Page(scoring: _scoring)),
             ),
             child: const Text('E1 氧气的收集'),
+          ),
+          const SizedBox(height: 12),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => E2Page(scoring: _scoring)),
+            ),
+            child: const Text('E2 过氧化氢制氧'),
           ),
           const SizedBox(height: 12),
           ElevatedButton(

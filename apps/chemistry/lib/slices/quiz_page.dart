@@ -10,11 +10,15 @@ class QuizPage extends StatefulWidget {
     required this.title,
     required this.questions,
     required this.scoring,
+    this.safetyNotice,
   });
 
   final String title;
   final List<Question> questions;
   final ChemistryScoring scoring;
+
+  /// 安全提示：不为空时在每一题（每一步）顶部常驻显示。
+  final String? safetyNotice;
 
   @override
   State<QuizPage> createState() => _QuizPageState();
@@ -74,6 +78,10 @@ class _QuizPageState extends State<QuizPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (widget.safetyNotice != null) ...[
+          _SafetyBanner(text: widget.safetyNotice!),
+          const SizedBox(height: 12),
+        ],
         Text('第 ${_index + 1} / ${widget.questions.length} 题',
             style: const TextStyle(fontSize: 14)),
         const SizedBox(height: 12),
@@ -119,6 +127,32 @@ class _QuizPageState extends State<QuizPage> {
           child: const Text('返回'),
         ),
       ],
+    );
+  }
+}
+
+class _SafetyBanner extends StatelessWidget {
+  const _SafetyBanner({required this.text});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      key: const Key('safety-notice'),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.orange.shade50,
+        border: Border.all(color: Colors.orange),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.warning_amber, color: Colors.orange),
+          const SizedBox(width: 8),
+          Expanded(child: Text('安全提示：$text')),
+        ],
+      ),
     );
   }
 }
