@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:lelexue_chinese/domain/chinese_unit1_adapter.dart';
 import 'package:shared/game_kit/game_kit.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 ChineseUnit1Data loadData() {
   // 测试从仓库根目录的 docs/data 读取同一份数据，保证适配层与数据文件一致。
