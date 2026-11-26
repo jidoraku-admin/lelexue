@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lelexue_chemistry/content/chemistry_unit1_content.dart';
+import 'package:lelexue_chemistry/scoring/chemistry_scoring.dart';
 
 final _kpPattern = RegExp(r'^chemistry\.g\d+\.v\d+\.u\d+\.k\d{3}$');
 
@@ -21,5 +22,22 @@ void main() {
   test('第一单元题目 id 全局唯一', () {
     final ids = [...u1aQuestions, ...u1bQuestions].map((q) => q.id).toList();
     expect(ids.toSet().length, ids.length);
+  });
+
+  test('每个知识点题数不少于 1★ 最少作答数（第 4.0 节）', () {
+    final byKp = <String, int>{};
+    for (final q in [...u1aQuestions, ...u1bQuestions]) {
+      byKp[q.knowledgePointId] = (byKp[q.knowledgePointId] ?? 0) + 1;
+    }
+    expect(byKp.keys, containsAll(['chemistry.g9.v1.u01.k001', 'chemistry.g9.v1.u01.k002']));
+    for (final e in byKp.entries) {
+      expect(e.value, greaterThanOrEqualTo(ChemistryScoring.minAttempts), reason: e.key);
+    }
+  });
+
+  test('U1B 每题都带加热安全提示（第 4.0 节）', () {
+    for (final q in u1bQuestions) {
+      expect(q.explanation, contains(u1bSafetyTip), reason: q.id);
+    }
   });
 }
