@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   material_ui: ^1.11.1
+  shared:
+    path: ../../packages/shared
 
 dev_dependencies:
   flutter_test:
