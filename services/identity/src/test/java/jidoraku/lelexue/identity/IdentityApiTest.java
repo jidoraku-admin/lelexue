@@ -20,11 +20,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class IdentityApiTest {
 
+    private static final String TEST_KEY = "test-service-key";
+    private static final String VALID_CALLER = "math";
+
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     private Flyway flyway;
+
+    private static RequestPostProcessor svc() {
+        return headers(VALID_CALLER, TEST_KEY);
+    }
+
+    private static RequestPostProcessor headers(String caller, String key) {
+        return request -> {
+            if (caller != null) {
+                request.addHeader("X-Service-Caller", caller);
+                request.addHeader("X-Service-Name", caller);
+            }
+            if (key != null) {
+                request.addHeader("X-Service-Key", key);
+            }
+            return request;
+        };
+    }
 
     @BeforeEach
     void resetSchema() {
@@ -82,7 +102,6 @@ class IdentityApiTest {
 
     @Test
     void keyOfAnotherServiceIsRejected() throws Exception {
-        // chinese 在名单内，但环境中没有 LELEXUE_SVC_KEY_CHINESE；拿 math 的密钥冒充也不行
         mvc.perform(get("/api/identity/parents/x/seats").with(headers("chinese", TEST_KEY)))
                 .andExpect(status().isUnauthorized());
     }
