@@ -43,7 +43,8 @@ void main() {
         .toList();
     final report = audit.run(jsonEncode(json));
     expect(report.isComplete, isFalse);
-    expect(report.uncoveredSentences, ['I have a ___.']);
+    // s2-have 同时覆盖 I have a ___. 与 Me too.，删掉后两项都应列出。
+    expect(report.uncoveredSentences, ['I have a ___.', 'Me too.']);
     expect(report.uncoveredWords, isEmpty);
   });
 
