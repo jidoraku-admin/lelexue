@@ -65,6 +65,28 @@ Widget buildSubjectEntry({
 - 变更影响：英语 Web 版原先位于根地址，现移至 `/english/`。学科团队需在 P1 之前确认子路径构建（如 base href）正确。
 - 项目 `lelexue` 的配置由共通或学科对话在 Cloudflare 或构建脚本中修改，项目总监不在 Cloudflare 后台操作。
 
+### 6.1 Web 构建契约（#142 后续，共通，2026-11-28）
+
+构建入口只有一个：`scripts/web/build_web.sh [输出目录]`，默认输出 `dist/web`。各学科不另写部署脚本。
+
+| 应用 | base href | 输出目录（相对输出根） |
+| --- | --- | --- |
+| hub（`apps/hub`） | `/` | `.`（根） |
+| 英语 / 数学 / 语文 / 物理 / 化学 | `/<code>/`，`code` 取 `SubjectCode.wireName` | `<code>/` |
+
+学科需要满足的条件（由 `scripts/web/check_web_contract.sh` 检查，不需要 Flutter）：
+
+1. `apps/<code>/web/index.html` 存在，并且其中的 base 标签是 `<base href="$FLUTTER_BASE_HREF">`，不写死路径。由构建脚本用 `--base-href` 注入，本地 `flutter run -d chrome` 时为 `/`。
+2. 资源（图片、音频、JSON）一律通过 Flutter 资源系统或相对路径加载，不使用以 `/` 开头的绝对路径，否则在子路径下会 404。
+3. 学科 Web 版内的路由不假设自己位于根地址。
+4. 没有 `web/index.html` 的学科不会构建，不影响其他学科和 hub。
+
+重写规则（`_redirects`，由构建脚本生成）：先列已构建的学科 `/<code>/* /<code>/index.html 200`，最后是 hub 回退 `/* /index.html 200`。
+
+Cloudflare Pages 项目 `lelexue` 应按此设置（后台现值未核对，由有权限的一方对齐）：构建命令 `bash scripts/web/build_web.sh dist/web`，发布目录 `dist/web`。试用构建另设环境变量 `HUB_DEV_USER_ID`（profile 模式，只用于预览分支，不用于 `main`）。
+
+英语迁移到 `/english/`：英语的 `web/index.html` 已经使用 `$FLUTTER_BASE_HREF`，满足第 1 条。英语对话只需按第 2、3 条自查，不需要再改构建配置。
+
 ## 7. 发行形态
 
 - 用户只安装一个应用：hub。各学科的内容以 Dart 包的形式打进 hub，用户不需要分别下载学科应用。
